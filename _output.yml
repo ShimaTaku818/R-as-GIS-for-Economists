@@ -1,0 +1,12 @@
+bookdown::gitbook:
+  config:
+    toc:
+      before: |
+        <li><a href="./">R as GIS for Economists</a></li>
+      after: |
+        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+  includes:
+    before_body: header.html
+    # after_body: after.html
+  split_by: section
+

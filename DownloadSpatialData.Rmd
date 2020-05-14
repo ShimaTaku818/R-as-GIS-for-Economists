@@ -1,0 +1,405 @@
+--- 
+title: "Download Publicly Accessible Spatial Datasets using R"
+author: "Taro Mieno"
+date: "`r Sys.Date()`"
+output:
+  tufte::tufte_html: 
+    number_sections: yes
+    toc_float: yes
+    toc: yes
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_book:
+    citation_package: natbib
+    latex_engine: xelatex
+# bibliography: skeleton.bib
+link-citations: yes
+---
+
+# Introduction
+
+There are many publicly available spatial datasets that can be downloaded using R. Programming data downloading using R instead of manually downloading data from websites can save lots of time and also enhances the reproducibility of your analysis. In this section, we will introduce some of such datasets and show how to download data.  
+
+## USDA NASS QuickStat (`tidyUSDA`)
+
+There are several packages that lets you download data from the USDA NASS QuickStat. Here we use the `tidyUSDA` package. A nice thing about [tidyUSDA](https://github.com/bradlindblad/tidyUSDA) is that it gives you an option to download data as an `sf` object, which means you can immediately visualize the data or spatially interact it with other spatial objects.
+
+First thing you want to do is to get an API key from this [website](https://quickstats.nass.usda.gov/api). We need an API key to actually download data. 
+
+
+```{r }
+library(tidyUSDA)  
+library(ggplot2)
+library(dplyr)
+library(keyring)  
+```
+
+You can download data using `getQuickstat()`. There are number of options you can use to narrow down scope of the data you are downloading including `data_item`, `geographic_level`, `year`,  `commodity`, and so on. See its [manual](https://cran.r-project.org/web/packages/tidyUSDA/tidyUSDA.pdf) for the full list of parameters you can set. As an example, the code below download corn-related data by county in Illinois for year 2016 as an `sf` object.
+
+```{r il_corn_download}
+(
+IL_corn_yield <- getQuickstat(
+    key = key_get("usda_nass_qs_api"),
+    program = "SURVEY",
+    commodity = "CORN",
+    geographic_level = "COUNTY",
+    state = "ILLINOIS",
+    year = "2016",
+    geometry = TRUE
+  )  %>% 
+  #--- keep only some of the variables ---#
+  dplyr::select(year, NAME, county_code, short_desc, Value)
+)
+```
+
+As you can see, it is an `sf` object with `geometry` column due to `geometry = TRUE` option. This means that you can immediately create a map with the data (Figure \@ref(fig:corn-yield-IL)):
+
+```{r corn-yield-IL, fig.cap = "Corn Yield (bu/acre) in Illinois in 2016"}
+ggplot() +
+  geom_sf(
+    data = filter(IL_corn_yield, short_desc == "CORN, GRAIN - YIELD, MEASURED IN BU / ACRE"), 
+    aes(fill = Value)
+  )
+```
+
+You can download data for multiple states and years at the same time like below (of course, if you want the whole U.S., don't specify the state parameter.). 
+
+```{r il_co_necorn_download}
+(
+IL_CO_NE_corn <- getQuickstat(
+    key = key_get("usda_nass_qs_api"),
+    program = "SURVEY",
+    commodity = "CORN",
+    geographic_level = "COUNTY",
+    state = c("ILLINOIS", "COLORADO", "NEBRASKA"),
+    year = paste(2014:2018),
+    geometry = TRUE
+  ) %>% 
+  #--- keep only some of the variables ---#
+  dplyr::select(year, NAME, county_code, short_desc, Value)
+)
+```
+
+
+### Look for parameter values
+
+This package has a function that lets you see all the possible parameter values you can use for many of these parameters. For example, suppose you know you would like irrigated corn yield in Colorado, but you are not sure what parameter value (string) you should supply to the `data_item` parameter. Then, you can do this:^[Of course, you can alternatively go to the QuickStat website and look for the text values.]
+
+```{r see_values_dataitem}
+#--- get all the possible values for data_item ---#
+all_items <- tidyUSDA::allDataItem 
+
+#--- take a look at the first six ---#
+head(all_items)
+```
+
+You can use key words like "CORN", "YIELD", "IRRIGATED" to narrow the entire list: 
+
+```{r }
+all_items %>% 
+  grep(pattern = "CORN", ., value = TRUE) %>% 
+  grep(pattern = "YIELD", ., value = TRUE) %>% 
+  grep(pattern = "IRRIGATED", ., value = TRUE)  
+```
+
+Looking at the list, we know the exact text value we want, which is the first entry of the vector.
+
+```{r co_corn_download}
+(
+CO_ir_corn_yield <- getQuickstat(
+    key = key_get("usda_nass_qs_api"),
+    program = "SURVEY",
+    data_item = "CORN, GRAIN, IRRIGATED - YIELD, MEASURED IN BU / ACRE",
+    geographic_level = "COUNTY",
+    state = "COLORADO",
+    year = "2018",
+    geometry = TRUE
+  ) %>% 
+  #--- keep only some of the variables ---#
+  dplyr::select(year, NAME, county_code, short_desc, Value)
+)
+```
+
+Here is the complete list of functions that gives you the possible values of the parameters for `getQuickstat()`. 
+
+```{r eval = F}
+tidyUSDA::allCategory 
+tidyUSDA::allSector 
+tidyUSDA::allGroup 
+tidyUSDA::allCommodity 
+tidyUSDA::allDomain 
+tidyUSDA::allCounty 
+tidyUSDA::allProgram 
+tidyUSDA::allDataItem 
+tidyUSDA::allState 
+tidyUSDA::allGeogLevel 
+```
+
+### Caveats
+
+You cannot retrieve more than $50,000$ (the limit is set by QuickStat) rows of data. This query requests way more than $50,000$ observations, and fail. In this case, you need to narrow the search and chop the task into smaller tasks. 
+
+```{r cav_1, error = TRUE}
+many_states_corn <- getQuickstat(
+    key = key_get("usda_nass_qs_api"),
+    program = "SURVEY",
+    commodity = "CORN",
+    geographic_level = "COUNTY",
+    state = c("ILLINOIS", "COLORADO", "NEBRASKA", "IOWA", "KANSAS"),
+    year = paste(1995:2018),
+    geometry = TRUE
+  ) 
+```
+
+Another caveat is that the query returns an error when there is no observation that satisfy your query criteria. For example, even though "CORN, GRAIN, IRRIGATED - YIELD, MEASURED IN BU / ACRE" is one of the values you can use for `data_item`, there is no entry for the statistic in Illinois in 2018. Therefore, the following query fails.
+
+```{r cav_2, error = TRUE}
+many_states_corn <- getQuickstat(
+    key = key_get("usda_nass_qs_api"),
+    program = "SURVEY",
+    data_item = "CORN, GRAIN, IRRIGATED - YIELD, MEASURED IN BU / ACRE",
+    geographic_level = "COUNTY",
+    state = "ILLINOIS",
+    year = "2018",
+    geometry = TRUE
+  ) 
+```
+
+
+## PRISM
+
+But, we are just interested in Kansas. In order to avoid carrying around unnecessary data while processing them and make processing faster, we can crop only the portion that overlaps with Kansas.  
+
+```{r }
+#--- get the geographic extent of the groundwater data ---#
+extent_KS <- extent(gw_KS_sf_2010)
+
+#--- read PRISM data and crop the PRISM data based on the extent ---#
+prism_KS <- raster("./Data/PRISM/PRISM_ppt_stable_4kmD2_20100401_bil/PRISM_ppt_stable_4kmD2_20100401_bil.bil") %>% 
+  crop(., extent_KS)
+```
+
+Here is the map of the cropped precipitation data superimposed on the Kansas county boundaries.
+
+```{r echo = FALSE}
+tm_shape(KS_counties) +
+  tm_polygons(col = NA) +
+tm_shape(prism_KS) +
+  tm_raster(title = "", alpha = 0.4) 
+```
+
+We now try to extract precipitation value by day for each of the wells by geographic geographically overlaying wells onto the PRISM data, and identify which PRISM grid each well falls within.  
+
+```{r echo = FALSE}
+tm_shape(prism_KS) +
+  tm_raster(title = "") +
+tm_shape(gw_KS_sf_2010) +
+  tm_symbols(size = 0.05)
+```
+
+## Daymet
+
+```{r }
+library(daymetr)
+
+#--- tiles ---#
+tm_shape(tile_outlines) +
+  tm_polygons() +
+tm_shape(st_transform(IA_grids, st_crs(tile_outlines))) +
+  tm_polygons(col = "red") 
+```
+
+```{r }
+tiles_to_get <- tile_outlines %>% 
+  st_as_sf() %>% 
+  .[st_transform(IA_grids, st_crs(tile_outlines)), ] %>% 
+  .$TileID
+```
+
+^[Note that when you download all the Daymet tiles data following the code below, the total size of the downloaded files will be about 3GB.]
+
+```{r }
+library(daymetr)
+
+query_par_data <- expand.grid(year = 2012:2014, param = c("tmax", "prcp"), tile = tiles_to_get) 
+
+get_daymet_tiles <- function(i) {
+
+  year <- query_par_data[i, "year"]
+  param <- query_par_data[i, "param"]
+  tile <- query_par_data[i, "tile"]
+
+  download_daymet_tiles(
+    tiles = tile, 
+    start = year,
+    end = year,
+    path = "./Data/Daymet",
+    param = param
+  )
+
+}
+
+plan(multiprocess, workers = 10)  
+
+future_lapply(1:nrow(query_par_data), get_daymet_tiles)
+``` 
+
+```{r }
+
+daymet_12 <- stack("./Data/Daymet/prcp_2012_11742.nc", varname = "prcp")
+
+daymet_12@layers[[1]] %>%  plot
+daymet_12@layers[[80]] %>%  plot
+daymet_12@layers[[140]] %>% getValues() %>%  hist
+
+ %>% 
+  brick(quick =TRUE)
+
+plot(daymet_12)
+
+library(ncdf4)
+
+daymet_12 <- nc_open("./Data/Daymet/prcp_2012_11742.nc") 
+
+daymet_12
+
+lon <- ncvar_get(daymet_12, "x")
+dim(lon)
+
+lat <- ncvar_get(daymet_12, "y")
+dim(lat)
+
+time <- ncvar_get(daymet_12, "time")
+dim(time)
+
+
+prcp <- ncvar_get(daymet_12, "prcp")
+
+prcp[, , 1] %>%  as.vector %>%  hist
+
+
+daymet_12 <- raster("./Data/Daymet/prcp_2012_11744.nc", varname = "prcp", band = 6)
+
+plot(daymet_12)
+
+IA_grids <- st_transform(IA_grids, projection(daymet_12)) 
+
+data <- exact_extract(daymet_12, IA_grids) %>% rbindlist(idcol = TRUE)
+
+plot(daymet_12)
+plot(IA_grids, add=TRUE)
+
+
+# library("maps")
+# states <- st_as_sf(map("state", plot = FALSE, fill = TRUE))
+# counties <- st_as_sf(map("county", plot = FALSE, fill = TRUE))
+```
+
+## USGS
+
+[USGS R](https://owi.usgs.gov/R/index.html)
+
+### Groundwater level data
+
+```{r }
+library(dataRetrieval)
+state_ls <- state.abb
+
+data_ne <- whatNWISdata(stateCd = "NE")
+
+KS_gwl <- readNWISdata(
+    stateCd="Kansas", 
+    startDate = "1980-01-01", 
+    endDate = "2020-01-01", 
+    service = "gwlevels"
+  ) %>% 
+  select(site_no, lev_dt, lev_va) %>% 
+  rename(date = lev_dt, dwt = lev_va)
+
+KS_site_ls <- KS_gwl[,site_no] %>% unique()
+
+sites_info <- readNWISsite(siteNumbers = KS_site_ls) %>% 
+  select(site_no, dec_lat_va, dec_long_va) %>% 
+  st_as_sf(coords = c("dec_long_va", "dec_lat_va")) %>% 
+  st_set_crs(4269)
+```
+
+### Nitrogen concentration
+
+```{r }
+
+SaltLake_totalN <- readNWISdata(
+  bBox = c(-113.0428, 40.6474, -112.0265, 41.7018), 
+  service = "qw", 
+  parameterCd = "00600", 
+  startDate = "2020-01-01"
+)
+
+attributes(SaltLake_totalN)
+
+attr(SaltLake_totalN, "variableInfo")
+
+
+phosphorous: 00665
+nitrogen: 00665
+```
+
+
+### Water temperature
+```{r }
+MauiCo_avgdailyQ <- readNWISdata(
+  stateCd = "Hawaii", 
+  service = "dv", 
+  parameterCd = "00060"
+)
+
+head(MauiCo_avgdailyQ)
+```
+
+### WQP 
+
+[WQP user guide](https://www.waterqualitydata.us/portal_userguide/)
+
+[WQP query](https://www.waterqualitydata.us/webservices_documentation/#WQPWebServicesGuide-Submitting)
+
+```{r }
+wqpcounts_ia <- readWQPdata(
+  statecode="US:19", 
+  querySummary = TRUE
+)
+
+IA_lake_phosphorus <- readWQPdata(
+  statecode = "IA", 
+  siteType = "Lake, Reservoir, Impoundment", 
+  characteristicName = "Phosphorus", 
+  startDate = "1990-10-01" 
+) %>% 
+filter(MonitoringLocationIdentifier, ResultMeasureValue, ActivityStartDate)
+
+#--- get longitude and latitude ---#
+siteInfo <- attr(IA_lake_phosphorus, "siteInfo") %>% 
+  select(MonitoringLocationIdentifier, dec_lat_va, dec_lon_va) %>% 
+  st_as_sf(coords = c("dec_lon_va", "dec_lat_va")) %>% 
+  st_set_crs(4269)
+
+attributes()
+```
+
+## Daymet
+
+
+<!-- ## Crop Data Layer   -->
+
+
+## Water quality 
+
+[USGS online ](https://owi.usgs.gov/R/training-curriculum/usgs-packages/)
+
+
+## Sentinel 2
+
+
+## NOAA (rnoaa)
+
+

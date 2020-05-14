@@ -1,0 +1,303 @@
+--- 
+title: "Handle raster data"
+author: "Taro Mieno"
+date: "`r Sys.Date()`"
+output:
+  tufte::tufte_html: 
+    css: "tufte_mine.css"
+    number_sections: yes
+    toc: yes
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_book:
+    citation_package: natbib
+    latex_engine: xelatex
+# bibliography: skeleton.bib
+link-citations: yes
+---
+
+
+```{r setup, echo = FALSE}
+library(tufte)
+library(knitr)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  cache = TRUE,
+  comment = NA,
+  message = FALSE,
+  warning = FALSE,
+  tidy = FALSE,
+  cache.lazy = FALSE
+  #--- figure ---#
+  # dpi=400
+)
+
+opts_knit$set(
+  root.dir = "/Users/tmieno2/Box/Teaching/AAEA R/GIS"
+)
+```
+
+```{r, echo=FALSE, warning=FALSE, cache = FALSE}
+#--- load packages ---#
+suppressMessages(library(data.table))
+suppressMessages(library(stringr))
+suppressMessages(library(raster))
+# setwd("/Users/tmieno2/Box/Teaching/AAEA R/GIS")
+```
+
+```{r, echo = F, eval = F}
+setwd("/Users/tmieno2/Box/Teaching/AAEA R/GIS")
+```
+
+# Before you start
+
+## What you need to know before you start
++ What raster data is?
+
+
+## Highlight of what you will (or not) learn 
++ read and write raster files
++ stack raster files
++ quick plot raster file (not creating publication-quality maps)
++ access values from raster objects
+
+# Introduction  
+
+
+In this section, we will learn how to use the `raster` and `terra` packages to handle raster data. `terra` package has been developed to replace `raster` package, and the first beta version of the `terra` package^[[github page](https://github.com/rspatial/terra)] was just released on CRAN on 20 March 2020. `terra` is written in C++ and thus faster than `raster` package in many raster data operations. 
+
+The topics we cover here is limited to only a small portion of the full capability of the `raster` and `terra` package. For example, we do not cover raster arithmetic, focal operations, or aggregation, which I consider are rarely of use for economists^[I do raster aggregation in Chapter X. However, it is only for the purpose of generating raster data of different cell densities to examine the performance of some raster operations.]. Those who are interested in a fuller treatment of the `raster` package are referred to Chapters 3, 4, and 5 of [Geocomputation with R](https://geocompr.robinlovelace.net/). For economists, most of the time, raster data is a source data from which values will be extracted to spatially related spatial objects in vector form^[For example, extracting land type values for a county in Iowa, extracting precipitation values from PRISM raster data for county in U.S.]. This is because the unit of analysis tends to be geographic units represented in vector form (e.g., county, school districts) rather than regular square grids without any economic or social meanings. Therefore, we will introduce only the essential knowledge of raster data operation required to effectively implement the task of extracting values, which will be covered extensively in Chapter . 
+
+You may wonder why we still learn `raster` even though `terra` is its replacement and faster. This is because other useful (critical if you are handling many large spatial datasets and need speed) packages for us economists, such as `exactextractr` and `velox`, were written to work with `raster` object classes and have still not been adapted to support `terra` object classes at the moment. I consider `exactextractr` and `velox`  critical for economists, especially those who use large spatially fine raster datasets with many temporal dimensions. As I stated earlier, raster data extraction will be by far the most common use case of raster data for economists and also the most time-consuming part of the whole raster data handling experience. `terra::extract()` is much much faster than `raster::extract()`, which is unbearably slow for large datasets. Unfortunately, `terra::extract()` is still much slower than the extraction function provided by `exactextractr` and `velox`^[A whole chapter is dedicated to raster value extraction in Chapter , where these packages are introduced.] packages for large datasets^[CDL data is a good example of a large (or spatially fine) raster data with the cell size of 30 meter by 30 meter.]. Since `exactextractr` and `velox` works only with objects defined by `raster` package, you need to convert a `terra` object to a `raster` if you would like to take advantage of those functions. This also means that we need to learn the difference in raster object classes between the two packages. This problem should be resolved in a matter of couple of years (or even less), and most of the spatial packages will add support for `terra`.  Good news is that learning both packages does not take much time. We learn only a fraction of what they are capable of, do you remember? 
+
+Finally, another package you might want to keep an eye on for raster (and vector data) handling is the `stars` package^[For the package details, see [here](https://r-spatial.github.io/stars/index.html). A few vignettes are available from the "Articles" tab.]. It provides a consistent way of handling spatiotemporal data than the `raster` and `terra` package. So far, the advantage of this packages brings does not seem worth the time I will need to spend learning it. 
+
+
+# Raster data handling using the `raster` and `terra` packages (Only the bare minimum) 
+
+## `raster` package: `RasterLayer`, `RasterStack`, and `RasterBrick`
+
+Let's start with taking a look at raster data. We will download CDL data for Iowa in 2015. 
+
+```{r read_the_IA_cdl_data}
+library(cdlTools)
+
+#--- download the CDL data for Iowa in 2015 ---#
+IA_cdl_2015 <- getCDL("Iowa", 2015)$IA2015
+
+#--- take a look ---#
+IA_cdl_2015
+```
+
+Evaluating the imported raster object provides you with information about the raster data, such as dimensions (number of cells, number of columns, number of cells), spatial resolution (30 meter by 30 meter for this raster data), extent, CRS and the minimum and maximum values recorded in this raster layer. The class of the downloaded data is `RasterLayer`. A `RasterLayer` consists of only one layer, meaning that only a single variable is associated with the cells (here it is land use category code in integer).
+
+Among these spatial characteristics, you often need to extract the CRS of a raster object before you interact it with vector data^[e.g., extracting values from a raster layer to vector data, or cropping a raster layer to the spatial extent of vector data.], which can be done using `projection()`:
+
+```{r chars}
+projection(IA_cdl_2015)
+```
+
+---
+
+You can stack multiple raster layers of the **same spatial resolution and extent** to create a `RasterStack` using `raster::stack()`. Often times, processing a multi-layer object has computational advantages over processing multiple single-layer one by one^[You will see this in Chapter 5 where we learn how to extract values from a raster layer for a vector data.]. 
+
+To create a `RasterStack` and `RasterBrick`, let's download the CDL data for IA in 2016 and stack it with the 2015 data.
+
+```{r make_stack}
+#--- download the CDL data for Iowa in 2016 ---#
+IA_cdl_2016 <- getCDL("Iowa", 2016)$IA2016 
+
+#--- stack the two ---#
+IA_cdl_stack <- stack(IA_cdl_2015, IA_cdl_2016)
+
+#--- take a look ---#
+IA_cdl_stack
+```  
+
+`IA_cdl_stack` is of class `RasterStack`, and it has two layers of variables: CDL for 2015 and 2016. You can make it a `RasterBrick` using `raster::brick()`:
+
+```{r make_brick}
+#--- stack the two ---#
+IA_cdl_brick <- brick(IA_cdl_stack)
+
+#--- or this works as well ---#
+# IA_cdl_brick <- brick(IA_cdl_2015, IA_cdl_2016)
+
+#--- take a look ---#
+IA_cdl_brick
+```  
+
+You probably noticed that it took some time to create the `RasterBrick` object^[Read [here](https://geocompr.robinlovelace.net/spatial-class.html#raster-classes) for the subtle difference between `RasterStack` and `RasterBrick`]. While spatial operations on `RasterBrick` are supposedly faster than `RasterStack`, the time to create a `RasterBrick` object itself is often long enough to kill the speed advantage entirely^[We will see this in Chapter , where we compare the speed of data extraction from `RasterStack` and `RasterBrick` objects.]. Often, the three raster object types are collectively referred to as `Raster`$^*$ objects for shorthand in the documentation of the `raster` and other related packages.
+
+## `terra` package: `SpatRaster`
+
+`terra` package has only one object class for raster data, `SpatRaster` and no distinctions between one-layer and multi-layer rasters is necessary, which is nice. Let's first convert a `RasterLayer` to a `SpatRaster` using `rast()` function.
+
+```{r spat_raster}
+#--- convert to a SpatRaster ---#
+IA_cdl_2015_sr <- rast(IA_cdl_2015)
+
+#--- take a look ---#
+IA_cdl_2015_sr
+```
+
+You can see that the number of layers (`nlyr`) is 1 of course because the original object is a `RasterLayer`, which by definition has only one layer. Now, let's convert a `RasterStack` to a `SpatRaster`.
+
+```{r spat_raster_nl}
+#--- convert to a SpatRaster ---#
+IA_cdl_stack_sr <- rast(IA_cdl_stack)
+
+#--- take a look ---#
+IA_cdl_stack_sr
+```
+
+Again, it is a `SpatRaster`, and you now see that the number of layers is 2. We just confirmed that `terra` has only one class for raster data whether it is single-layer or multiple-layer ones.
+
+Instead of `projection()`, you use `crs()` to extract the CRS.
+
+```{r }
+crs(IA_cdl_2015_sr)
+```
+
+## Converting a `SpatRaster` object to a `Raster`$^*$ object.
+
+You can revert a `SpatRaster` object back to a `Raster`$^*$ object using `raster()`, `stack()`, and `brick()`. Keep in mind that if you use `rater()` even though `SpatRaster` has multiple layers, the resulting `RasterLayer` object has only one layer. 
+
+```{r convert_back}
+#--- RasterLayer (one layer lost) ---#
+IA_cdl_stack_sr %>% raster()
+
+#--- RasterLayer ---#
+IA_cdl_stack_sr %>% stack()
+
+#--- RasterLayer (this takes some time) ---#
+IA_cdl_stack_sr %>% brick()
+```
+
+# Read and write a raster data file  
+
+Sometimes we can download raster data as we saw in Section 3.1. But, most of the time you need to read raster data stored as a file. Raster data files come in numerous formats. For example, PRPISM comes in the Band interleaved by line (BIL) format, some of the Daymet data comes in netCDF format. Other popular formats include GeoTiff, SAGA, ENVI, and many others. 
+
+## `raster`
+
+You can use the `raster::raster()` function to read raster data of many common formats, and it should be almost always the case that raster data you got can be read using the function. Here, we read a GeoTiff file (a file with .tif extension).
+
+```{r read_no_eval, eval = F}
+#--- general syntax ---#
+raster(filename)
+
+#--- an example ---#
+IA_cdl_15 <- raster("./Data/IA_cdl_2015.tif") 
+```
+
+```{r read_eval, echo = F}
+IA_cdl_15 <- raster("./Data/IA_cdl_2015.tif") 
+```
+
+One important thing to note here is that the cell values of the raster data are actually not in memory when you "read" raster data from a file. You can check this by `inMemory` function.
+
+```{r in_memory}
+#--- check if in memory ---#
+inMemory(IA_cdl_2015)
+```
+
+You basically just established a connection to the file. This helps to reduce the memory footprint of raster data handling. 
+
+---
+
+To write a `Raster`$^*$ you can use `raster::writeRaster()`. 
+
+```{r write_raster, eval = F}
+#--- syntax ---#
+writeRaster(raster object , file name, format) 
+
+#--- example ---#
+writeRaster(IA_cdl_stack, "./Data/IA_cdl_2015.tif", format = "GTiff", overwrite = TRUE) 
+```
+
+The above code saves the `RasterStack` object as a GeoTiff file^[There are many other alternative formats (see [here](https://www.rdocumentation.org/packages/raster/versions/3.0-12/topics/writeRaster)). I picked GeoTiff just because I am familiar with GeoTiff the most. I do not see a good reason to save it in a different format other than GeoTiff. So, I always pick GeoTiff. Finally, note that format option can be dropped as `writeRaster()` infers the format from the extension of the file name.]. `overwrite = TRUE` is necessary if a file with the same already exists and you are overwriting it. `writeRaster()` can be frustratingly slow for a large `Raster`$^*$ object. `terra::writeRaster()`, which I introduce below, is much faster.
+
+## `terra`
+
+You use `terra::rast()` to read raster data:
+
+```{r read_no_eval_terra, eval = F}
+#--- general syntax ---#
+rast(filename)
+
+#--- an example ---#
+IA_cdl_2015_sr <- rast("./Data/IA_cdl_2015.tif") 
+```
+
+```{r read_eval_terra, echo = F}
+IA_cdl_2015_sr <- rast("./Data/IA_cdl_2015.tif") 
+```
+
+Just like `raster::raster()`, it does not read cell values in memory.
+ 
+---
+
+You can write `SpatRaster` object using `terra::writeRaster()`. It works exactly the same as `raster::writeRaster()`. 
+
+```{r write_terra, eval = F}
+terra::writeRaster(IA_cdl_2015_sr, "./Data/IA_cdl_stack.tif", format = "GTiff", overwrite = TRUE)
+```
+
+## Speed comparison
+
+Here, we compare the speed of writing raster data using  
+
+```{r write_comp, eval = F}
+#--- terra::writeRaster (faster) ---#
+tic()
+terra::writeRaster(IA_cdl_2015_sr, "./Data/IA_cdl_stack.tif", format = "GTiff", overwrite = TRUE)
+tic()
+
+#--- raster::writeRaster (slow) ---#
+tic()
+raster::writeRaster(IA_cdl_stack, "./Data/IA_cdl_stack.tif", format = "GTiff", overwrite = TRUE)
+toc()
+```
+
+You can save a `Raster`$^*$ object using `terra::writeaRaster()`, but you do not get any speed advantage.
+
+```{r terra_write_no_speed}
+#--- terra::writeRaster with RasterStack (no speed advantage) ---#
+tic()
+terra::writeRaster(IA_cdl_stack, "./Data/IA_cdl_stack.tif", format = "GTiff", overwrite = TRUE)
+toc() 
+```
+
+## Access values 
+
+You can access the values stored in a `Raster`$^*$ object using `getValues()` function. For `SpatRaster`, you can use `values()`.
+
+`raster` way:
+
+```{r getvalues}
+#--- raster::getValues ---#
+values_from_stack <- getValues(IA_cdl_stack) 
+
+#--- take a look ---#
+head(values_from_stack)
+```
+
+`terra` way:
+```{r values}
+#--- terra::values ---#
+values_from_rs <- values(IA_cdl_stack_sr) 
+
+#--- take a look ---#
+head(values_from_rs)
+``` 
+
+The returned values come in a matrix form: one column for one layer. Instead of getting all the values, you could get a portion of them by using `getValuesBlock()` by specifying the region for which you would like to get values. It is used extensively in `exact_extract()` function, which we show as one of the fastest ways to extract values. However, if you are finding yourself using `getValuesBlock()`, it is very much likely that you are wasting your time by not using a faster alternative. See Chapter X for further discussion of fast value extraction.  
+
+
+
+[RasterOption](https://www.gis-blog.com/increasing-the-speed-of-raster-processing-with-r-part-13/)
+
+<!-- ```{r }
+rasterOptions()  
+``` -->

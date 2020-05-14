@@ -1,0 +1,16 @@
+/Data/*
+/Codes/*
+/ReplicationData/*
+knit_rmd.R
+DataPrep.R
+Notes.Rmd
+book.bib
+todo.md
+/_bookdown_files/*
+/.Rproj.user/*
+.Rproj.user
+/docs/.DS*
+.DS_Store
+.Rhistory
+R_GIS_Books.rds
+preamble.tex
