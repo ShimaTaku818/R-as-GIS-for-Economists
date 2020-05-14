@@ -1,0 +1,6 @@
+book_filename: "R_GIS_Book"
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Chapter "
+rmd_files: ["index.Rmd", "Demonstration.Rmd"]
