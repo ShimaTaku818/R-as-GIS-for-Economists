@@ -1,0 +1,2287 @@
+--- 
+title: "R as GIS for Economists"
+author: "Taro Mieno"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [RGIS.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+---
+
+# Preface {-}
+
+This book is being developed as part of my effort to put together course materials for my data science course targeted at upper-level undergraduate and graduate students at the University of Nebraska Lincoln. This books aims particularly at **spatial data processing for an econometric project**, where spatial variables become part of an econometric analysis. Over the years, I have seen so many students and researchers who spend so much time just processing spatial data (often involving clicking the ArcGIS (or QGIS) user interface to death), which is a waste of time from the perspective of academic productivity. My hope is that this book will help researchers become more proficient in spatial data processing and enhance the overall productivity of the fields of economics for which spatial data are essential.  
+
+**About me**
+
+I am an Assistant Professor at the Department of Agricultural Economics at University of Nebraska Lincoln, where I also teach Econometrics for Master's students. My research interests lie in precision agriculture, water economics, and agricultural policy. My personal website is [here](http://taromieno.netlify.com/). 
+
+**Comments and Suggestions?**
+
+Any constructive comments and suggestions about how I can improve the book are all welcome. Please send me an email at tmieno2@unl.edu or create an issue on [the github page](https://github.com/tmieno2/R-as-GIS-for-Economists)  of this book.
+
+<hr>
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+
+## Why R as GIS for Economists? {-}
+
+R has extensive capabilities as GIS software. In my opinion, $99\%$ of your spatial data processing needs as an economist will be satisfied by R. But, there are several popular options for GIS tasks other than R:
+
++ Python
++ ArcGIS
++ QGIS
+
+Here I compare them briefly and discuss why R is a good option.
+
+### R vs Python {-}
+
+Both R and Python are actually heavily dependent on open source software GDAL and GEOS for their core GIS operations (GDAL for reading spatial data, and GEOS for geometrical operations like intersecting two spatial layers).^[For example, see the very first sentence of [this page](https://cran.r-project.org/web/packages/sf/index.html)] So, when you run GIS tasks on R or Python you basically tell R or Python what you want to do and they talk to the software, let them do the job, and return the results back to us. This means that R and Python are not very different in its capability at GIS tasks as they are dependent on the common open source software for many GIS tasks. When GDAL and GEOS get better, R and Python get better (with a short lag). Both of them have good spatial visualization tools as well. Moreover, both R and Python can communicate with QGIS and ArcGIS (as long you as have them installed of course) and use their functionalities from within R and Python via the bridging packages: `RQGIS` and `PyQGIS` for QGIS, and `R-ArcGIS` and `ArcPy`.^[We do not learn them in this lecture note because I do not see the benefits of using them.] So, if you are more familiar with Python than R, go ahead and go for the Python option. From now on, my discussions assume that you are going for the R option, as otherwise, you would not be reading the rest of the book anyway.
+
+### R vs ArcGIS or QGIS {-}
+
+ArcGIS is commercial software and it is quite expensive (you are likely to be able to get a significant discount if you are a student at or work for a University). On the other hand, QGIS is open source and free. It has seen significant developments over the decade, and I would say it is just as competitive as ArcGIS. QGIS also uses open source geospatial software GDAL, GEOS, and others (SAGA, GRASS GIS). Both of them have a graphical interface that helps you implement various GIS tasks unlike R which requires programming. 
+
+Now, since R can use ArcGIS and QGIS through the bridging packages, a more precise question we should be asking is whether you should program GIS tasks using R (possibly using the bridging packages) or manually implement GIS tasks using the graphical interface of ArcGIS or QGIS. The answer is programming GIS tasks using R. First, manual GIS operations are hard to repeat. It is often the case that in the course of a project you need to redo the same GIS task except that the underlying datasets have changed. If you have programmed the process with R, you just run the same code and that's it. You get the desired results. If you did not program it, you need to go through many clicks on the graphical interface all over again, potentially trying to remember how you actually did it last time.^[You could take a step by step note of what you did though.] Second and more important, manual operations are not scalable. It has become much more common that we need to process many large spatial datasets. Imagine you are doing the same operations on $1,000$ files using a graphical interface, or even $50$ files. Do you know who is good at doing the same tasks over and over again without complaining? A computer. Just let them do what they like to do. You have better things do. 
+
+Finally, should you learn ArcGIS or QGIS in addition to (or before) R? I am doubtful. As economists, GIS tasks we need to do are not super convoluted most of the time. Suppose $\Omega_R$ and $\Omega_{AQ}$ represent the set of GIS tasks R and $ArcGIS/QGIS$ can implement, respectively. Further, let $\Omega_E$ represent the set of skills economists need to implement. Then, $\Omega_E \in \Omega_R$ $99\%$ (or maybe $95\%$ to be safe) of the time and $\Omega_E \not\subset \Omega_{AQ}\setminus\Omega_R$ $99\%$ of the time. Personally, I have never had to rely on either ArcGIS or QGIS for my research projects after I learn how to use R as GIS. 
+
+One of the things ArcGIS and QGIS can do but R cannot do ($\Omega_{AQ}\setminus\Omega_R$) is creating spatial objects by hand using a graphical user interface, like drawing polygons and lines. Another thing that R lags behind ArcGIS and QGIS is 3D data visualization. But, I must say neither of them is essential for economists at the moment. Finally, sometime it is easier and faster to make a map using ArcGIS and QGIS especially for a complicated map.^[Let me know if you know something that is essential for economists that only ArcGIS or QGIS can do. I will add that to the list her.] 
+
+### Summary {-}
+
++ **You have never used any GIS software?**
+
+Learn R first. If you find out you really really cannot complete the tasks you would like to do on R, then turn to other options. 
+
++ **You have used ArcGIS or QGIS and do not like them because they crash often?**
+
+Why don't you try R?^[I am not saying R does not crash. R does crash. But, often times, the fault is yours, not the software's.] You may realize you actually do not need them.
+
++ **You have used ArcGIS or QGIS before and are so comfortable with them, but need to program repetitive GIS tasks?**
+
+Learn R and maybe take advantage of `R-ArcGIS` or `RQGIS`, which this book does not cover.
+
++ **You know for sure that you need to run only a simple GIS task once and never have to do any GIS tasks ever again?**
+
+Stop reading and ask one of your friends to do the job. Pay him/her $\$20$ per hour, which is way below the opportunity cost of setting up either ArcGIS or QGI and learning to do that simple task on them.
+
+
+## How is this book different from other online books and resources? {-}
+
+We are seeing an explosion of online (and free) resources that teach how to use R for spatial data processing.^[This phenomenon is largely thanks to packages like `bookdown` [@Rbookdown], `blogdown` [@Rblogdown], and `pkgdown` [@Rpkgdown] that has lowered the cost of professional contents creation much much lower than before. Indeed, this book was built taking advantage of the `bookdown` package.]  Here is an incomplete list of such resources:
+
++ [Geocomputation with R](https://geocompr.robinlovelace.net/)
++ [Spatial Data Science](https://keen-swartz-3146c4.netlify.app/)
++ [Spatial Data Science with R](https://www.rspatial.org/index.html)
++ [Introduction to GIS using R](https://www.jessesadler.com/post/gis-with-r-intro/)
++ [Code for An Introduction to Spatial Analysis and Mapping in R](https://bookdown.org/lexcomber/brunsdoncomber2e/)
++ [Introduction to GIS in R](https://annakrystalli.me/intro-r-gis/index.html)
++ [Intro to GIS and Spatial Analysis](https://mgimond.github.io/Spatial/index.html)
++ [Introduction to Spatial Data Programming with R](http://132.72.155.230:3838/r/)
++ [Reproducible GIS analysis with R](http://staff.washington.edu/phurvitz/r_gis/)
++ [R for Earth-System Science](http://geog.uoregon.edu/bartlein/courses/geog490/index.html)
++ [Rspatial](http://rspatial.org/index.html)
++ [NEON Data Skills](https://www.neonscience.org/resources/data-skills)
++ [Simple Features for R](https://r-spatial.github.io/sf/)
+<!-- + [Nick Eubank](https://www.nickeubank.com/gis-in-r/) -->
+
+Thanks to all these resources, it has become much easier to self-teach R for GIS work than six or seven years ago when I first started using R for GIS. Even though I have not read through all these resources carefully, I am pretty sure every topic found in this book can also be found _somewhere_ in these resources (except the demonstrations). So, you may wonder why on earth you can benefit from reading this book. It all boils down to search costs. Researchers in different disciplines require different sets of spatial data skills. The available resources are either very general covering so many topics that economists are very unlikely to use. It is particularly hard for those who do not have much experience in GIS to identify whether particular skills are essential or not. So, they could spend so much time learning something that is not really useful. The value of this book lies in its deliberate incomprehensiveness. It only packages materials that satisfy the need of most economists, cutting out many topics that are likely to be of limited use for economists. 
+
+For those who are looking for more comprehensive treatments of spatial data handling and processing in one book, I personally like [Geocomputation with R](https://geocompr.robinlovelace.net/) a lot. Increasingly, the developer of R packages created a website dedicated to their R packages, where you can often find vignettes (tutorials), like [Simple Features for R](https://r-spatial.github.io/sf/). 
+
+## What is going to be covered in this book? {-}
+
+The book starts with the very basics of spatial data handling (e.g., importing and exporting spatial datasets) and moves on to more practical spatial data operations (e.g., spatial data join) that are useful for research projects. This books is still under development. Right now, only Chapter 1 is available. I will work on the rest of the book over the summer. The "coming soon" chapters are close to be done. I just need to add finishing touches to those chapters. The "wait a bit" chapters need some more work, adding contents, etc.  
+
++ Chapter 1: Demonstrations of R as GIS (available)
+	* groundwater pumping and groundwater level
+	* precision agriculture
+	* land use and weather
+	* corn planted acreage and railroads
+	* groundwater pumping and weather
++ Chapter 2: The basics of vector data handling using `sf` package (coming soon)
+	* spatial data structure in `sf`
+	* import and export vector data
+	* (re)projection of spatial datasets
+	* single-layer geometrical operations (e.g., create buffers, find centroids)
+	* other miscellaneous basic operations
++ Chapter 3: Spatial interactions of vector datasets (coming soon)
+	* spatially subsetting one layer based on another layer
+	* extracting values from one layer to another layer^[`over` function in `sp` language]
++ Chapter 4: The basics of raster data handling using `raster` and `terra` packages (coming soon)
+	* import and export raster data
+	* stacking raster data
++ Chapter 5: Spatial interactions of vector and raster datasets (wait a bit)
+	* extracting values from a raster layer to a vector layer
++ Chapter 6: Efficient spatial data processing (wait a bit)  
+	* parallelization 
++ Chapter 7: Downloading publicly available spatial datasets (wait a bit)
+	* Sentinel 2 (`sen2r`)
+	* USDA NASS QuickStat (`tidyUSDA`)
+	* PRISM (`prism`)
+	* Daymet (`daymetr`)
+	* USGS (`dataRetrieval`)
++ Chapter 8: Parallel computation (wait a bit)
+
+As you can see above, this book does not spend any time on the very basics of GIS concepts. Before you start reading the book, you should know the followings at least (it's not much): 
+
++ What Geographic Coordinate System (GCS), Coordinate Reference System (CRS), and projection are ([this](https://annakrystalli.me/intro-r-gis/gis.html) is a good resource)
++ Distinctions between vector and raster data ([this](https://gis.stackexchange.com/questions/57142/what-is-the-difference-between-vector-and-raster-data-models) is a simple summary of the difference)
+
+Finally, this book does not cover spatial statistics or spatial econometrics at all. This book is about spatial data _processing_. Spatial analysis is something you do _after_ you have processed spatial data.
+
+
+## Conventions of the book and some notes {-}
+
+Here are some notes of the conventions of this book and notes for R beginners and those who are not used to reading `rmarkdown`-generated html documents.
+
+### Texts in gray boxes {-}
+
+They are one of the following:
+
++ objects defined on R during demonstrations
++ R functions
++ R packages
+
+When it is a function, I always put parentheses at the end like this: `st_read()`.^[This is a function that draws values randomly from the uniform distribution.] Sometimes, I combine a package and function in one like this: `sf::st_read()`. This means it is a function called `st_read()` from the `sf` package. 
+
+### Colored Boxes {-}
+
+Codes are in blue boxes, and outcomes are in red boxes.
+
+Codes:
+
+```{r codes, eval = F}
+runif(5)
+```
+
+Outcomes:
+
+```{r outcomes, echo = F}
+runif(5)
+```
+
+### Parentheses around codes {-}
+
+Sometimes you will see codes enclosed by parenthesis like this:
+
+```{r notes_par}
+(
+  a <- runif(5)
+)
+```
+
+The parentheses prints what's inside of a newly created object (here `a`) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created. 
+
+This one prints nothing.
+
+```{r notes_par_nodisp}
+a <- runif(5)
+```
+
+### Footnotes {-}
+
+Footnotes appear at the bottom of the page. You can easily get to a footnote by clicking on the footnote number. You can also go back to the main narrative where the footnote number is by clicking on the curved arrow at the end of the footnote. So, don't worry about having to scroll all the way up to where you were after reading footnotes.
+
+## Session Information {-}
+
+Here is the session information when compiling the book:
+
+```{r session_info}
+sessionInfo()	
+```
+
+
+
+
+
+<!--chapter:end:index.Rmd-->
+
+# R as GIS: Demonstrations {#demo} 
+
+```{r setup, echo = FALSE, results = "hide"}
+library(knitr)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  cache = TRUE,
+  comment = NA,
+  message = FALSE,
+  warning = FALSE,
+  tidy = FALSE,
+  cache.lazy = FALSE
+)
+
+suppressMessages(library(here))
+opts_knit$set(root.dir = here())
+```
+
+```{r setwd, eval = FALSE, echo = FALSE}
+setwd(here())
+```
+
+```{r, echo=FALSE, warning=FALSE, cache = FALSE}
+#--- load packages ---#
+suppressMessages(library(data.table))
+suppressMessages(library(here))
+suppressMessages(library(rgdal))
+suppressMessages(library(stringr))
+suppressMessages(library(rgeos))
+suppressMessages(library(sf))
+suppressMessages(library(ggplot2))
+suppressMessages(library(raster))
+suppressMessages(library(stargazer))
+suppressMessages(library(tmap))
+suppressMessages(library(future.apply))
+suppressMessages(library(lubridate))
+suppressMessages(library(tidyverse))
+#--- source functions ---#
+source("Codes/Chap_1_Demonstration.R")
+```
+
+## Introduction {-}
+
+The primary objective of this chapter is to showcase the power of R as GIS through demonstrations using mock-up econometric research projects^[Note that this lecture does not deal with spatial econometrics at all. This lecture is about spatial data processing, not spatial econometrics. [This](http://www.econ.uiuc.edu/~lab/workshop/Spatial_in_R.html) is a great resource for spatial econometrics in R.]. Each project consists of a project overview (objective, datasets used, econometric model, and GIS tasks involved) and demonstration. This is really not a place you learn the nuts and bolts of how R does spatial operations. Indeed, we intentionally do not explain all the details of how the R codes work. We reiterate that the main purpose of the demonstrations is to get you a better idea of how R can be used to process spatial data to help your research projects involving spatial datasets. Finally, note that these *mock-up* projects use extremely simple econometric models that completely lacks careful thoughts you would need in real research projects. So, don't waste your time judging the econometric models, and just focus on GIS tasks. If you are not familiar with html documents generated by `rmarkdown`, you might benefit from reading the conventions of the book in the Preface.
+
+### Target Audience {-}
+
+The target audience of this chapter is those who are not very familiar with R as GIS. Knowledge of R certainly helps. But, I tried to write in a way that R beginners can still understand the power of R as GIS^[I welcome any suggestions to improve the reading experience of unexperienced R users.]. Do not get bogged down by all the complex-looking R codes. Just focus on the narratives and figures to get a sense of what R can do.
+
+### Direction for replication {-}
+
+Running the codes in this chapter involves reading datasets from a disk. All the datasets that will be imported are available [here](https://www.dropbox.com/sh/cyx9clgmshwc8eo/AAApv03Qpx84IGKCyF5v2rJ6a?dl=0). In this chapter, the path to files is set relative to my own working directory (which is hidden). To run the codes without having to mess with paths to the files, follow these steps:^[I thought about using the `here` package, but I found it a bit confusing for unexperienced R users.]
+
++ set a folder (any folder) as the working directory using `setwd()`  
++ create a folder called "Data" inside the folder designated as the working directory  
++ download the pertinent datasets from [here](https://www.dropbox.com/sh/cyx9clgmshwc8eo/AAApv03Qpx84IGKCyF5v2rJ6a?dl=0) and put them in the "Data" folder
++ run _Chap_1_Demonstration.R_ which is included in the datasets folder you have downloaded
+
+```{r source_functions, eval = F}
+source("Data/Chap_1_Demonstration.R")
+```
+
+Note that the data folder includes 183-day worth of PRISM precipitation data for Demonstration 3, which are quite large in size (slightly less than 1 GB). If you are not replicating Demonstration 3, you can either choose not to download them or discard them if you have downloaded them already.
+
+## Demonstration 1: The impact of groundwater pumping on depth to water table {#Demo1}
+
+<!-- this is for making stargazer table nicer -->
+```{r table_style_demo1, results="asis", echo=FALSE}
+cat("
+<style>
+.book .book-body .page-wrapper .page-inner section.normal table
+{
+  width:auto;
+}
+.book .book-body .page-wrapper .page-inner section.normal table td,
+.book .book-body .page-wrapper .page-inner section.normal table th,
+.book .book-body .page-wrapper .page-inner section.normal table tr
+{
+  padding:0;
+  border:0;
+  background-color:#fff;
+}
+</style>
+")
+```
+
+### Project Overview
+
+---
+
+**Objective:**
+
+* Understand the impact of groundwater pumping on groundwater level. 
+
+---
+
+**Datasets**
+
+* Groundwater pumping by irrigation wells in Chase, Dundy, and Perkins Counties in the southwest corner of Nebraska 
+* Groundwater levels observed at USGS monitoring wells located in the three counties and retrieved from the National Water Information System (NWIS) maintained by USGS using the `dataRetrieval` package.
+
+---
+
+**Econometric Model**
+
+In order to achieve the project objective, we will estimate the following model:
+
+$$
+ y_{i,t} - y_{i,t-1} = \alpha + \beta gw_{i,t-1} + v
+$$
+
+where $y_{i,t}$ is the depth to groundwater table^[the distance from the surface to the top of the aquifer] in March^[For our geographic focus of southwest Nebraska, corn is the dominant crop type. Irrigation for corn happens typically between April through September. For example, this means that changes in groundwater level ($y_{i,2012} - y_{i,2011}$) captures the impact of groundwater pumping that occurred April through September in 2011.] in year $t$ at USGS monitoring well $i$, and $gw_{i,t-1}$ is the total amount of groundwater pumping that happened within the 2-mile radius of the monitoring well $i$. 
+
+---
+
+**GIS tasks**
+
+* read an ESRI shape file as an `sf` (spatial) object 
+  - use `sf::st_read()`
+* download depth to water table data using the `dataRetrieval` package developed by USGS 
+  - use `dataRetrieval::readNWISdata()` and `dataRetrieval::readNWISsite()`
+* create a buffer around USGS monitoring wells
+  - use `sf::st_buffer()`
+* convert a regular `data.frame` (non-spatial) with geographic coordinates into an `sf` (spatial) objects
+  - use `sf::st_as_sf()`  and `sf::st_set_crs()`
+* reproject an `sf` object to another CRS
+  - use `sf::st_transform()`
+* identify irrigation wells located inside the buffers and calculate total pumping
+  - use `sf::st_join()`
+
+---
+
+**packages**
+
++ Load (install first if you have not) the following packages if you intend to replicate the demonstration.
+
+```{r demo1_packages, eval = FALSE}
+library(sf)
+library(dplyr)
+library(lubridate)
+library(stargazer)
+```
+
+There are other packages that will be loaded during the demonstration.
+
+### Project Demonstration
+
+The geographic focus of the project is the southwest corner of Nebraska consisting of Chase, Dundy, and Perkins County (see Figure \@ref(fig:NE-county) for their locations within Nebraska). Let's read a shape file of the three counties represented as polygons. We will use it later to spatially filter groundwater level data downloaded from NWIS.
+
+```{r NE_county_data, echo = FALSE, results = "hide"}
+#--- Nebraska counties ---#
+NE_county <- st_read(
+    dsn = "./Data", 
+    layer = "cb_2018_us_county_20m"
+  ) %>% 
+  filter(STATEFP == "31") %>% 
+  mutate(NAME = as.character(NAME)) %>% 
+  st_transform(32614) 
+
+three_counties <- st_read(dsn = "./Data", layer = "urnrd") %>% 
+  st_transform(32614)
+```
+
+```{r Demo1_read_urnrd_borders}
+three_counties <- st_read(dsn = "./Data", layer = "urnrd") %>% 
+  #--- project to WGS84/UTM 14N ---#
+  st_transform(32614)
+```
+
+```{r NE-county, fig.cap = "The location of Chase, Dundy, and Perkins County in Nebraska", echo =F}
+#--- map the three counties ---#
+tm_shape(NE_county) +
+  tm_polygons() +
+tm_shape(three_counties) +
+  tm_polygons(col = "blue", alpha = 0.3) +
+  tm_layout(frame = FALSE)
+```
+---
+
+We have already collected groundwater pumping data, so let's import it. 
+
+```{r Demo1_urnrd_gw_read}
+#--- groundwater pumping data ---#
+(
+urnrd_gw <- readRDS("./Data/urnrd_gw_pumping.rds")
+)
+```
+
+`well_id` is the unique irrigation well identifier, and `vol_af` is the amount of groundwater pumped in acre-feet. This dataset is just a regular `data.frame` with coordinates. We need to convert this dataset into a object of class `sf` so that we can later identify irrigation wells located within a 2-mile radius of USGS monitoring wells (see Figure \@ref(fig:sp-dist-wells) for the spatial distribution of the irrigation wells).
+
+```{r convert_to_sf}
+urnrd_gw_sf <- urnrd_gw %>% 
+  #--- convert to sf ---#
+  st_as_sf(coords = c("lon", "lat")) %>% 
+  #--- set CRS WGS UTM 14 (you need to know the CRS of the coordinates to do this) ---# 
+  st_set_crs(32614) 
+
+#--- now sf ---#
+urnrd_gw_sf
+```
+
+```{r sp-dist-wells, fig.cap = "Spatial distribution of irrigation wells", echo = FALSE, results = "hide"}
+urnrd_gw_sf <- urnrd_gw %>% 
+  #--- convert to sf ---#
+  st_as_sf(coords = c("lon", "lat")) %>% 
+  #--- set CRS WGS UTM 14 (you need to know the CRS of the coordinates to do this) ---# 
+  st_set_crs(32614) 
+
+tm_shape(three_counties) +
+  tm_polygons() +
+tm_shape(unique(urnrd_gw_sf, by = "well_id")) +
+  tm_symbols(size = 0.1, col = "blue") +
+  tm_layout(frame = FALSE)
+```
+---
+
+Here are the rest of the steps we will take to obtain a regression-ready dataset for our analysis.
+
+1. download groundwater level data observed at USGS monitoring wells from National Water Information System (NWIS) using the `dataRetrieval` package 
+2. identify the irrigation wells located within the 2-mile radius of the USGS wells and calculate the total groundwater pumping that occurred around each of the USGS wells by year 
+3. merge the groundwater pumping data to the groundwater level data
+
+---
+
+Let's download groundwater level data from NWIS first. The following code downloads groundwater level data for Nebraska from Jan 1, 1990, through Jan 1, 2016.
+
+```{r gwl_data_download, eval = F}
+#--- load the dataRetrieval package ---#
+library(dataRetrieval)
+
+#--- download groundwater level data ---#
+NE_gwl <- readNWISdata(
+    stateCd="Nebraska", 
+    startDate = "1990-01-01", 
+    endDate = "2016-01-01", 
+    service = "gwlevels"
+  ) %>% 
+  dplyr::select(site_no, lev_dt, lev_va) %>% 
+  rename(date = lev_dt, dwt = lev_va) 
+
+#--- take a look ---#
+head(NE_gwl, 10)
+```
+
+```{r read_NW_gwl, echo = F}
+library(dataRetrieval)
+
+NE_gwl <- readRDS("./Data/NE_gwl.rds")
+
+#--- take a look ---#
+head(NE_gwl, 10)
+```
+
+`site_no` is the unique monitoring well identifier, `date` is the date of groundwater level monitoring, and `dwt` is depth to water table. 
+
+We calculate the average groundwater level in March by USGS monitoring well (right before the irrigation season starts):^[`month()` and `year()` are from the `lubridate` package. They extract month and year from a `Date` object.]
+
+```{r avg_march_deptn}
+#--- Average depth to water table in March ---#
+NE_gwl_march <- NE_gwl %>% 
+  mutate(
+    date = as.Date(date),
+    month = month(date),
+    year = year(date),
+  ) %>% 
+  #--- select observation in March ---#
+  filter(year >= 2007, month == 3) %>% 
+  #--- gwl average in March ---#
+  group_by(site_no, year) %>% 
+  summarize(dwt  = mean(dwt))
+
+#--- take a look ---#
+head(NE_gwl_march, 10)
+```
+
+Since `NE_gwl` is missing geographic coordinates for the monitoring wells, we will download them using the `readNWISsite()` function and select only the monitoring wells that are inside the three counties.  
+
+```{r NE_sites}
+#--- get the list of site ids ---#  
+NE_site_ls <- NE_gwl$site_no %>% unique()
+
+#--- get the locations of the site ids ---#  
+sites_info <- readNWISsite(siteNumbers = NE_site_ls) %>% 
+  dplyr::select(site_no, dec_lat_va, dec_long_va) %>% 
+  #--- turn the data into an sf object ---#
+  st_as_sf(coords = c("dec_long_va", "dec_lat_va")) %>% 
+  #--- NAD 83 ---#
+  st_set_crs(4269) %>% 
+  #--- project to WGS UTM 14 ---#
+  st_transform(32614) %>% 
+  #--- keep only those located inside the three counties ---#
+  .[three_counties, ]
+```
+
+---
+
+We now identify irrigation wells that are located within the 2-mile radius of the monitoring wells^[This can alternatively be done using the `st_is_within_distance()` function.]. We first create polygons of 2-mile radius circles around the monitoring wells (see Figure \@ref(fig:buffer-map)).
+
+```{r create_buffer}
+buffers <- st_buffer(sites_info, dist = 2*1609.34) # in meter
+```
+
+```{r buffer-map, fig.cap = "2-mile buffers around USGS monitoring wells", echo = FALSE}
+tm_shape(three_counties) +
+  tm_polygons() +
+tm_shape(buffers) +
+  tm_polygons(col = "red", alpha = 0,2) +
+tm_shape(sites_info) +
+  tm_symbols(size = 0.1) +
+  tm_layout(frame = FALSE)
+```
+
+We now identify which irrigation wells are inside each of the buffers and get the associated groundwater pumping values. The `st_join()` function from the `sf` package will do the trick.
+
+```{r Demo_join_buffer_gw, cache = FALSE}
+#--- find irrigation wells inside the buffer and calculate total pumping  ---#
+pumping_neaby <- st_join(buffers, urnrd_gw_sf)
+``` 
+
+Let's take a look at a USGS monitoring well (`site_no` = $400012101323401$).
+
+```{r take_a_look}
+filter(pumping_neaby, site_no == 400012101323401, year == 2010)
+```
+
+As you can see, this well has seven irrigation wells within its 2-mile radius in 2010.   
+
+Now, we will get total nearby pumping by monitoring well and year. 
+
+```{r Demo1_summary_by_buffer}
+(
+total_pumping_nearby <- pumping_neaby %>% 
+  #--- calculate total pumping by monitoring well ---#
+  group_by(site_no, year) %>% 
+  summarize(nearby_pumping = sum(vol_af, na.rm = TRUE)) %>% 
+  #--- NA means 0 pumping ---#  
+  mutate(
+    nearby_pumping = ifelse(is.na(nearby_pumping), 0, nearby_pumping)
+  )
+)
+```
+
+---
+
+We now merge nearby pumping data to the groundwater level data, and transform the data to obtain the dataset ready for regression analysis.
+
+```{r Demo_nearby_merge}
+#--- regression-ready data ---#
+reg_data <- NE_gwl_march %>% 
+  #--- pick monitoring wells that are inside the three counties ---#
+  filter(site_no %in% unique(sites_info$site_no)) %>% 
+  #--- merge with the nearby pumping data ---#
+  left_join(., total_pumping_nearby, by = c("site_no", "year")) %>% 
+  #--- lead depth to water table ---#
+  arrange(site_no, year) %>% 
+  group_by(site_no) %>% 
+  mutate(
+    #--- lead depth ---#
+    dwt_lead1 = dplyr::lead(dwt, n = 1, default = NA, order_by = year),
+    #--- first order difference in dwt  ---#
+    dwt_dif  = dwt_lead1 - dwt
+  )  
+
+#--- take a look ---#
+dplyr::select(reg_data, site_no, year, dwt_dif, nearby_pumping)
+``` 
+
+---
+
+Finally, we estimate the model using the `lfe` package.
+
+```{r Demo_reg_dwt}
+#--- load the lfe package for regression with fixed effects ---#
+library(lfe)
+
+#--- OLS with site_no and year FEs (error clustered by site_no) ---#
+reg_dwt <- felm(dwt_dif ~ nearby_pumping | site_no + year | 0 | site_no, data = reg_data)
+```
+
+Here is the regression result.
+
+```{r reg_dwt_disp, results = "asis"}
+stargazer(reg_dwt, type = "html")
+```
+
+## Demonstration 2: Precision Agriculture
+
+```{r table_style_demo2, results="asis", echo=FALSE}
+cat("
+<style>
+.book .book-body .page-wrapper .page-inner section.normal table
+{
+  width:auto;
+}
+.book .book-body .page-wrapper .page-inner section.normal table td,
+.book .book-body .page-wrapper .page-inner section.normal table th,
+.book .book-body .page-wrapper .page-inner section.normal table tr
+{
+  padding:0;
+  border:0;
+  background-color:#fff;
+}
+</style>
+")
+```
+
+### Project Overview
+
+---
+
+**Objectives:**
+
++ Understand the impact of nitrogen on corn yield 
++ Understand how electric conductivity (EC) affects the marginal impact of nitrogen on corn 
+
+---
+
+**Datasets:**
+
++ The experimental design of an on-farm randomized nitrogen trail on an 80-acre field 
++ Data generated by the experiment
+  * As-applied nitrogen rate
+  * Yield measures 
++ Electric conductivity 
+
+---
+
+**Econometric Model:**
+
+Here is the econometric model, we would like to estimate:
+
+$$
+yield_i = \beta_0 + \beta_1 N_i + \beta_2 N_i^2 + \beta_3 N_i \cdot EC_i + \beta_4 N_i^2 \cdot EC_i + v_i
+$$
+
+where $yield_i$, $N_i$, $EC_i$, and $v_i$ are corn yield, nitrogen rate, EC, and error term at subplot $i$. Subplots which are obtained by dividing experimental plots into six of equal-area compartments.  
+
+---
+
+**GIS tasks**
+
+* read spatial data in various formats: R data set (rds), shape file, and GeoPackage file
+  - use `sf::st_read()` 
+* create maps using the `ggplot2` package
+  - use `ggplot2::geom_sf()`
+* create subplots within experimental plots
+  - use-defined function that makes use of `st_geometry()` 
+* identify corn yield, as-applied nitrogen, and electric conductivity (EC) data points within each of the experimental plots and find their averages
+  - use `sf::st_join()` and   `sf::aggregate()`
+
+---
+
+**Preparation for replication**
+
++ Source (run) *Chap_1_Demonstration.R* to define `theme_map` and `gen_subplots()`
+
+```{r source_demo2, eval = F}
+source("Codes/Chap_1_Demonstration.R")
+```
+
++ Load (install first if you have not) the following packages (There are other packages that will be loaded during the demonstration).
+
+```{r demo2_packages, eval = FALSE}
+library(sf)
+library(dplyr)
+library(ggplot2)
+library(stargazer)
+```
+
+### Project Demonstration
+
+We have already run a whole-field randomized nitrogen experiment on a 80-acre field. Let's import the trial design data
+
+```{r Demo2_exp_design}
+#--- read the trial design data ---#
+trial_design_16 <- readRDS("./Data/trial_design.rds")
+```
+
+Figure \@ref(fig:trial-fig) is the map of the trial design generated using `ggplot2` package.^[`theme_for_map` is a user defined object that defines the theme of figures generated using `ggplot2` for this section. You can find it in **Chap_1_Demonstration.R**.].
+
+```{r trial-fig, fig.cap = "The Experimental Design of the Randomize Nitrogen Trial"}
+#--- map of trial design ---#
+ggplot(data = trial_design_16) +
+  geom_sf(aes(fill = factor(NRATE))) +
+  scale_fill_brewer(name = "N", palette = "OrRd", direction = 1) +
+  theme_for_map
+```
+
+---
+
+We have collected yield, as-applied NH3, and EC data. Let's read in these datasets:^[Here we are demonstrating that R can read spatial data in different formats. R can read spatial data of many other formats. Here, we are reading a shapefile (.shp) and GeoPackage file (.gpkg).]
+
+```{r Demo2_data_experiment, results = "hide"}
+#--- read yield data (sf data saved as rds) ---#
+yield <- readRDS("./Data/yield.rds")
+
+#--- read NH3 data (GeoPackage data) ---#
+NH3_data <- st_read("Data/NH3.gpkg")
+
+#--- read ec data (shape file) ---#
+ec <- st_read(dsn="Data", "ec")
+```
+
+Figure \@ref(fig:Demo2-show-the-map) shows the spatial distribution of the three variables. A map of each variable was made first, and then they are combined into one figure using the `patchwork` package^[Here is its [github page](https://github.com/thomasp85/patchwork). See the bottom of the page to find vignettes.].
+
+```{r Demo2-show-the-map, fig.cap = "Spatial distribution of yield, NH3, and EC", fig.height = 9}
+
+#--- yield map ---#
+g_yield <- ggplot() +
+  geom_sf(data = trial_design_16) +
+  geom_sf(data = yield, aes(color = yield), size = 0.5) +
+  scale_color_distiller(name = "Yield", palette = "OrRd", direction = 1) +
+  theme_for_map
+
+#--- NH3 map ---#
+g_NH3 <- ggplot() +
+  geom_sf(data = trial_design_16) +
+  geom_sf(data = NH3_data, aes(color = aa_NH3), size = 0.5) +
+  scale_color_distiller(name = "NH3", palette = "OrRd", direction = 1) +
+  theme_for_map
+
+#--- NH3 map ---#
+g_ec <- ggplot() +
+  geom_sf(data = trial_design_16) +
+  geom_sf(data = ec, aes(color = ec), size = 0.5) +
+  scale_color_distiller(name = "EC", palette = "OrRd", direction = 1) +
+  theme_for_map
+
+#--- stack the figures vertically and display  ---#
+library(patchwork)
+g_yield/g_NH3/g_ec
+```
+
+---
+
+Instead of using plot as the observation unit, we would like to create subplots inside each of the plots and make them the unit of analysis because it would avoid masking the within-plot spatial heterogeneity of EC. Here, we divide each plot into six subplots^[`gen_subplots` is a user-defined function. See **Chap_1_Demonstration.R**.]:
+
+```{r Demo2_get_subplots}
+#--- generate subplots ---#
+subplots <- lapply(
+  1:nrow(trial_design_16), 
+  function(x) gen_subplots(trial_design_16[x, ], 6)
+  ) %>% 
+  do.call('rbind', .) 
+```
+
+Figure \@ref(fig:map-subgrid) is a map of the subplots generated.
+
+```{r map-subgrid, fig.cap = "Map of the subplots"}
+#--- here is what subplots look like ---#
+ggplot(subplots) +
+  geom_sf() +
+  theme_for_map
+```
+
+---
+
+We now identify the mean value of corn yield, nitrogen rate, and EC for each of the subplots using `sf::aggregate()` and `sf::st_join()`.
+
+```{r Demo2_merge_join}
+(
+reg_data <- subplots %>% 
+  #--- yield ---#
+  st_join(., aggregate(yield, ., mean), join = st_equals) %>%
+  #--- nitrogen ---#
+  st_join(., aggregate(NH3_data, ., mean), join = st_equals) %>%
+  #--- EC ---#
+  st_join(., aggregate(ec, ., mean), join = st_equals)
+)
+``` 
+
+Here are the visualization of the subplot-level data (Figure \@ref(fig:Demo2-subplot-fig)):  
+
+```{r Demo2-subplot-fig, fig.cap = "Spatial distribution of subplot-level yield, NH3, and EC", fig.height = 7}
+(ggplot() +
+  geom_sf(data = reg_data, aes(fill = yield), color = NA) +
+  scale_fill_distiller(name = "Yield", palette = "OrRd", direction = 1) +
+  theme_for_map)/
+(ggplot() +
+  geom_sf(data = reg_data, aes(fill = aa_NH3), color = NA) +
+  scale_fill_distiller(name = "NH3", palette = "OrRd", direction = 1) +
+  theme_for_map)/
+(ggplot() +
+  geom_sf(data = reg_data, aes(fill = ec), color = NA) +
+  scale_fill_distiller(name = "EC", palette = "OrRd", direction = 1) +
+  theme_for_map)
+``` 
+
+---
+
+Let's estimate the model and see the results:
+
+```{r Demo2_results, results = "asis"}
+lm(yield ~ aa_NH3 + I(aa_NH3^2) + I(aa_NH3*ec) + I(aa_NH3^2*ec), data = reg_data) %>% 
+  stargazer(type = "html")
+```
+
+
+## Demonstration 3: Land Use and Weather
+
+```{r table_style_demo3, results="asis", echo=FALSE}
+cat("
+<style>
+.book .book-body .page-wrapper .page-inner section.normal table
+{
+  width:auto;
+}
+.book .book-body .page-wrapper .page-inner section.normal table td,
+.book .book-body .page-wrapper .page-inner section.normal table th,
+.book .book-body .page-wrapper .page-inner section.normal table tr
+{
+  padding:0;
+  border:0;
+  background-color:#fff;
+}
+</style>
+")
+```
+
+### Project Overview
+
+---
+
+**Objective**
+
+Understand the impact of past precipitation on crop choice in Iowa (IA). 
+
+---
+
+**Datasets**
+
++ IA county boundary 
++ Regular grids over IA, created using `sf::st_make_grid()` 
++ PRISM daily precipitation data downloaded using `prism` package
++ Land use data from the Cropland Data Layer (CDL) for IA in 2015, downloaded using `cdlTools` package
+
+---
+
+**Econometric Model**
+
+The econometric model we would like to estimate is:
+
+$$
+ CS_i = \alpha + \beta_1 PrN_{i} + \beta_2 PrC_{i} + v_i
+$$
+where $CS_i$ is the area share of corn divided by that of soy in 2015 for grid $i$ (we will generate regularly-sized grids in the Demo section), $PrN_i$ is the total precipitation observed in April through May and September  in 2014, $PrC_i$ is the total precipitation observed in June through August in 2014, and $v_i$ is the error term. To run the econometric model, we need to find crop share and weather variables observed at the grids. We first tackle the crop share variable, and then the precipitation variable.
+
+---
+
+**GIS tasks**
+
++ download Cropland Data Layer (CDL) data by USDA NASS 
+  * use `cdlTools::getCDL()`
++ download PRISM weather data
+  * use `prism::get_prism_dailys()`
++ crop PRISM data to the geographic extent of IA 
+  * use `raster::crop()`
++ create regular grids within IA, which become the observation units of the econometric analysis
+  * use `sf::st_make_grid()` 
++ remove grids that share small area with IA 
+  * use `sf::st_intersection()` and `sf::st_area`
++ assign crop share and weather data to each of the generated IA grids (parallelized)
+  * use `exactextractr::exact_extract()` and `future.apply::future_lapply()`
++ create maps 
+  * use `tmap` package
+
+---
+
+**Preparation for replication**
+
++ Load (install first if you have not) the following packages (There are other packages that will be loaded during the demonstration).
+
+```{r demo3_packages, eval = FALSE}
+library(sf)
+library(data.table)
+library(dplyr)
+library(raster)
+library(lubridate)
+library(tmap)
+library(future.apply)
+library(stargazer)
+```
+
+### Project Demonstration
+
+The geographic focus of this project is IA. Let's get IAs state border (see Figure \@ref(fig:IA-map) for its map).
+
+```{r Demo4_IA_boundary}
+library("maps")
+
+#--- IA state boundary ---#
+IA_boundary <- st_as_sf(map("state", "iowa", plot = FALSE, fill = TRUE)) 
+```
+
+```{r IA-map, echo = FALSE, fig.cap = "IA state boundary", fig.margin = TRUE}
+#--- map IA state border ---#
+tm_shape(IA_boundary) +
+  tm_polygons() +
+  tm_layout(frame = FALSE) 
+```
+
+The unit of analysis is artificial grids that we create over IA. The grids are regularly-sized rectangles except around the edge of the IA state border^[We by no means are saying that this is the right geographical unit of analysis. This is just about demonstrating how R can be used for analysis done at the higher spatial resolution than county.]. So, let's create grids and remove those that do not overlap much with IA.
+
+```{r Demo4_IA_grids} 
+#--- create regular grids (40 cells by 40 columns) over IA ---#
+IA_grids <- IA_boundary %>% 
+  #--- create grids ---#
+  st_make_grid(, n = c(40, 40)) %>% 
+  #--- convert to sf ---#
+  st_as_sf() %>% 
+  #--- find the intersections of IA grids and IA polygon ---#
+  st_intersection(., IA_boundary) %>% 
+  #--- calculate the area of each grid ---#
+  mutate(
+    area = as.numeric(st_area(.)),
+    area_ratio = area/max(area)
+  ) %>% 
+  #--- keep only if the intersected area is large enough ---#
+  filter(area_ratio > 0.8) %>% 
+  #--- assign grid id for future merge ---#
+  mutate(grid_id = 1:nrow(.))
+```
+
+Here is what the generated grids look like (Figure \@ref(fig:Demo4-IA-grids-map)):
+
+```{r Demo4-IA-grids-map, fig.cap = "Map of regular grids generated over IA"}
+#--- plot the grids over the IA state border ---#
+tm_shape(IA_boundary) +
+  tm_polygons(col = "green") +
+tm_shape(IA_grids) +
+  tm_polygons(alpha = 0) +
+  tm_layout(frame = FALSE)
+```  
+
+---
+
+Let's work on crop share data. You can download CDL data using the `getCDL()` function from the `cdlTools` package.
+
+```{r Demo4_cdl_download}
+#--- load the cdlTools package ---#
+library(cdlTools)
+
+#--- download the CDL data for IA in 2015 ---#
+(
+IA_cdl_2015 <- getCDL("Iowa", 2015)$IA2015
+)
+```
+
+The cells (30 meter by 30 meter) of the imported raster layer take a value ranging from 0 to 255. Corn and soybean are represented by 1 and 5, respectively (visualization of the CDL data is on the right).
+
+Figure \@ref(fig:overlap-cdl-grid) shows the map of one of the IA grids and the CDL cells it overlaps with.
+
+```{r overlap-cdl-grid, fig.cap = "Spatial overlap of a IA grid and CDL layer", echo = FALSE, dependson = "Demo4_cdl_download"}
+temp_grid <- IA_grids[100, ]
+
+extent_grid <- temp_grid %>% 
+  st_transform(., projection(IA_cdl_2015)) %>% 
+  extent()
+
+raster_ovelap <- raster::crop(IA_cdl_2015, extent_grid)
+
+tm_shape(raster_ovelap) +
+  tm_raster() +
+tm_shape(temp_grid) +
+  tm_borders(lwd = 3, col = "blue") 
+```  
+
+We would like to extract all the cell values within the blue border. 
+
+We use `exactextractr::exact_extract()` to identify which cells of the CDL raster layer fall within each of the IA grids and extract land use type values. We then find the share of corn and soybean for each of the grids.
+
+```{r Demo4_extract, results = "hide"}
+#--- reproject grids to the CRS of the CDL data ---#
+IA_grids_rp_cdl <- st_transform(IA_grids, projection(IA_cdl_2015))
+
+#--- load the exactextractr package for fast rater value extractions for polygons ---#
+library(exactextractr)
+
+#--- extract crop type values and find frequencies ---#
+cdl_extracted <- exact_extract(IA_cdl_2015, IA_grids_rp_cdl) %>% 
+  lapply(., function (x) data.table(x)[,.N, by = value]) %>% 
+  #--- combine the list of data.tables into one data.table ---#
+  rbindlist(idcol = TRUE) %>% 
+  #--- find the share of each land use type ---#
+  .[, share := N/sum(N), by = .id] %>% 
+  .[, N := NULL] %>% 
+  #--- keep only the share of corn and soy ---#
+  .[value %in% c(1, 5), ]  
+```
+
+We then find the corn to soy ratio for each of the IA grids.
+
+```{r Demo4_share_calc}
+#--- find corn/soy ratio ---#
+corn_soy <- cdl_extracted %>% 
+  #--- long to wide ---#
+  dcast(.id ~ value, value.var = "share") %>% 
+  #--- change variable names ---#
+  setnames(c(".id", "1", "5"), c("grid_id", "corn_share", "soy_share")) %>% 
+  #--- corn share divided by soy share ---#
+  .[, c_s_ratio := corn_share / soy_share]
+```
+
+---
+
+We are still missing daily precipitation data at the moment. We have decided to use daily weather data from PRISM. Daily PRISM data is a raster data with the cell size of 4 km by 4 km. Figure \@ref(fig:Demo4-show-prism-data) the right presents precipitation data downloaded for April 1, 2010. It covers the entire contiguous U.S.     
+
+```{r Demo4-show-prism-data, fig.cap = "Map of PRISM raster data layer", echo = FALSE, fig.margin = TRUE}
+prism_ex <- readRDS( "./Data/prism_ex.rds")
+tm_shape(prism_ex) +
+  tm_raster() +
+  tm_layout(frame = FALSE)
+```
+
+Let's now download PRISM data^[You do not have to run this code to download the data. It is included in the data folder for replication ([here](https://www.dropbox.com/sh/cyx9clgmshwc8eo/AAApv03Qpx84IGKCyF5v2rJ6a?dl=0)).]. This can be done using the `get_prism_dailys()` function from the `prism` package.^[[prism github page](https://github.com/ropensci/prism)]  
+
+<!-- not to be seen -->
+```{r Demo4_get_prism, eval = FALSE}
+options(prism.path = "./Data/PRISM")
+
+get_prism_dailys(
+  type = "ppt", 
+  minDate = "2014-04-01", 
+  maxDate = "2014-09-30", 
+  keepZip = FALSE 
+)
+```
+
+When we use `get_prism_dailys()` to download data^[For this project, I could have just used monthly PRISM data, which can be downloaded using the `get_prism_monthlys()` function. But, in many applications, daily data is necessary, so I wanted to illustrate how to download and process them.], it creates one folder for each day. So, I have about 180 folders inside the folder I designated as the download destination above with the `options()` function. 
+
+<!-- The name of the folder is expressive about what the data inside it is about. For example, the precipitation data for April 1st, 2010 is stored in the folder called "PRISM_ppt_stable_4kmD2_20100401_bil." Inside it, you will see bunch of files with exactly the same prefix, but with different extensions.   --> 
+
+---
+
+We now try to extract precipitation value by day for each of the IA grids by geographically overlaying IA grids onto the PRISM data layer and identify which PRISM cells each of the IA grid encompass. Figure \@ref(fig:Demo4-prism-crop) shows how the first IA grid overlaps with the PRISM cells^[Do not use `st_buffer()` for spatial objects in geographic coordinates (latitude, longitude) if you intend to use the created buffers for any serious IA (it is difficult to get the right distance parameter anyway.). Significant distortion will be introduced to the buffer due to the fact that one degree in latitude and longitude means different distances at the latitude of IA. Here, I am just creating a buffer to extract PRISM cells to display on the map.]. 
+
+```{r Demo4-prism-crop, fig.cap = "Spatial overlap of an IA grid over PRISM cells"}
+#--- read a PRISM dataset ---#
+prism_whole <- raster("./Data/PRISM/PRISM_ppt_stable_4kmD2_20140401_bil/PRISM_ppt_stable_4kmD2_20140401_bil.bil") 
+
+#--- align the CRS ---#
+IA_grids_rp_prism <- st_transform(IA_grids, projection(prism_whole))
+
+#--- crop the PRISM data for the 1st IA grid ---#
+PRISM_1 <- crop(prism_whole, st_buffer(IA_grids_rp_prism[1, ], dist = 0.05))
+
+#--- map them ---#
+tm_shape(PRISM_1) +
+  tm_raster() +
+tm_shape(IA_grids_rp_prism[1, ]) +
+  tm_polygons(alpha = 0) +
+  tm_layout(frame = NA)
+```
+
+As you can see, some PRISM grids are fully inside the analysis grid, while others are partially inside it. So, when assigning precipitation values to grids, we will use the coverage-weighted mean of precipitations^[In practice, this may not be advisable. The coverage fraction calculation by `exact_extract()` is done using latitude and longitude. Therefore, the relative magnitude of the fraction numbers incorrectly reflects the actual relative magnitude of the overlapped area. When the spatial resolution of the sources grids (grids from which you extract values) is much smaller relative to that of the target grids (grids to which you assign values to), then a simple average would be very similar to a coverage-weighted mean. For example, CDL consists of 30m by 30m grids, and more than $1,000$ grids are inside one analysis grid.]. 
+
+Unlike the CDL layer, we have `r seq(as.Date("2014-04-01"), as.Date("2014-09-30"), "days") %>% length` raster layers to process. Fortunately, we can process many raster files at the same time very quickly by first "stacking" many raster files first and then applying the `exact_extract()` function. Using `future_lapply()`, we let $6$ cores take care of this task with each processing 31 files, except one of them handling only 28 files.^[Parallelization of extracting values from many raster layers for polygons are discussed in much more detail in Chapter \@ref(Efficient). When I tried stacking all 183 files into one stack and applying `exact_extract`, it did not finish the job after over five minutes. So, I terminated the process in the middle. The parallelized version gets the job done in about $30$ seconds on my desktop.]
+We first get all the paths to the PRISM files. 
+
+```{r setup_parallel}
+#--- get all the dates ---#
+dates_ls <- seq(as.Date("2014-04-01"), as.Date("2014-09-30"), "days") 
+
+#--- remove hyphen ---#
+dates_ls_no_hyphen <- str_remove_all(dates_ls, "-")
+
+#--- get all the prism file names ---#
+folder_name <- paste0("PRISM_ppt_stable_4kmD2_", dates_ls_no_hyphen, "_bil") 
+file_name <- paste0("PRISM_ppt_stable_4kmD2_", dates_ls_no_hyphen, "_bil.bil") 
+file_paths <- paste0("./Data/PRISM/", folder_name, "/", file_name)
+
+#--- take a look ---#
+head(file_paths)
+```
+
+We now prepare for parallelized extractions and then implement them using `future_apply()`.
+
+```{r go_parallel_prep}
+#--- define the number of cores to use ---#
+num_core <- 6
+
+#--- prepare some parameters for parallelization ---#
+file_len <- length(file_paths)
+files_per_core <- ceiling(file_len/num_core)
+
+#--- prepare for parallel processing ---#
+plan(multiprocess, workers = num_core)
+
+#--- reproject IA grids to the CRS of PRISM data ---#
+IA_grids_reprojected <- st_transform(IA_grids, projection(prism_whole))
+```
+
+Here is the function that we run in parallel over `r num_core` cores. 
+
+```{r define_function_prism_get, eval = F}
+#--- define the function to extract PRISM values by block of files ---#
+extract_by_block <- function(i, files_per_core) {
+
+  #--- files processed by core  ---#
+  start_file_index <- (i-1) * files_per_core + 1
+
+  #--- indexes for files to process ---#
+  file_index <- seq(
+    from = start_file_index,
+    to = min((start_file_index + files_per_core), file_len),
+    by = 1
+  )
+
+  #--- extract values ---# 
+  data_temp <- file_paths[file_index] %>% # get file names
+    #--- stack files ---#
+    stack() %>% 
+    #--- extract ---#
+    exact_extract(., IA_grids_reprojected) %>% 
+    #--- combine into one data set ---#
+    rbindlist(idcol = "ID") %>% 
+    #--- wide to long ---#
+    melt(id.var = c("ID", "coverage_fraction")) %>% 
+    #--- calculate "area"-weighted mean ---#
+    .[, .(value = sum(value * coverage_fraction)/sum(coverage_fraction)), by = .(ID, variable)]
+
+  return(data_temp)
+}
+```
+
+Now, let's run the function in parallel and calculate precipitation by period.
+
+```{r parallel_prism_not_run, eval = FALSE}
+#--- run the function ---#
+precip_by_period <- future_lapply(1:num_core, function(x) extract_by_block(x, files_per_core)) %>% rbindlist() %>% 
+  #--- recover the date ---#
+  .[, variable := as.Date(str_extract(variable, "[0-9]{8}"), "%Y%m%d")] %>% 
+  #--- change the variable name to date ---#
+  setnames("variable", "date") %>% 
+  #--- define critical period ---#
+  .[,critical := "non_critical"] %>% 
+  .[month(date) %in% 6:8, critical := "critical"] %>% 
+  #--- total precipitation by critical dummy  ---#
+  .[, .(precip=sum(value)), by = .(ID, critical)] %>%
+  #--- wide to long ---#
+  dcast(ID ~ critical, value.var = "precip")
+```
+
+```{r read_precip_period, echo = FALSE}
+# saveRDS(precip_by_period, "./Data/precip_by_period.rds")
+precip_by_period <- readRDS( "./Data/precip_by_period.rds")
+```
+
+We now have grid-level crop share and precipitation data. 
+
+---
+
+Let's merge them and run regression.^[We can match on `grid_id` from `corn_soy` and `ID` from "precip_by_period" because `grid_id` is identical with the row number and ID variables were created so that the ID value of $i$ corresponds to $i$ th row of `IA_grids`.]
+
+```{r Demo4_reg}
+#--- crop share ---#
+reg_data <- corn_soy[precip_by_period, on = c(grid_id = "ID")]
+
+#--- OLS ---#
+reg_results <- lm(c_s_ratio ~ critical + non_critical, data = reg_data)
+```
+
+Here is the regression results table.
+
+
+```{r , results = "asis"}
+#--- regression table ---#
+stargazer(reg_results, type = "html")
+```
+
+Again, do not read into the results as the econometric model is terrible.  
+
+
+## Demonstration 4: The Impact of Railroad Presence on Corn Planted Acreage
+
+```{r table_style_demo4, results="asis", echo=FALSE}
+cat("
+<style>
+.book .book-body .page-wrapper .page-inner section.normal table
+{
+  width:auto;
+}
+.book .book-body .page-wrapper .page-inner section.normal table td,
+.book .book-body .page-wrapper .page-inner section.normal table th,
+.book .book-body .page-wrapper .page-inner section.normal table tr
+{
+  padding:0;
+  border:0;
+  background-color:#fff;
+}
+</style>
+")
+```
+
+### Project Overview
+
+---
+
+**Objective**
+
++ Understand the impact of railroad on corn planted acreage in Illinois
+
+---
+
+**Datasets**
+
++ USDA corn planted acreage for Illinois downloaded from the USDA  NationalAgricultural Statistics Service (NASS) QuickStats service using `tidyUSDA` package 
++ US railroads (line data) downloaded from [here](https://catalog.data.gov/dataset/tiger-line-shapefile-2015-nation-u-s-rails-national-shapefile)
+
+---
+
+**Econometric Model**
+
+We will estimate the following model:
+
+$$
+  y_i = \beta_0 + \beta_1 RL_i + v_i
+$$
+
+where $y_i$ is corn planted acreage in county $i$ in Illinois, $RL_i$ is the total length of railroad, and $v_i$ is the error term.
+
+---
+
+**GIS tasks**
+
++ Download USDA corn planted acreage by county as a spatial dataset (`sf` object)
+  * use `tidyUSDA::getQuickStat()`
++ Import US railroad shape file as a spatial dataset (`sf` object) 
+  * use `sf:st_read()`
++ Spatially subset (crop) the railroad data to the geographic boundary of Illinois 
+  * use `sf_1[sf_2, ]`
++ Find railroads for each county (cross-county railroad will be chopped into pieces for them to fit within a single county)
+  * use `sf::st_intersection()`        
++ Calculate the travel distance of each railroad piece
+  * use `sf::st_length()`
+
+---
+
+**Preparation for replication**
+
++ Load (install first if you have not) the following packages (There are other packages that will be loaded during the demonstration).
+
+```{r demo4_packages, eval = FALSE}
+library(sf)
+library(ggplot2)
+library(dplyr)
+library(stargazer)
+```
+
+### Project Demonstration
+
+We first download corn planted acreage data for 2018 from USDA NASS QuickStat service using `tidyUSDA` package^[In order to actually download the data, you need to obtain the API key [here](https://quickstats.nass.usda.gov/api). Once the API key was obtained, I stored it using `set_key()` from the `keyring` package, which was named "usda_nass_qs_api". In the code to the left, I retrieve the API key using `key_get("usda_nass_qs_api")` in the code.].
+
+```{r get_quicknass, results = "hide"}
+library(keyring)
+library(tidyUSDA)
+
+(
+IL_corn_planted <- getQuickstat(
+    key = key_get("usda_nass_qs_api") ,
+    program = "SURVEY",
+    data_item = "CORN - ACRES PLANTED",
+    geographic_level = "COUNTY",
+    state = "ILLINOIS",
+    year = "2018",
+    geometry = TRUE
+  )  %>% 
+  #--- keep only some of the variables ---#
+  dplyr::select(year, NAME, county_code, short_desc, Value)
+)
+```
+
+```{r IL_corn_planted, echo = F}
+IL_corn_planted
+```
+
+A nice thing about this function is that the data is downloaded as an `sf` object with county geometry with `geometry = TRUE`. So, you can immediately plot it (Figure \@ref(fig:map-il-corn-acreage)) and use it for later spatial interactions without having to merge the downloaded data to an independent county boundary data.^[`theme_for_map` is a user defined object that defines the theme of figures generated using `ggplot2` for this section. You can find it in **Chap_1_Demonstration.R**.]. 
+
+```{r map-il-corn-acreage, fig.cap = "Map of Con Planted Acreage in Illinois in 2018"}
+ggplot(IL_corn_planted) +
+  geom_sf(aes(fill = Value/1000)) +
+  scale_fill_distiller(name = "Planted Acreage (1000 acres)", palette = "YlOrRd", trans = "reverse") +
+  theme(
+    legend.position = "bottom"
+  ) +
+  theme_for_map
+```
+
+---
+
+Let's import the U.S. railroad data and reproject to the CRS of `IL_corn_planted`:
+
+```{r Demo5_rail, dependson = "map_il_corn_acreage"}
+rail_roads <- st_read(dsn = "./Data/", layer = "tl_2015_us_rails") %>% 
+  st_transform(st_crs(IL_corn_planted))
+```
+
+Here is what it looks like:
+
+```{r Demo5-rail-plot, fig.cap = "Map of Railroads"}
+ggplot(rail_roads) +
+  geom_sf() +
+  theme_for_map
+```
+
+We now crop it to the Illinois state border (Figure \@ref(fig:Demo5-rail-IL-plot)) using `sf_1[sf_2, ]`:
+
+```{r crop_to_IL_run, echo = FALSE, dependson = "map_il_corn_acreage"}
+rail_roads_IL <- rail_roads[IL_corn_planted, ]
+```
+
+```{r crop_to_IL, eval = FALSE, dependson = "map_il_corn_acreage"}
+rail_roads_IL <- rail_roads[IL_corn_planted, ]
+```
+
+```{r Demo5-rail-IL-plot, fig.cap = "Map of railroads in Illinois"}
+ggplot() +
+  geom_sf(data = rail_roads_IL) +
+  theme_for_map
+```
+
+Let's now find railroads for each county, where cross-county railroads will be chopped into pieces so each piece fits completely within a single county, using `st_intersection()`.
+
+```{r intersect_rails, dependson = "map_il_corn_acreage"}
+rails_IL_segmented <- st_intersection(rail_roads_IL, IL_corn_planted) 
+```
+
+Here are the railroads for Richland County:
+
+```{r map_seg_rail, dependson = "intersect_rails", fig.height = 6}
+ggplot() + 
+  geom_sf(data = dplyr::filter(IL_corn_planted, NAME == "Richland")) +
+  geom_sf(data = dplyr::filter(rails_IL_segmented, NAME == "Richland"), aes( color = LINEARID )) +
+  theme(
+    legend.position = "bottom"
+  ) +
+  theme_for_map
+```
+
+We now calculate the travel distance (Great-circle distance) of each railroad piece using `st_length()` and then sum them up by county to find total railroad length by county.
+
+```{r rail_total_county}
+(
+rail_length_county <- mutate(
+    rails_IL_segmented, 
+    length_in_m = as.numeric(st_length(rails_IL_segmented)),
+  ) %>% 
+  #--- group by county ID ---#
+  group_by(county_code) %>% 
+  #--- sum rail length by county ---#
+  summarize(length_in_m = sum(length_in_m)) %>% 
+  #--- geometry no longer needed ---#
+  st_drop_geometry()
+)
+```
+
+---
+
+We merge the railroad length data to the corn planted acreage data and estimate the model.
+
+```{r merge_data}
+reg_data <- left_join(IL_corn_planted, rail_length_county, by = "county_code") 
+```
+
+```{r results = "asis"}
+lm(Value ~ length_in_m, data = reg_data) %>% 
+  stargazer(type = "html")
+```
+
+## Demonstration 5: Groundwater use for agricultural irrigation
+
+```{r table_style_demo5, results="asis", echo=FALSE}
+cat("
+<style>
+.book .book-body .page-wrapper .page-inner section.normal table
+{
+  width:auto;
+}
+.book .book-body .page-wrapper .page-inner section.normal table td,
+.book .book-body .page-wrapper .page-inner section.normal table th,
+.book .book-body .page-wrapper .page-inner section.normal table tr
+{
+  padding:0;
+  border:0;
+  background-color:#fff;
+}
+</style>
+")
+```
+
+### Project Overview
+
+---
+
+**Objective**
++ Understand the impact of monthly precipitation on groundwater use for agricultural irrigation
+
+---
+
+**Datasets**
+
++ Annual groundwater pumping by irrigation wells in Kansas for 2010 and 2011 (originally obtained from the Water Information Management & Analysis System (WIMAS) database)
++ Daymet^[[Daymet website](https://daymet.ornl.gov/)] daily precipitation and maximum temperature downloaded using `daymetr` package
+
+---
+
+**Econometric Model**
+
+The econometric model we would like to estimate is:
+
+$$
+   y_{i,t}  = \alpha +  P_{i,t} \beta + T_{i,t} \gamma + \phi_i + \eta_t + v_{i,t}
+$$
+
+where $y$ is the total groundwater extracted in year $t$, $P_{i,t}$ and $T_{i,t}$ is the collection of monthly total precipitation and mean maximum temperature April through September in year $t$, respectively, $\phi_i$ is the well fixed effect, $\eta_t$ is the year fixed effect, and $v_{i,t}$ is the error term. 
+
+---
+
+**GIS tasks**
+
++ download Daymet precipitation and maximum temperature data for each well from within R in parallel
+  * use `daymetr::download_daymet()` and `future.apply::future_lapply()`
+
+---
+
+### Project Demonstration
+
+We have already collected annual groundwater pumping data by irrigation wells in 2010 and 2011 in Kansas from the Water Information Management & Analysis System (WIMAS) database. Let's read in the groundwater use data.  
+
+```{r Demo5_gw}
+#--- read in the data ---#
+(
+gw_KS_sf <- readRDS( "./Data/gw_KS_sf.rds") 
+)
+```
+
+We have `r length(unique(gw_KS_sf$well_id))` wells in total, and each well has records of groundwater pumping (`af_used`) for years 2010 and 2011. Here is the spatial distribution of the wells. 
+
+```{r Demo5_map, echo = FALSE}
+KS_counties <- readRDS("./Data/KS_county_borders.rds")
+
+tm_shape(KS_counties) +
+  tm_polygons() +
+tm_shape(gw_KS_sf) +
+  tm_symbols(size = 0.05, col = "black")
+```
+
+<!-- 
+#=========================================
+# Daymet data download and processing 
+#=========================================
+-->
+
+--- 
+
+We now need to get monthly precipitation and maximum temperature data. We have decided that we use [Daymet](https://daymet.ornl.gov/) weather data. Here we use the `download_daymet()` function from the `daymetr` package^[[daymetr vignette](https://cran.r-project.org/web/packages/daymetr/vignettes/daymetr-vignette.html)] that allows us to download all the weather variables for a specified geographic location and time period^[See [here]() for a fuller explanation of how to use the `daymetr` package.]. We write a wrapper function that downloads Daymet data and then processes it to find monthly total precipitation and mean maximum temperature^[This may not be ideal for a real research project because the original raw data is not kept. It is often the case that your econometric plan changes on the course of your project (e.g., using other weather variables or using different temporal aggregation of weather variables instead of monthly aggregation). When this happens, you need to download the same data all over again.]. We then loop over the `r nrow(gw_KS_sf)` wells, which is parallelized using the `future_apply()` function^[For parallelized computation, see Chapter \@ref(prallel)] from the `future.apply` package. This process takes about an hour on my Mac with parallelization on 7 cores. The data is available in the data repository for this course (named as "all_daymet.rds"). 
+
+```{r Demo5_getdaymet}
+library(daymetr)
+library(future.apply)
+
+#--- get the geographic coordinates of the wells ---#
+well_locations <- gw_KS_sf %>%
+  unique(by = "well_id") %>% 
+  dplyr::select(well_id) %>% 
+  cbind(., st_coordinates(.))
+
+#--- define a function that downloads Daymet data by well and process it ---#
+get_daymet <- function(i) {
+
+  temp_site <- well_locations[i, ]$well_id
+  temp_long <- well_locations[i, ]$X
+  temp_lat <- well_locations[i, ]$Y
+
+  data_temp <- download_daymet(
+      site = temp_site,
+      lat = temp_lat,
+      lon = temp_long,
+      start = 2010,
+      end = 2011,
+      #--- if TRUE, tidy data is returned ---#
+      simplify = TRUE,
+      #--- if TRUE, the downloaded data can be assigned to an R object ---#
+      internal = TRUE
+    ) %>% 
+    data.table() %>% 
+    #--- keep only precip and tmax ---#
+    .[measurement %in% c("prcp..mm.day.", "tmax..deg.c."), ] %>%  
+    #--- recover calender date from Julian day ---#
+    .[, date := as.Date(paste(year, yday, sep = "-"), "%Y-%j")] %>% 
+    #--- get month ---#
+    .[, month := month(date)] %>% 
+    #--- keep only April through September ---#
+    .[month %in% 4:9,] %>% 
+    .[, .(site, year, month, date, measurement, value)] %>% 
+    #--- long to wide ---#
+    dcast(site + year + month + date~ measurement, value.var = "value") %>% 
+    #--- change variable names ---#
+    setnames(c("prcp..mm.day.", "tmax..deg.c."), c("prcp", "tmax")) %>% 
+    #--- find the total precip and mean tmax by month-year ---#
+    .[, .(prcp = sum(prcp), tmax = mean(tmax)) , by = .(month, year)] %>% 
+    .[, well_id := temp_site]
+
+  return(data_temp)
+  gc()
+}
+```
+
+Here is what one run (for the first well) of `get_daymet()` returns 
+
+```{r Demo5_one_run}
+#--- one run ---#
+(
+returned_data <- get_daymet(1)[]
+)
+```
+
+We get the number of cores you can use by `RhpcBLASctl::get_num_procs()` and parallelize the loop over wells using `future_lapply()`.^[For Mac users, `mclapply` or `pbmclapply` (`mclapply` with progress bar) are good alternatives.]
+
+```{r eval = FALSE}
+#--- prepare parallelized process ---#
+library(RhpcBLASctl) 
+num_core <- get_num_procs() - 1
+
+#--- run get_daymet with parallelization ---#
+(
+all_daymet <- future_lapply(1:nrow(well_locations), get_daymet) %>% 
+  rbindlist() 
+)
+```
+
+```{r all_daymet_read, echo = FALSE}
+all_daymet <- readRDS("./Data/all_daymet.rds")
+all_daymet
+```
+
+---
+
+Before merging the Daymet data, we need to reshape the data into a wide format to get monthly precipitation and maximum temperature as columns.  
+
+```{r Demo5_long_wide}
+#--- long to wide ---#
+daymet_to_merge <- dcast(all_daymet, well_id + year ~ month, value.var = c("prcp", "tmax"))
+
+#--- take a look ---#
+daymet_to_merge
+```
+
+Now, let's merge the weather data to the groundwater pumping dataset.
+
+```{r Demo5_merge_weather}
+(
+reg_data <- data.table(gw_KS_sf) %>% 
+  #--- keep only the relevant variables ---#
+  .[, .(well_id, year, af_used)] %>% 
+  #--- join ---#
+  daymet_to_merge[., on = c("well_id", "year")]
+)
+```
+
+---
+
+Let's run regression and display the results.
+
+```{r Demo5_reg_display, results = "asis"}
+#--- load lfe package ---#
+library(lfe)
+
+#--- run FE ---#
+reg_results <- felm(
+  af_used ~ 
+  prcp_4 + prcp_5 + prcp_6 + prcp_7 + prcp_8 + prcp_9 +
+  tmax_4 + tmax_5 + tmax_6 + tmax_7 + tmax_8 + tmax_9
+  |well_id + year| 0 | well_id,
+  data = reg_data
+)
+
+#--- display regression results ---#
+stargazer(reg_results, type = "html")
+```
+
+That's it. Do not bother to try to read into the regression results. Again, this is just an illustration of how R can be used to prepare a regression-ready dataset with spatial variables.  
+
+
+<!--chapter:end:Demonstration.Rmd-->
+
+# Handle vector data using the sf package {#vector-basics}
+
+```{r setup, echo = FALSE}
+library(knitr)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  cache = TRUE,
+  comment = NA,
+  message = FALSE,
+  warning = FALSE,
+  tidy = FALSE,
+  cache.lazy = FALSE
+)
+
+opts_knit$set(root.dir = "~/Box/Teaching/AAEA R/GIS")
+```
+
+```{r setwd, eval = FALSE, echo = FALSE}
+setwd("~/Box/Teaching/AAEA R/GIS")
+```
+
+```{r, echo=FALSE, warning=FALSE, cache = FALSE}
+#--- load packages ---#
+suppressMessages(library(data.table))
+suppressMessages(library(here))
+suppressMessages(library(rgdal))
+suppressMessages(library(stringr))
+suppressMessages(library(rgeos))
+suppressMessages(library(sf))
+suppressMessages(library(ggplot2))
+suppressMessages(library(raster))
+suppressMessages(library(stargazer))
+suppressMessages(library(tmap))
+suppressMessages(library(future.apply))
+suppressMessages(library(lubridate))
+suppressMessages(library(tidyverse))
+```
+
+## Introduction
+
+In this chapter we learn how to use the `sf` package to handle and operate on spatial datasets. The `sf` package uses the class of simple feature (`sf`)^[yes, it is the same as the package name] for spatial objects in R. We first learn how `sf` objects store and represent spatial datasets. We then move on to the following practical topics:
+
++ read and write a shapefile and spatial data in other formats (and why you might not want to use the shape file system any more, but use other alternative formats)
++ project and reproject spatial objects
++ convert `sf` objects into `sp` objective, vice versa
++ confirm that `dplyr` works well with `sf` objects
++ implement non-interactive (does not involve two `sf` objects) geometric operations on `sf` objects
+  * create buffers 
+  * find the area of polygons
+  * find the centroid of polygons
+  * calculate the length of lines
+
+### `sf` or `sp`?
+
+The `sf` package was designed to replace the `sp` package (both developed by Edzer Pebesma), which has been one of the most popular and powerful spatial packages in R for more than a decade. It has been about four years since `sf` package was first registered on CRAN. A couple of years back, many other spatial packages did not have support for the package yet. In this [blog post](https://www.r-bloggers.com/should-i-learn-sf-or-sp-for-spatial-r-programming/) that asked the question of whether one should learn `sp` of `sf`, the author said:
+
+"That's a tough question. If you have time, I would say, learn to use both. sf is pretty new, so a lot of packages that depend on spatial classes still rely on sp. So you will need to know sp if you want to do any integration with many other packages, including raster (as of March 2018).
+
+However, in the future we should see an increasing shift toward the sf package and greater use of sf classes in other packages. I also think that sf is easier to learn to use than sp."
+
+The future has come, and it's not a tough question anymore. I cannot think of any major spatial packages that do not support `sf` package, and `sf` has largely become the standard for handling vector data in $R$. Thus, this lecture note does not cover how to use `sp` at all.^[except we learn how to convert back and forth between `sf` object ans `sp` objects just in case you need `sp` objects.]
+
+`sf` has several advantages over `sp` package [@pebesma2018simple].^[There are cases where `sp` is faster completing the same task than `sf`. For example, see the answer to [this question](https://gis.stackexchange.com/questions/324952/spover-vs-sfst-intersection-in-r). But, the I doubt the difference between the two is practically negligible even with a bigger data than the test data.] First, it cut off the tie that `sp` had with ESRI shapefile system, which had somewhat loose way of representing spatial data. Instead, it uses _simple feature access_, which is an open standard supported by Open Geospatial Consortium (OGC). Another important benefit is its compatibility with the `tidyverse` package, which include widely popular packages like `ggplot2` and `dplyr`. Consequently, map-making with `ggplot()` and data wrangling with a family of `dplyr` functions come very natural to many $R$ users. `sp` objects have different slots for spatial information and attributes data, and they are not amenable to `dplyr` way of data transformation.
+
+
+## Spatial Data Structure
+
+Here, we learn how the `sf` package stores spatial data, along the definitions of three key `sf` objects: simple feature geometry (`sfg`), simple feature geometry list-column (`sfc`), and simple feature (`sf`). The `sf` package provides a simply way of storing geographic information and the attributes of the geographic units in a single dataset. This special type of dataset is called simple feature (`sf`). It is best to take a look at an example to see how this is achieved. We use North Carolina county boundaries with county attributes (Figure \@ref(fig:nc-county)).  
+
+```{r nc_import}
+#--- a dataset that comes with the sf package ---#
+nc <- st_read(system.file("shape/nc.shp", package="sf")) 
+```
+
+```{r nc-county, fig.cap = "North Carolina county boundary"}
+library(tmap)
+tm_shape(nc) +
+  tm_polygons() +
+  tm_layout(frame = NA)
+```
+
+As you can see below, this dataset is of class `sf` (and `data.frame` at the same time).
+
+```{r class_sf}
+class(nc)
+```
+
+Now, let's take a look inside of `nc`.
+
+```{r }
+#--- take a look at the data ---#
+head(nc)
+```
+
+Just like a regular `data.frame`, you see a number of variables (attributes) except that you have a variable called `geometry` at the end. Each row represents a single geographic unit (here, county). Ashe County (1st row) has area of $0.114$, FIPS code of $37009$, and so on. And the entry in `geometry` column at the first row represents the geographic information of Ashe County. An entry in the `geometry` column is a simple feature geometry (`sfg`), which is an $R$ object that represents the geographic information of a single geometric feature (county in this example). There are different types of `sfg`s (`POINT`, `LINESTRING`, `POLYGON`, `MULTIPOLYGON`, etc). Here, `sfg`s representing counties in NC are of type `MULTIPOLYGON`. Let's take a look inside the `sfg` for Ashe County using `st_geometry()`.
+
+```{r geometry}
+st_geometry(nc[1, ])[[1]][[1]]
+```
+
+As you can see, the `sfg` consists of a number of points (pairs of two numbers). Connecting the points in the order they are stored delineate the Ashe County boundary.
+
+```{r }
+plot(st_geometry(nc[1, ])) 
+``` 
+
+We will take a closer look at different types of `sfg` in the next section. 
+
+Finally, the `geometry` variable is a list of individual `sfg`s, called simple feature geometry list-column (`sfc`).
+
+```{r }
+dplyr::select(nc, geometry)
+``` 
+
+Elements of a geometry list-column are allowed to be different in nature from other elements^[just like a regular `list` object can contain mixed types of elements: numeric, character, etc]. In the `nc` data, all the elements (`sfg`s) in `geometry` column are `MULTIPOLYGON`. However, you could also have `LINESTRING` or `POINT` objects mixed with `MULTIPOLYGONS` objects in a single `sf` object if you would like. 
+
+## Simple feature geometry, simple feature geometry list-column, and simple feature
+
+Here, we learn how different types of `sfg` are constructed. We also learn how to create `sfc` and `sf` from `sfg` from scratch.^[I must say that creating spatial objects from scratch yourself is an unnecessary skill for many of us as an economist. But, it is still good to know the underlying structure of the data. Also, occasionally the need arises. For example, I had to construct spatial objects from scratch when I designed on-farm randomized nitrogen trials. In such cases, it is of course necessary to understand how different types of `sfg` are constructed, create `sfc` from a collection of `sfg`s, and then create an `sf` from a `sfc`.]    
+
+### Simple feature geometry (`sfg`)
+
+The `sf` package uses a class of `sfg` (simple feature geometry) objects to represent a geometry of a single geometric feature (say, a city as a point, a river as a line, county and school district as polygons). There are different types of `sfg`s. Here are some example feature types that we commonly encounter as an economist^[You will hardly see the other geometry types: MULTIPOINT and GEOMETRYCOLLECTION. You may see GEOMETRYCOLLECTION after intersecting two spatial objects. You can see [here](https://r-spatial.github.io/sf/articles/sf1.html#sfg-simple-feature-geometry-1) if you are interested in learning what they are.]:
+
++ `POINT`: area-less feature that represents a point (e.g., well, city, farmland) 
++ `LINESTRING`: (e.g., a tributary of a river) 
++ `MULTILINESTRING`: (e.g., river with more than one tributaries) 
++ `POLYGON`: geometry with a positive area (e.g., county, state, country)
++ `MULTIPOLYGON`: collection of polygons to represent a single object (e.g., countries with islands: U.S., Japan)
+
+---
+
+`POINT` is the simplest geometry type, and is represented by a vector of two^[or three to represent a point in the three-dimensional space] numeric values. An example below shows how a `POINT` feature can be made from scratch^[we will learn how to make `sfg` objects from scratch because it helps to better understand how the spatial data is stored.]:
+
+```{r sf_point}
+#--- create a POINT ---#
+a_point <- st_point(c(2,1))
+```
+
+The `st_point()` function creates a `POINT` object when supplied with a vector of two numeric values. If you check the class of the newly created object,
+
+```{r class}
+#--- check the class of the object ---#
+class(a_point)
+```
+
+You can see that it's indeed a `POINT` object. But, it's also an `sfg` object. So, `a_point` is an `sfg` object of type `POINT`. 
+
+---
+
+A `LINESTRING` objects are represented by a sequence of points:  
+
+```{r linestrting}
+#--- collection of points in a matrix form ---#
+s1 <- rbind(c(2,3),c(3,4),c(3,5),c(1,5))
+
+#--- see what s1 looks like ---#
+s1
+
+#--- create a "LINESTRING" ---#
+a_linestring <- st_linestring(s1)
+
+#--- check the class ---#
+class(a_linestring)
+```
+
+`s1` is a matrix where each row represents a point. By applying `st_linestring()` function to `s1`, you create a `LINESTRING` object. Let's see what the line looks like.
+
+```{r plot_line}
+plot(a_linestring)
+```
+
+As you can see, each pair of consecutive points in the matrix are connected by a straight line to form a line. 
+
+---
+
+A `POLYGON` is very similar to `LINESTRING` in the manner it is represented. 
+
+```{r polygon_1}
+#--- collection of points in a matrix form ---#
+p1 <- rbind(c(0,0), c(3,0), c(3,2), c(2,5), c(1,3), c(0,0))
+
+#--- see what s1 looks like ---#
+p1
+ #--- create a "LINESTRING" ---#
+a_polygon <- st_polygon(list(p1))
+
+#--- check the class ---#
+class(a_polygon)
+
+#--- see what it looks like ---#
+plot(a_polygon)
+```
+
+Just like the `LINESTRING` object we created earlier, a `POLYGON` is represented by a collection of points. The biggest difference between them is that we need to have some positive area enclosed by lines connecting the points. To do that, you have the the same point for the first and last points to close the loop: here, it's `c(0,0)`. A `POLYGON` can have a hole in it. The first matrix of a list becomes the exterior ring, and all the subsequent matrices will be holes within the exterior ring.  
+
+```{r polygon_hole}
+#--- a hole within p1 ---#
+p2 <- rbind(c(1,1), c(1,2), c(2,2), c(1,1))
+
+#--- create a polygon with hole ---#
+a_plygon_with_a_hole <- st_polygon(list(p1,p2))
+
+#--- see what it looks like ---#
+plot(a_plygon_with_a_hole)
+```
+
+---
+
+You can create a `MULTIPOLYGON` object in a similar manner. The only difference is that you supply a list of lists of matrices, with each inner list representing a polygon. An example below: 
+
+```{r multi_polygon}
+#--- second polygon ---#
+p3 <- rbind(c(4,0), c(5,0), c(5,3), c(4,2), c(4,0)) 
+
+#--- create a multipolygon ---#
+a_multipolygon <- st_multipolygon(list(list(p1,p2), list(p3)))
+
+#--- see what it looks like ---#
+plot(a_multipolygon)
+```
+
+Each of `list(p1,p2)`, `list(p3,p4)`, `list(p5)` represents a polygon. You supply a list of these lists to the `st_multipolygon()` function to make a `MULTIPOLYGON` object.
+
+### Create simple feature geometry list-column (`sfc`) and simple feature (`sf`) from scratch
+
+To make a simple feature geometry list-column (`sfc`), you can simply supply a list of `sfg` to the `st_sfc()` function as follows:
+
+```{r gen_sfc}
+#--- create an sfc ---#
+sfc_ex <- st_sfc(list(a_point,a_linestring,a_polygon,a_multipolygon))
+```
+
+To create a `sf` object, you first add a `sfc` as a column to a `data.frame`.  
+
+```{r add_sfc_to_df}
+#--- create a data.frame ---#
+df_ex <- data.frame(
+  name=c('A','B','C','D')
+)
+
+#--- add the sfc as a column ---#
+df_ex$geometry <- sfc_ex 
+
+#--- take a look ---#
+df_ex
+```
+
+At this point, it is not recognized as a `sf` by R yet.
+
+```{r class_check}
+#--- see what it looks like (this is not an sf object yet) ---#
+class(df_ex)
+```
+
+You can register it as a `sf` object using `st_as_sf()`.
+
+```{r gen_sf_yourself}
+#--- let R recognize the data frame as sf ---#
+sf_ex <- st_as_sf(df_ex)
+
+#--- see what it looks like ---#
+sf_ex
+```
+
+As you can see `sf_ex` is now recognized also as an `sf` object.  
+
+```{r check_if_sf}
+#--- check the class ---#
+class(sf_ex)
+```
+
+
+## Reading and writing vector data
+
+I claimed that you do not need ArcGIS $99\%$ of your work as an economist. However, the vast majority of people still use ArcGIS to handle spatial data, which has its own system of storing spatial data^[See [here]() for other various formats spatial data are stored.] called shapefile. So, chances are that your collaborators still use shapefiles. Moreover, there are many GIS data online that are available only as shapefiles. So, it is important to learn how to read and write shapefiles. 
+
+### Reading a shape file
+
+We can use `st_read()` function to read a shapefile. It reads in a shape file and then turn the data into an sf object. Let's take a look at an example. 
+
+```{r import_nc_shp}
+#--- read a NE county boundary shape file ---#
+nc_loaded <- st_read(dsn = "./Data", "nc") 
+```
+
+Typically, you have two arguments to specify for `st_read()`. The first one is `dsn`, which is basically the path to the shape file you want to import. The second one is the name of the shapefile. Notice that you do not add `.shp` extension to the file name: "NE_county," not "NE_county.shp."^[When storing a spatial dataset, ArcGIS divides the information into separate files. All of them have the same prefix, but have different extensions. We typically say we read a shape file, but we really are importing all these files including the shape file with the .shp extension. When you read those data, you just refer to the common prefix because you really are importing all the files, not just a .shp file.].
+
+### Writing to a shape file
+
+Writing an `sf` object as a shape file is just as easy. You use the `st_write()` function, with the first argument being the name of the `sf` object you are exporting, and the second being the name of the new shape file. For example, the code below will export an `sf` object called `NE_county` as `NE_county_2.shp` (along with other supporting files). 
+
+```{r write_nc, eval = FALSE}
+st_write(nc_loaded, dsn="./Data", "nc", driver="ESRI Shapefile", append = FALSE)
+```
+
+`append = FALSE` forces writing the data when there already exists a file with the same name. Without the option, this happens.
+
+```{r write_nc_error, error = TRUE}
+st_write(nc_loaded, dsn="./Data", "nc", driver="ESRI Shapefile")
+```
+
+### Better alternatives 
+
+Now, if your collaborator is using ArcGIS and demanding that he/she needs a shapefile for his/her work, sure you can use the above command to write a shapefile. But, there is really no need to work with the shapefile system. One of the alternative data formats that are considered superior to the shapefile system is GeoPackage^[Link here], which overcomes various limitations associated with shapefile^[see the last paragraph of [chapter 7.5 of this book](https://csgillespie.github.io/efficientR/data-carpentry.html#data-processing-with-data.table), [this blogpost](https://carto.com/blog/fgdb-gpkg/), or [this](http://switchfromshapefile.org/)]. Unlike the shapefile system, it produces only a single file with .gpkg extension. Note that GeoPackage file can also be easily read into ArcGIS. So, it might be worthwhile to convince your collaborators to stop using shapefiles and start using GeoPackage.  
+
+```{r gpkg, eval = FALSE}
+#--- write as a gpkg file ---#
+st_write(nc, dsn = "./Data/nc.gpkg")
+
+#--- read a gpkg file ---#
+nc <- st_read("./Data/nc.gpkg")
+```
+
+Or better yet, if your collaborator uses R (or if it is only you who uses the data), then just save it as an rds file using `saveRDS()`, which can be of course read using `readRDS()`.
+
+```{r save_read_nc_as_rds}
+#--- save as an rds ---#
+saveRDS(nc, "/Users/tmieno2/Box/Teaching/AAEA R/GIS/nc_county.rds")
+
+#--- read an rds ---#
+nc <- readRDS("/Users/tmieno2/Box/Teaching/AAEA R/GIS/nc_county.rds")
+```
+
+The use of rds files is particularly attractive when the dataset is large because rds files are generally more memory efficient than shape files, eating up less of your disk memory. 
+
+
+## Projection with a different Coordinate Reference Systems 
+
+You often need to reproject an `sf` using a different coordinate reference system (CRS) because you need to have two or more `sf` objects have the same CRS to do geometrical operations on them or to map those `sf` in the same map. In order to check the current CRS for an `sf` object, you can use the `st_crs()` function. 
+
+```{r chech_CRS}
+st_crs(nc)
+```
+
+`wkt` stands for **Well Known Text**^[`sf` versions prior to 0.9 provides CRS information in the form of `proj4string`. The newer version of `sf` presents CRS in the form of `wtk` (see [this slide](https://nowosad.github.io/whyr_webinar004/#25)). You can find the reason behind this change in the same slide, starting from [here](https://nowosad.github.io/whyr_webinar004/#18).], which is one of many many formats to store CRS information.^[See [here](https://spatialreference.org/ref/epsg/nad27/) for numerous other formats that represent the same CRS.] 4267 is the SRID (Spatial Reference System Identifier) defined by the European Petroleum Survey Group (EPSG) for the CRS^[You can find the CRS-EPSG number correspondence [here](http://spatialreference.org/ref/epsg/).]. 
+
+When you transform your `sf` using a different CRS, you can use its EPSG number if the CRS has an EPSG number.^[Potential pool of CRS is infinite. Only the commonly-used CRS have been assigned EPSG SRID.] Let's transform the `sf` to `WGS 84` (another commonly used GCS), whose EPSG number is 4326. We can use the `st_transform()` function to achieve that, with the first argument being the `sf` object you are transforming and the second being the EPSG number of the new CRS.
+
+```{r to_4326}
+#--- transform ---#
+nc_wgs84 <- st_transform(nc, 4326)
+
+#--- check if the transformation was successful ---#
+st_crs(nc_wgs84)
+```
+
+Notice that `wkt` was also altered accordingly to reflect the change in CRS: datum was changed to WGS 84. Now, let's transform (reproject) the data using `NAD83 / UTM zone 17N` CRS. Its EPSG number is $26917$.^[(see [here](http://spatialreference.org/ref/epsg/nad83-utm-zone-14n/))] So, the following code does the job.
+
+```{r to_26917}
+#--- transform ---#
+nc_utm17N <- st_transform(nc_wgs84, 26917)
+
+#--- check if the transformation was successful ---#
+st_crs(nc_utm17N)
+```
+
+As you can see in its CRS information, the projection system is now UTM zone 17N. 
+
+You often need to change the CRS of a `sf` object when you interact^[e.g., spatial subsetting, joining, etc] it with another `sf` object. In such a case, you can extract the CRS of the other `sf` object using `st_crs()` and use it for transformation^[In this example, we are using the same data with two different CRS. But, you get the point.]. 
+
+```{r to_utm17}
+#--- transform ---#
+nc_utm17N_2 <- st_transform(nc_wgs84, st_crs(nc_utm17N))
+
+#--- check if the transformation was successful ---#
+st_crs(nc_utm17N_2)
+```
+
+
+<!-- However, notice that the `epsg` component of CRS is $NA$. ESRI shapefile format uses WTK (Well-known Text) format to refer to the CRS in use, which is saved in .prj file. So, if there is no corresponding SRID number for the CRS in use, the `epsg` component number would get lost when you save an `sf` object when you save it as an ESRI shapefile. This is exactly what happened to 
+ -->
+
+## Turning a data.frame of points into a `sf` 
+
+Often times, you have a dataset with geographic coordinates as variables in a csv or other formats, which would not be recognized as a spatial dataset by R immediately when it is read into R. In this case, you need to identify which variables represent the geographic coordinates from the data set, and create an `sf` yourself. Fortunately, it is easy to do so using the `st_as_sf()` function.
+
+```{r dataframe_to_sf}
+#--- read well registration data ---#
+wells <- readRDS('./Data/registration.rds') 
+
+#--- recognize it as an sf ---#
+wells_sf <- st_as_sf(wells, coords = c("longdd","latdd"))
+
+#--- take a look at the data ---#
+head(wells_sf[,1:5])
+```
+
+Note that the CRS of `wells_sf` is NA. Obviously, $R$ does not know the reference system without you telling it. We know^[Yes, YOU need to know the CRS of your data.] that the geographic coordinates in the wells data is NAD 83 ($epsg=4269$) for this dataset. So, we can assign the right CRS using either `st_set_crs()` or `st_crs()`.
+
+```{r set_crs}
+#--- set CRS ---#
+wells_sf <- st_set_crs(wells_sf, 4269) 
+
+#--- or this ---#
+st_crs(wells_sf) <- 4269
+
+#--- see the change ---#
+head(wells_sf[,1:5])
+```
+
+## Conversion to and from sp
+
+You can convert an `sf` object to its `sp` counterpart using `as(sf_object, "Spatial")` as in^[Before the `sf` package was introduced, `sp` was the major package that provided R with spatial data handling capability. When the `sf` package was new a few years ago, most of the spatial packages that utilize the `sp` package were not able to work with `sf` objects, and it was necessary to learn how to use the `sp` package in addition to the `sf` package. Now, most of the major spatial packages have been modified to work with `sf` objects. At least, I no longer have faced the needs to use `sp` objects instead of `sf` objects for the past year. However, you may find instances where `sp` objects are necessary or desirable. For example, those who run spatial econometric methods using `spdep`, creating neighbors from polygons is a bit faster using `sp` objects than using `sf` objects). In that case, it is good to know how to convert an `sf` object to an `sp` object, vice versa.]:
+
+```{r as_spatial}
+#--- conversion ---#
+wells_sp <- as(wells_sf,"Spatial")
+
+#--- check the class of NE_sp ---#
+class(wells_sp)
+```
+
+<!-- ```{r }
+list(a_point, a_polygon) %>% st_sfc() %>% st_as_sf() %>% 
+  as("Spatial")
+```
+
+ -->
+As you can see `NE_sp` is a class of `SpatialPointsDataFrame`, polygons with data frame supported by the `sp` package. The above syntax works for converting a `sf` of polygons into `SpatialPolygonsDataFrame` as well^[The function does not work for an `sf` object that consists of different geometry types (e.g., POINT and POLYGON). This is because `sp` objects do not allow to have different types of geometries in the single `sp` object. For example, `SpatialPointsDataFrame` consists only of points data.].     
+
+You can revert `NE_sp` back to an `sf` object using the `st_as_sf()` function, as follows:
+
+```{r back_to_sf}
+#--- revert back to sf ---#
+wells_sf <- st_as_sf(wells_sp)
+
+#--- check the class ---#
+class(wells_sf)
+```
+
+We do not cover how to use the `sp` package as the benefit of learning it has become marginal compared to when `sf` was just introduced a few years back^[For those interested in learning the `sp` package, [this website](https://rspatial.org/) is a good resource.]. Moreover, as we just saw, we can go back and forth between `sf` and `sp`. So, there is really no need to learn `sp`.
+
+## Non-spatial transformation of sf 
+
+An important feature of an `sf` object is that it is basically a data.frame with geometric information stored as a variable (column). This means that transforming an `sf` object works just like transforming a `data.frame`. Basically, everything you can do to a `data.frame`, you can do to a `sf` as well. The code below just provides an example of basic operations including `select()`, `filter()`, and `mutate()` in action with an `sf` object to just confirm that `dplyr`  operations works with an sf object just like a `data.frame`.   
+
+```{r apply_dplyr}
+#--- here is what the data looks like ---#
+dplyr::select(wells_sf, wellid, nrdname, acres, regdate, nrdname)
+
+#--- do some transformations ---#
+wells_sf %>% 
+  #--- select variables (geometry will always remain after select) ---#
+  dplyr::select(wellid, nrdname, acres, regdate, nrdname) %>% 
+  #--- removes observations with acre < 30  ---#
+  filter(acres > 30) %>% 
+  #--- hectare instead of acre ---#
+  mutate(hectare = acres * 0.404686) 
+```
+
+Now, let's try to get a summary of a variable by group using the  `group_by()` and `summarize()` functions.
+
+```{r summary}
+#--- summary by group ---#
+wells_by_nrd <- wells_sf %>% 
+  #--- group by nrdname ---#
+  group_by(nrdname) %>% 
+  #--- summarize ---#
+  summarize(tot_acres = sum(acres, na.rm = TRUE))
+
+#--- take a look ---#
+wells_by_nrd
+```
+
+So, we got total acres by NRD as we expected. One interesting change that happened is geometry variable. Each NRD now has `multipoint` sfg, which is the combination of all the wells (points) located inside the NRD as you can see below.   
+
+```{r map_combine}
+tm_shape(wells_by_nrd) + 
+  tm_symbols(col = "nrdname", size = 0.2) +
+  tm_layout(
+    frame = NA,
+    legend.outside = TRUE,
+    legend.outside.position = "bottom"
+  )
+```
+
+This feature is unlikely to be of much use to us. If you would like to drop a geometry column, you can use the `st_drop_geometry()` function:
+
+```{r drop_geometry}
+#--- remove geometry ---#
+wells_no_longer_sf <- st_drop_geometry(wells_by_nrd)
+
+#--- take a look ---#
+wells_no_longer_sf
+``` 
+
+Finally, `data.table` does not work as well with sf objects as `dplyr` does. 
+
+```{r sf_to_datatable}
+#--- convert an sf to data.table ---#
+wells_by_nrd_dt <- data.table(wells_by_nrd)
+
+#--- take a look ---#
+wells_by_nrd_dt
+
+#--- check the class ---#
+class(wells_by_nrd_dt)
+```
+
+You see that `wells_by_nrd_dt` is no longer an sf object even though geometry still remains in the data. If you try to run `sf` operations on it, it will of course give you an error. Like this:
+
+```{r ch3_create_buffer, error = TRUE}
+st_buffer(wells_by_nrd_dt, dist = 2)
+```
+
+But, it is easy to revert it back to an `sf` object again by using the `st_as_sf()` function^[This was not the case before. Turning an `sf` object to a `data.table` object used to replace sfg with NA.]. 
+
+```{r table_to_sf}
+wells_by_nrd_sf_again <- st_as_sf(wells_by_nrd_dt)
+``` 
+
+So, this means that if you need fast data transformation, you can first turn an `sf` to a `data.table`, transform the data using the `data.table` functionality, and then revert back to `sf`^[Remember that conversions between `sp` and `sf` also take time.]. However, for most economists, the geometry variable itself is not of interest in the sense that it never enters econometric models. For most of us, the geographic information contained in the geometry variable is just a glue to tie two datasets together by geographic referencing. Once we get values of spatial variables of interest, then there is no point in keeping your data an sf object. Personally, whenever I no longer need to carry around the geometry variable, I immediately turn an sf object into a `data.table` for fast data transformation especially when the data is large. 
+
+## Geometrical operations
+
+There are various geometrical operations that are particularly useful for economists. Here, some of the most commonly used geometrical operations are introduced^[For the complete list of available geometrical operations under the `sf` package, see [here](https://cran.r-project.org/web/packages/sf/vignettes/sf1.html).]. You can see the practical use of these functions in the Demonstration section.
+ 
+### st_buffer 
+
+`st_buffer()` creates a buffer around points, lines, or the border of polygons. 
+
+---
+
+Let's create buffers around points. First, we read well locations data. 
+
+```{r points_import}
+#--- read wells location data ---#
+urnrd_wells_sf <- readRDS("./Data/urnrd_wells.rds") %>% 
+  #--- project to UTM 14N WGS 84 ---#
+  st_transform(32614)  
+```
+
+Here is the spatial distribution of the wells (Figure \@ref(fig:urnrd-wells)). 
+
+```{r urnrd-wells, fig.cap = "Map of the wells"}
+tm_shape(urnrd_wells_sf) +
+  tm_symbols(col = "red", size = 0.1) +
+  tm_layout(frame = NA)
+```
+
+Let's create buffers around the wells.
+
+```{r gen_buffer_points}
+#--- create a one-mile buffer around the wells ---#
+wells_buffer <- st_buffer(urnrd_wells_sf, dist = 1600)
+```
+
+As you can see, you see bunch of circles around wells with the radius of $1,600$ meters (Figure \@ref(fig:buffer-points-map)).   
+
+```{r buffer-points-map, fig.cap = "Buffers around wells"}
+tm_shape(wells_buffer) +
+  tm_polygons(alpha = 0) +
+tm_shape(urnrd_wells_sf) +
+  tm_symbols(col = "red", size = 0.1) +
+  tm_layout(frame = NA)
+```
+
+A practical application of buffer creation will be seen in Chapter \@ref(Demo1).
+
+---
+
+We now create buffers around polygons. First, read NE county boundary data and select three counties (Chase, Dundy, and Perkins).
+
+```{r ne_counties, echo=FALSE}
+NE_counties <- readRDS("./Data/NE_county_borders.rds") %>%
+  filter(NAME %in% c("Perkins", "Dundy", "Chase")) %>% 
+  st_transform(32614)
+```
+
+Here is what they look like (Figure \@ref(fig:map-three-counties)):
+
+```{r map-three-counties, fig.cap = "Map of the three counties"}
+tm_shape(NE_counties) +
+  tm_polygons('NAME', palette="RdYlGn", contrast=.3, title="County") +
+  tm_layout(frame = NA)
+```
+
+The following code creates buffers around polygons (see the results in Figure \@ref(fig:buffer-county)):
+
+```{r buffer_polygons}
+NE_buffer <- st_buffer(NE_counties, dist = 2000)
+```
+
+```{r buffer-county, fig.cap = "Buffers around the three counties"}
+tm_shape(NE_buffer) +
+  tm_polygons(col='blue',alpha=0.2) +
+tm_shape(NE_counties) +
+  tm_polygons('NAME', palette="RdYlGn", contrast=.3, title="County") + 
+  tm_layout(
+    legend.outside=TRUE,
+    frame=FALSE
+  )
+```
+
+For example, this can use useful to identify observations are close enough to the border of political boundaries when you want to take advantage of spatial discontinuity of policies across adjacent political boundaries.    
+
+### st_area 
+
+The `st_area()` function calculates the area of polygons. 
+
+```{r get_area}
+#--- generate area by polygon ---#
+(
+  NE_counties <- mutate(NE_counties, area = st_area(NE_counties))
+)
+```
+
+Now, as you can see below,
+
+```{r check_class_area}
+class(NE_counties$area)
+```
+
+the default class of the results of `st_area()` is `units`, which does not accept numerical operations. So, let's turn it into double.
+
+```{r convert_to_numeric}
+(
+NE_counties <- mutate(NE_counties, area = as.numeric(area))
+)
+```
+
+`st_area()` is useful when you want to find area-weighted average of characteristics after spatially joining two polygon layers using the `st_intersection()` function. 
+
+### st_centroid
+
+The `st_centroid()` function finds the centroid of each polygon.
+
+```{r gen_centroids}
+#--- create centroids ---#
+(
+NE_centroids <- st_centroid(NE_counties)
+)
+```
+
+Here's what the map of the output (Figure \@ref(fig:map-centroids)).
+
+```{r map-centroids, fig.cap = "The centroids of the polygons"}
+tm_shape(NE_counties) +
+  tm_polygons() +
+tm_shape(NE_centroids)+
+  tm_symbols(size=0.5) +
+tm_layout(
+    legend.outside=TRUE,
+    frame=FALSE
+  )
+```
+
+It can be useful when creating a map with labels because the centroid of polygons tend to be a good place to place labels at like this (Figure \@ref(fig:cent-label)).^[When creating maps with the ggplot2 package, you can use `geom_sf_text()` or `geom_sf_label()`, which automatically finds where to put texts. See some examples [here](https://yutani.rbind.io/post/geom-sf-text-and-geom-sf-label-are-coming/).]
+
+```{r cent-label, fig.cap = "County names placed at the centroids of the counties"}
+tm_shape(NE_counties) +
+  tm_polygons() +
+tm_shape(NE_centroids)+
+  tm_text("NAME") +
+tm_layout(
+    legend.outside=TRUE,
+    frame=FALSE
+  )
+```
+
+It may be also useful when you somehow need to calculate the "distance" between polygons.  
+
+### st_length
+
+We can use `st_length()` to calculate great circle distances^[Great circle distance is the shortest distance between two points on the surface of a sphere (earth)] of `LINESTRING` and `MULTILINESTRING` when they are represented in geodetic coordinates. On the other hand, if they are projected and use a Cartesian coordinate system, it will calculate Euclidean distance. We use U.S. railroad data for a demonstration. 
+
+```{r railroad_import}
+#--- import US railroad data and take only the first 10 of it ---#
+(
+a_railroad <- rail_roads <- st_read(dsn = "./Data/", layer = "tl_2015_us_rails")[1:10, ]
+)
+
+#--- check CRS ---#
+st_crs(a_railroad)
+```
+
+It uses geodetic coordinate system. Let's calculate the great circle distance of the lines.
+
+```{r get_distance}
+(
+a_railroad <- mutate(a_railroad, length = st_length(a_railroad))
+)
+```
+
+
+
+
+
+<!-- ## st_distance
+
+The `st_distance` function calculates distances between spatial objects. Its output is the matrix of distances whose $i,j$ element is the distance between the $i$th `sfg` of the first `sf` and $j$th `sfg` of the second `sf`. The following code find the distance between the first 10 wells in `urnrd_wells_sf`.
+
+```{r st_distance}
+st_distance(urnrd_wells_sf[1:10, ], urnrd_wells_sf[1:10, ])
+```
+ -->
+
+<!--chapter:end:VectorDataBasics.Rmd-->
+

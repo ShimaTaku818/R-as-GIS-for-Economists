@@ -74,7 +74,7 @@ theme_update(
 ```
 
 
-## Introduction
+**Introduction**
 
 ## Topological relations
 
@@ -615,7 +615,7 @@ Notice that the `mean()` function was applied to all the columns in `KS_wells`, 
 aggregate(dplyr::select(KS_wells, af_used), KS_counties, FUN = mean)
 ```
 
-### Case 3: polygons (target) vs polygons (source)
+### Case 3: polygons (target) vs polygons (source) {#polygon-polygon}
 
 For this case, `st_join(target_sf, source_sf)` will return all the unique intersecting polygon-polygon combinations with the information of the polygon from source_sf attached.  
 
@@ -674,10 +674,9 @@ tm_shape(HUC_IA) +
 HUC_joined <- st_join(HUC_IA, IA_corn)
 ```
 
+---
 
-#### Area-weighted average (use area-preserving projection)
-
-To do area-weighted average, we can first use `st_intersection()`. For each of the polygons in the target layer, this function, finds the intersecting polygons from the source data, and then divide the target polygon into parts based on the boundary of the intersecting polygons. 
+To find an area-weighted average, we can first use `st_intersection()`. For each of the polygons in the target layer, this function, finds the intersecting polygons from the source data, and then divide the target polygon into parts based on the boundary of the intersecting polygons. 
 
 ```{r intersection}
 HUC_intersections <- st_intersection(HUC_IA, IA_corn) %>% 
