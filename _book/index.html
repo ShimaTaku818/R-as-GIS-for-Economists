@@ -131,8 +131,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-me"><i class="fa fa-check"></i>About me</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#comments-and-suggestions"><i class="fa fa-check"></i>Comments and Suggestions?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-r-as-gis-for-economists"><i class="fa fa-check"></i>Why R as GIS for Economists?</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-vs-python"><i class="fa fa-check"></i>R vs Python</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-vs-arcgis-or-qgis"><i class="fa fa-check"></i>R vs ArcGIS or QGIS</a></li>
@@ -213,16 +211,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="preface" class="section level1 unnumbered">
 <h1>Preface</h1>
 <p>This book is being developed as part of my effort to put together course materials for my data science course targeted at upper-level undergraduate and graduate students at the University of Nebraska Lincoln. This books aims particularly at <strong>spatial data processing for an econometric project</strong>, where spatial variables become part of an econometric analysis. Over the years, I have seen so many students and researchers who spend so much time just processing spatial data (often involving clicking the ArcGIS (or QGIS) user interface to death), which is a waste of time from the perspective of academic productivity. My hope is that this book will help researchers become more proficient in spatial data processing and enhance the overall productivity of the fields of economics for which spatial data are essential.</p>
-<div id="about-me" class="section level3 unnumbered">
-<h3>About me</h3>
+<p><strong>About me</strong></p>
 <p>I am an Assistant Professor at the Department of Agricultural Economics at University of Nebraska Lincoln, where I also teach Econometrics for Master’s students. My research interests lie in precision agriculture, water economics, and agricultural policy. My personal website is <a href="http://taromieno.netlify.com/">here</a>.</p>
-</div>
-<div id="comments-and-suggestions" class="section level3 unnumbered">
-<h3>Comments and Suggestions?</h3>
+<p><strong>Comments and Suggestions?</strong></p>
 <p>Any constructive comments and suggestions about how I can improve the book are all welcome. Please send me an email at <a href="mailto:tmieno2@unl.edu" class="email">tmieno2@unl.edu</a> or create an issue on <a href="https://github.com/tmieno2/R-as-GIS-for-Economists">the github page</a> of this book.</p>
 <hr>
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
-</div>
 <div id="why-r-as-gis-for-economists" class="section level2 unnumbered">
 <h2>Why R as GIS for Economists?</h2>
 <p>R has extensive capabilities as GIS software. In my opinion, <span class="math inline">\(99\%\)</span> of your spatial data processing needs as an economist will be satisfied by R. But, there are several popular options for GIS tasks other than R:</p>
@@ -359,7 +353,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Codes:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">runif</span>(<span class="dv">5</span>)</a></code></pre></div>
 <p>Outcomes:</p>
-<pre><code>## [1] 0.58823950 0.00263095 0.24093128 0.74688897 0.34729440</code></pre>
+<pre><code>## [1] 0.81808297 0.53668660 0.48720697 0.07982134 0.30988293</code></pre>
 </div>
 <div id="parentheses-around-codes" class="section level3 unnumbered">
 <h3>Parentheses around codes</h3>
@@ -367,7 +361,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">(</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">  a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">)</a></code></pre></div>
-<pre><code>## [1] 0.8393547 0.9182578 0.8033027 0.1492357 0.8768438</code></pre>
+<pre><code>## [1] 0.9353105 0.4424917 0.4052275 0.7954257 0.5689663</code></pre>
 <p>The parentheses prints what’s inside of a newly created object (here <code>a</code>) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created.</p>
 <p>This one prints nothing.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">5</span>)</a></code></pre></div>
