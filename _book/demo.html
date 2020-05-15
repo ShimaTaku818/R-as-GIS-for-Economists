@@ -131,6 +131,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-me"><i class="fa fa-check"></i>About me</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#comments-and-suggestions"><i class="fa fa-check"></i>Comments and Suggestions?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-r-as-gis-for-economists"><i class="fa fa-check"></i>Why R as GIS for Economists?</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-vs-python"><i class="fa fa-check"></i>R vs Python</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-vs-arcgis-or-qgis"><i class="fa fa-check"></i>R vs ArcGIS or QGIS</a></li>
@@ -147,7 +149,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#session-information"><i class="fa fa-check"></i>Session Information</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="demo.html"><a href="demo.html"><i class="fa fa-check"></i><b>1</b> R as GIS: Demonstrations</a><ul>
-<li class="chapter" data-level="" data-path="demo.html"><a href="demo.html#introduction"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="demo.html"><a href="demo.html#before-you-start"><i class="fa fa-check"></i>Before you start</a><ul>
+<li class="chapter" data-level="" data-path="demo.html"><a href="demo.html#target-audience"><i class="fa fa-check"></i>Target Audience</a></li>
+<li class="chapter" data-level="" data-path="demo.html"><a href="demo.html#direction-for-replication"><i class="fa fa-check"></i>Direction for replication</a></li>
+</ul></li>
 <li class="chapter" data-level="1.1" data-path="demo.html"><a href="demo.html#Demo1"><i class="fa fa-check"></i><b>1.1</b> Demonstration 1: The impact of groundwater pumping on depth to water table</a><ul>
 <li class="chapter" data-level="1.1.1" data-path="demo.html"><a href="demo.html#project-overview"><i class="fa fa-check"></i><b>1.1.1</b> Project Overview</a></li>
 <li class="chapter" data-level="1.1.2" data-path="demo.html"><a href="demo.html#project-demonstration"><i class="fa fa-check"></i><b>1.1.2</b> Project Demonstration</a></li>
@@ -170,7 +175,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="vector-basics.html"><a href="vector-basics.html"><i class="fa fa-check"></i><b>2</b> Handle vector data using the sf package</a><ul>
-<li class="chapter" data-level="" data-path="vector-basics.html"><a href="vector-basics.html#introduction-1"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="vector-basics.html"><a href="vector-basics.html#before-you-start-1"><i class="fa fa-check"></i>Before you start</a><ul>
+<li><a href="vector-basics.html#sf-or-sp"><code>sf</code> or <code>sp</code>?</a></li>
+</ul></li>
 <li class="chapter" data-level="2.1" data-path="vector-basics.html"><a href="vector-basics.html#spatial-data-structure"><i class="fa fa-check"></i><b>2.1</b> Spatial Data Structure</a></li>
 <li class="chapter" data-level="2.2" data-path="vector-basics.html"><a href="vector-basics.html#simple-feature-geometry-simple-feature-geometry-list-column-and-simple-feature"><i class="fa fa-check"></i><b>2.2</b> Simple feature geometry, simple feature geometry list-column, and simple feature</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="vector-basics.html"><a href="vector-basics.html#simple-feature-geometry-sfg"><i class="fa fa-check"></i><b>2.2.1</b> Simple feature geometry (<code>sfg</code>)</a></li>
@@ -243,12 +250,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </script>
 <div id="demo" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> R as GIS: Demonstrations</h1>
-<div id="introduction" class="section level2 unnumbered">
-<h2>Introduction</h2>
+<div id="before-you-start" class="section level2 unnumbered">
+<h2>Before you start</h2>
 <p>The primary objective of this chapter is to showcase the power of R as GIS through demonstrations using mock-up econometric research projects<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>. Each project consists of a project overview (objective, datasets used, econometric model, and GIS tasks involved) and demonstration. This is really not a place you learn the nuts and bolts of how R does spatial operations. Indeed, we intentionally do not explain all the details of how the R codes work. We reiterate that the main purpose of the demonstrations is to get you a better idea of how R can be used to process spatial data to help your research projects involving spatial datasets. Finally, note that these <em>mock-up</em> projects use extremely simple econometric models that completely lacks careful thoughts you would need in real research projects. So, don’t waste your time judging the econometric models, and just focus on GIS tasks. If you are not familiar with html documents generated by <code>rmarkdown</code>, you might benefit from reading the conventions of the book in the Preface.</p>
-<p><strong>Target Audience</strong></p>
+<div id="target-audience" class="section level3 unnumbered">
+<h3>Target Audience</h3>
 <p>The target audience of this chapter is those who are not very familiar with R as GIS. Knowledge of R certainly helps. But, I tried to write in a way that R beginners can still understand the power of R as GIS<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>. Do not get bogged down by all the complex-looking R codes. Just focus on the narratives and figures to get a sense of what R can do.</p>
-<p><strong>Direction for replication</strong></p>
+</div>
+<div id="direction-for-replication" class="section level3 unnumbered">
+<h3>Direction for replication</h3>
 <p>Running the codes in this chapter involves reading datasets from a disk. All the datasets that will be imported are available <a href="https://www.dropbox.com/sh/cyx9clgmshwc8eo/AAApv03Qpx84IGKCyF5v2rJ6a?dl=0">here</a>. In this chapter, the path to files is set relative to my own working directory (which is hidden). To run the codes without having to mess with paths to the files, follow these steps:<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a></p>
 <ul>
 <li>set a folder (any folder) as the working directory using <code>setwd()</code><br />
@@ -260,6 +270,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">source</span>(<span class="st">&quot;Data/Chap_1_Demonstration.R&quot;</span>)</a></code></pre></div>
 <p>Note that the data folder includes 183-day worth of PRISM precipitation data for Demonstration 3, which are quite large in size (slightly less than 1 GB). If you are not replicating Demonstration 3, you can either choose not to download them or discard them if you have downloaded them already.</p>
+</div>
 </div>
 <div id="Demo1" class="section level2">
 <h2><span class="header-section-number">1.1</span> Demonstration 1: The impact of groundwater pumping on depth to water table</h2>

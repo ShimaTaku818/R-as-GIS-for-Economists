@@ -6,7 +6,7 @@
 
 
 
-## Introduction {-}
+## Before you start {-}
 
 In this chapter we learn how to use the `sf` package to handle and operate on spatial datasets. The `sf` package uses the class of simple feature (`sf`)^[yes, it is the same as the package name] for spatial objects in R. We first learn how `sf` objects store and represent spatial datasets. We then move on to the following practical topics:
 
@@ -20,7 +20,7 @@ In this chapter we learn how to use the `sf` package to handle and operate on sp
   * find the centroid of polygons
   * calculate the length of lines
 
-**`sf` or `sp`?**
+### `sf` or `sp`? {-}
 
 The `sf` package was designed to replace the `sp` package, which has been one of the most popular and powerful spatial packages in R for more than a decade. It has been about four years since `sf` package was first registered on CRAN. A couple of years back, many other spatial packages did not have support for the package yet. In this [blog post](https://www.r-bloggers.com/should-i-learn-sf-or-sp-for-spatial-r-programming/) that asked the question of whether one should learn `sp` of `sf`, the author said:
 

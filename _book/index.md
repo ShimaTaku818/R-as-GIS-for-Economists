@@ -14,11 +14,11 @@ description: "This is a minimal example of using the bookdown package to write a
 
 This book is being developed as part of my effort to put together course materials for my data science course targeted at upper-level undergraduate and graduate students at the University of Nebraska Lincoln. This books aims particularly at **spatial data processing for an econometric project**, where spatial variables become part of an econometric analysis. Over the years, I have seen so many students and researchers who spend so much time just processing spatial data (often involving clicking the ArcGIS (or QGIS) user interface to death), which is a waste of time from the perspective of academic productivity. My hope is that this book will help researchers become more proficient in spatial data processing and enhance the overall productivity of the fields of economics for which spatial data are essential.  
 
-**About me**
+### About me {-}
 
 I am an Assistant Professor at the Department of Agricultural Economics at University of Nebraska Lincoln, where I also teach Econometrics for Master's students. My research interests lie in precision agriculture, water economics, and agricultural policy. My personal website is [here](http://taromieno.netlify.com/). 
 
-**Comments and Suggestions?**
+### Comments and Suggestions? {-}
 
 Any constructive comments and suggestions about how I can improve the book are all welcome. Please send me an email at tmieno2@unl.edu or create an issue on [the github page](https://github.com/tmieno2/R-as-GIS-for-Economists)  of this book.
 
@@ -162,7 +162,7 @@ Outcomes:
 
 
 ```
-## [1] 0.9663720 0.1348422 0.7897663 0.9950182 0.3192584
+## [1] 0.46481885 0.07506393 0.57149286 0.88586678 0.40826562
 ```
 
 ### Parentheses around codes {-}
@@ -177,7 +177,7 @@ Sometimes you will see codes enclosed by parenthesis like this:
 ```
 
 ```
-## [1] 0.1187087 0.3789819 0.8773591 0.2963889 0.3976654
+## [1] 0.2168010 0.4276363 0.1153001 0.1520762 0.8073401
 ```
 
 The parentheses prints what's inside of a newly created object (here `a`) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created. 

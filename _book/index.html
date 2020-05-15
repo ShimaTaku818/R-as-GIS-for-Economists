@@ -131,6 +131,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-me"><i class="fa fa-check"></i>About me</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#comments-and-suggestions"><i class="fa fa-check"></i>Comments and Suggestions?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-r-as-gis-for-economists"><i class="fa fa-check"></i>Why R as GIS for Economists?</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-vs-python"><i class="fa fa-check"></i>R vs Python</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-vs-arcgis-or-qgis"><i class="fa fa-check"></i>R vs ArcGIS or QGIS</a></li>
@@ -147,7 +149,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#session-information"><i class="fa fa-check"></i>Session Information</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="demo.html"><a href="demo.html"><i class="fa fa-check"></i><b>1</b> R as GIS: Demonstrations</a><ul>
-<li class="chapter" data-level="" data-path="demo.html"><a href="demo.html#introduction"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="demo.html"><a href="demo.html#before-you-start"><i class="fa fa-check"></i>Before you start</a><ul>
+<li class="chapter" data-level="" data-path="demo.html"><a href="demo.html#target-audience"><i class="fa fa-check"></i>Target Audience</a></li>
+<li class="chapter" data-level="" data-path="demo.html"><a href="demo.html#direction-for-replication"><i class="fa fa-check"></i>Direction for replication</a></li>
+</ul></li>
 <li class="chapter" data-level="1.1" data-path="demo.html"><a href="demo.html#Demo1"><i class="fa fa-check"></i><b>1.1</b> Demonstration 1: The impact of groundwater pumping on depth to water table</a><ul>
 <li class="chapter" data-level="1.1.1" data-path="demo.html"><a href="demo.html#project-overview"><i class="fa fa-check"></i><b>1.1.1</b> Project Overview</a></li>
 <li class="chapter" data-level="1.1.2" data-path="demo.html"><a href="demo.html#project-demonstration"><i class="fa fa-check"></i><b>1.1.2</b> Project Demonstration</a></li>
@@ -170,7 +175,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="vector-basics.html"><a href="vector-basics.html"><i class="fa fa-check"></i><b>2</b> Handle vector data using the sf package</a><ul>
-<li class="chapter" data-level="" data-path="vector-basics.html"><a href="vector-basics.html#introduction-1"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="vector-basics.html"><a href="vector-basics.html#before-you-start-1"><i class="fa fa-check"></i>Before you start</a><ul>
+<li><a href="vector-basics.html#sf-or-sp"><code>sf</code> or <code>sp</code>?</a></li>
+</ul></li>
 <li class="chapter" data-level="2.1" data-path="vector-basics.html"><a href="vector-basics.html#spatial-data-structure"><i class="fa fa-check"></i><b>2.1</b> Spatial Data Structure</a></li>
 <li class="chapter" data-level="2.2" data-path="vector-basics.html"><a href="vector-basics.html#simple-feature-geometry-simple-feature-geometry-list-column-and-simple-feature"><i class="fa fa-check"></i><b>2.2</b> Simple feature geometry, simple feature geometry list-column, and simple feature</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="vector-basics.html"><a href="vector-basics.html#simple-feature-geometry-sfg"><i class="fa fa-check"></i><b>2.2.1</b> Simple feature geometry (<code>sfg</code>)</a></li>
@@ -249,12 +256,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="preface" class="section level1 unnumbered">
 <h1>Preface</h1>
 <p>This book is being developed as part of my effort to put together course materials for my data science course targeted at upper-level undergraduate and graduate students at the University of Nebraska Lincoln. This books aims particularly at <strong>spatial data processing for an econometric project</strong>, where spatial variables become part of an econometric analysis. Over the years, I have seen so many students and researchers who spend so much time just processing spatial data (often involving clicking the ArcGIS (or QGIS) user interface to death), which is a waste of time from the perspective of academic productivity. My hope is that this book will help researchers become more proficient in spatial data processing and enhance the overall productivity of the fields of economics for which spatial data are essential.</p>
-<p><strong>About me</strong></p>
+<div id="about-me" class="section level3 unnumbered">
+<h3>About me</h3>
 <p>I am an Assistant Professor at the Department of Agricultural Economics at University of Nebraska Lincoln, where I also teach Econometrics for Master’s students. My research interests lie in precision agriculture, water economics, and agricultural policy. My personal website is <a href="http://taromieno.netlify.com/">here</a>.</p>
-<p><strong>Comments and Suggestions?</strong></p>
+</div>
+<div id="comments-and-suggestions" class="section level3 unnumbered">
+<h3>Comments and Suggestions?</h3>
 <p>Any constructive comments and suggestions about how I can improve the book are all welcome. Please send me an email at <a href="mailto:tmieno2@unl.edu" class="email">tmieno2@unl.edu</a> or create an issue on <a href="https://github.com/tmieno2/R-as-GIS-for-Economists">the github page</a> of this book.</p>
 <hr>
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
+</div>
 <div id="why-r-as-gis-for-economists" class="section level2 unnumbered">
 <h2>Why R as GIS for Economists?</h2>
 <p>R has extensive capabilities as GIS software. In my opinion, <span class="math inline">\(99\%\)</span> of your spatial data processing needs as an economist will be satisfied by R. But, there are several popular options for GIS tasks other than R:</p>
@@ -391,7 +402,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Codes:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">runif</span>(<span class="dv">5</span>)</a></code></pre></div>
 <p>Outcomes:</p>
-<pre><code>## [1] 0.9663720 0.1348422 0.7897663 0.9950182 0.3192584</code></pre>
+<pre><code>## [1] 0.46481885 0.07506393 0.57149286 0.88586678 0.40826562</code></pre>
 </div>
 <div id="parentheses-around-codes" class="section level3 unnumbered">
 <h3>Parentheses around codes</h3>
@@ -399,7 +410,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">(</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">  a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">)</a></code></pre></div>
-<pre><code>## [1] 0.1187087 0.3789819 0.8773591 0.2963889 0.3976654</code></pre>
+<pre><code>## [1] 0.2168010 0.4276363 0.1153001 0.1520762 0.8073401</code></pre>
 <p>The parentheses prints what’s inside of a newly created object (here <code>a</code>) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created.</p>
 <p>This one prints nothing.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">5</span>)</a></code></pre></div>
