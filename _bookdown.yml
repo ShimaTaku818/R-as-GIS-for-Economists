@@ -4,3 +4,4 @@ language:
   ui:
     chapter_name: "Chapter "
 rmd_files: ["index.Rmd", "Demonstration.Rmd"]
+output_dir: "docs"
