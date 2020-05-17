@@ -7,8 +7,7 @@
 
 
 
-
-## Introduction
+**Introduction**
 
 ## Topological relations
 
@@ -750,10 +749,9 @@ For this particular context, the following code will do the job:
 
 ```r
 #--- spatial join ---#
+(
 KS_wells_County <- st_join(KS_wells, KS_corn_price)
-
-#--- take a look ---#
-KS_wells_County
+)
 ```
 
 ```
@@ -940,7 +938,7 @@ First 10 features:
 10   1.142775 MULTIPOLYGON (((-95.50827 3...
 ```
 
-### Case 3: polygons (target) vs polygons (source)
+### Case 3: polygons (target) vs polygons (source) {#polygon-polygon}
 
 For this case, `st_join(target_sf, source_sf)` will return all the unique intersecting polygon-polygon combinations with the information of the polygon from source_sf attached.  
 
@@ -987,7 +985,10 @@ tm_shape(IA_corn) +
   tm_layout(frame = FALSE, legend.outside = TRUE)
 ```
 
-<img src="SpatialInteractionVectorVector_files/figure-html/map-IA-corn, "Map of Iowa counties color-differentiated by corn planted acreage"-1.png" width="672" />
+<div class="figure">
+<img src="SpatialInteractionVectorVector_files/figure-html/map-IA-corn-1.png" alt="Map of Iowa counties color-differentiated by corn planted acreage" width="672" />
+<p class="caption">(\#fig:map-IA-corn)Map of Iowa counties color-differentiated by corn planted acreage</p>
+</div>
 
 Now import the HUC units data:
 
@@ -1037,10 +1038,9 @@ tm_shape(HUC_IA) +
 HUC_joined <- st_join(HUC_IA, IA_corn)
 ```
 
+---
 
-#### Area-weighted average (use area-preserving projection)
-
-To do area-weighted average, we can first use `st_intersection()`. For each of the polygons in the target layer, this function, finds the intersecting polygons from the source data, and then divide the target polygon into parts based on the boundary of the intersecting polygons. 
+To find an area-weighted average, we can first use `st_intersection()`. For each of the polygons in the target layer, this function, finds the intersecting polygons from the source data, and then divide the target polygon into parts based on the boundary of the intersecting polygons. 
 
 
 ```r
