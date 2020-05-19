@@ -16,7 +16,7 @@ This book is being developed as part of my effort to put together course materia
 
 **About me**
 
-I am an Assistant Professor at the Department of Agricultural Economics at University of Nebraska Lincoln, where I also teach Econometrics for Master's students. My research interests lie in precision agriculture, water economics, and agricultural policy. My personal website is [here](http://taromieno.netlify.com/). 
+I am an Assistant Professor at the Department of Agricultural Economics at the University of Nebraska Lincoln, where I also teach Econometrics for Master's students. My research interests lie in precision agriculture, water economics, and agricultural policy. My personal website is [here](http://taromieno.netlify.com/). 
 
 **Comments and Suggestions?**
 
