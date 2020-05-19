@@ -444,7 +444,7 @@ where $yield_i$, $N_i$, $EC_i$, and $v_i$ are corn yield, nitrogen rate, EC, and
 * create maps using the `ggplot2` package
   - use `ggplot2::geom_sf()`
 * create subplots within experimental plots
-  - use-defined function that makes use of `st_geometry()` 
+  - user-defined function that makes use of `st_geometry()` 
 * identify corn yield, as-applied nitrogen, and electric conductivity (EC) data points within each of the experimental plots and find their averages
   - use `sf::st_join()` and   `sf::aggregate()`
 
