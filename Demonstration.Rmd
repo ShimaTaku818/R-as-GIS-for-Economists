@@ -746,7 +746,7 @@ IA_cdl_2015 <- getCDL("Iowa", 2015)$IA2015
 )
 ```
 
-The cells (30 meter by 30 meter) of the imported raster layer take a value ranging from 0 to 255. Corn and soybean are represented by 1 and 5, respectively (visualization of the CDL data is on the right).
+The cells (30 meter by 30 meter) of the imported raster layer take a value ranging from 0 to 255. Corn and soybean are represented by 1 and 5, respectively (Figure \@ref(fig:overlap-cdl-grid)).
 
 Figure \@ref(fig:overlap-cdl-grid) shows the map of one of the IA grids and the CDL cells it overlaps with.
 
@@ -803,7 +803,7 @@ corn_soy <- cdl_extracted %>%
 
 ---
 
-We are still missing daily precipitation data at the moment. We have decided to use daily weather data from PRISM. Daily PRISM data is a raster data with the cell size of 4 km by 4 km. Figure \@ref(fig:Demo4-show-prism-data) the right presents precipitation data downloaded for April 1, 2010. It covers the entire contiguous U.S.     
+We are still missing daily precipitation data at the moment. We have decided to use daily weather data from PRISM. Daily PRISM data is a raster data with the cell size of 4 km by 4 km. Figure \@ref(fig:Demo4-show-prism-data) presents precipitation data downloaded for April 1, 2010. It covers the entire contiguous U.S.     
 
 ```{r Demo4-show-prism-data, fig.cap = "Map of PRISM raster data layer", echo = FALSE, fig.margin = TRUE}
 prism_ex <- readRDS( "./Data/prism_ex.rds")
