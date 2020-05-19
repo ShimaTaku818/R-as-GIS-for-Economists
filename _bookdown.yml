@@ -4,5 +4,5 @@ language:
   ui:
     chapter_name: "Chapter "
 new_session: yes
-rmd_files: ["index.Rmd", "Demonstration.Rmd", "VectorDataBasics.Rmd"]
+rmd_files: ["index.Rmd", "Demonstration.Rmd"]
 output_dir: "docs"

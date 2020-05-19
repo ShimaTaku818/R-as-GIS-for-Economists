@@ -24,7 +24,7 @@
 <meta name="author" content="Taro Mieno" />
 
 
-<meta name="date" content="2020-05-18" />
+<meta name="date" content="2020-05-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -173,32 +173,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.5.2" data-path="demo.html"><a href="demo.html#project-demonstration-4"><i class="fa fa-check"></i><b>1.5.2</b> Project Demonstration</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="vector-basics.html"><a href="vector-basics.html"><i class="fa fa-check"></i><b>2</b> Handle vector data using the sf package</a><ul>
-<li class="chapter" data-level="" data-path="vector-basics.html"><a href="vector-basics.html#before-you-start-1"><i class="fa fa-check"></i>Before you start</a><ul>
-<li><a href="vector-basics.html#sf-or-sp"><code>sf</code> or <code>sp</code>?</a></li>
-<li class="chapter" data-level="" data-path="vector-basics.html"><a href="vector-basics.html#direction-for-replication-1"><i class="fa fa-check"></i>Direction for replication</a></li>
-</ul></li>
-<li class="chapter" data-level="2.1" data-path="vector-basics.html"><a href="vector-basics.html#spatial-data-structure"><i class="fa fa-check"></i><b>2.1</b> Spatial Data Structure</a></li>
-<li class="chapter" data-level="2.2" data-path="vector-basics.html"><a href="vector-basics.html#simple-feature-geometry-simple-feature-geometry-list-column-and-simple-feature"><i class="fa fa-check"></i><b>2.2</b> Simple feature geometry, simple feature geometry list-column, and simple feature</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="vector-basics.html"><a href="vector-basics.html#simple-feature-geometry-sfg"><i class="fa fa-check"></i><b>2.2.1</b> Simple feature geometry (<code>sfg</code>)</a></li>
-<li class="chapter" data-level="2.2.2" data-path="vector-basics.html"><a href="vector-basics.html#create-simple-feature-geometry-list-column-sfc-and-simple-feature-sf-from-scratch"><i class="fa fa-check"></i><b>2.2.2</b> Create simple feature geometry list-column (<code>sfc</code>) and simple feature (<code>sf</code>) from scratch</a></li>
-</ul></li>
-<li class="chapter" data-level="2.3" data-path="vector-basics.html"><a href="vector-basics.html#reading-and-writing-vector-data"><i class="fa fa-check"></i><b>2.3</b> Reading and writing vector data</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="vector-basics.html"><a href="vector-basics.html#reading-a-shapefile"><i class="fa fa-check"></i><b>2.3.1</b> Reading a shapefile</a></li>
-<li class="chapter" data-level="2.3.2" data-path="vector-basics.html"><a href="vector-basics.html#writing-to-a-shapefile"><i class="fa fa-check"></i><b>2.3.2</b> Writing to a shapefile</a></li>
-<li class="chapter" data-level="2.3.3" data-path="vector-basics.html"><a href="vector-basics.html#better-alternatives"><i class="fa fa-check"></i><b>2.3.3</b> Better alternatives</a></li>
-</ul></li>
-<li class="chapter" data-level="2.4" data-path="vector-basics.html"><a href="vector-basics.html#projection-with-a-different-coordinate-reference-systems"><i class="fa fa-check"></i><b>2.4</b> Projection with a different Coordinate Reference Systems</a></li>
-<li class="chapter" data-level="2.5" data-path="vector-basics.html"><a href="vector-basics.html#turning-a-data.frame-of-points-into-an-sf"><i class="fa fa-check"></i><b>2.5</b> Turning a data.frame of points into an <code>sf</code></a></li>
-<li class="chapter" data-level="2.6" data-path="vector-basics.html"><a href="vector-basics.html#conversion-to-and-from-sp"><i class="fa fa-check"></i><b>2.6</b> Conversion to and from sp</a></li>
-<li class="chapter" data-level="2.7" data-path="vector-basics.html"><a href="vector-basics.html#non-spatial-transformation-of-sf"><i class="fa fa-check"></i><b>2.7</b> Non-spatial transformation of sf</a></li>
-<li class="chapter" data-level="2.8" data-path="vector-basics.html"><a href="vector-basics.html#non-interactive-geometrical-operations"><i class="fa fa-check"></i><b>2.8</b> Non-interactive geometrical operations</a><ul>
-<li class="chapter" data-level="2.8.1" data-path="vector-basics.html"><a href="vector-basics.html#st_buffer"><i class="fa fa-check"></i><b>2.8.1</b> st_buffer</a></li>
-<li class="chapter" data-level="2.8.2" data-path="vector-basics.html"><a href="vector-basics.html#st_area"><i class="fa fa-check"></i><b>2.8.2</b> st_area</a></li>
-<li class="chapter" data-level="2.8.3" data-path="vector-basics.html"><a href="vector-basics.html#st_centroid"><i class="fa fa-check"></i><b>2.8.3</b> st_centroid</a></li>
-<li class="chapter" data-level="2.8.4" data-path="vector-basics.html"><a href="vector-basics.html#st_length"><i class="fa fa-check"></i><b>2.8.4</b> st_length</a></li>
-</ul></li>
-</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -243,7 +217,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Here I compare them briefly and discuss why R is a good option.</p>
 <div id="r-vs-python" class="section level3 unnumbered">
 <h3>R vs Python</h3>
-<p>Both R and Python are actually heavily dependent on open source software GDAL and GEOS for their core GIS operations (GDAL for reading spatial data, and GEOS for geometrical operations like intersecting two spatial layers).<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> So, when you run GIS tasks on R or Python you basically tell R or Python what you want to do and they talk to the software, let it do the job, and return the results to you. This means that R and Python are much different in their capability at GIS tasks as they are dependent on the common open source software for many GIS tasks. When GDAL and GEOS get better, R and Python get better (with a short lag). Both of them have good spatial visualization tools as well. Moreover, both R and Python can communicate with QGIS and ArcGIS (as long you as have them installed of course) and use their functionalities from within R and Python via the bridging packages: <code>RQGIS</code> and <code>PyQGIS</code> for QGIS, and <code>R-ArcGIS</code> and <code>ArcPy</code>.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> So, if you are more familiar with Python than R, go ahead and go with Python. From now on, my discussions assume that you are going for the R option, as otherwise, you would not be reading the rest of the book anyway.</p>
+<p>Both R and Python are actually heavily dependent on open source software GDAL and GEOS for their core GIS operations (GDAL for reading spatial data, and GEOS for geometrical operations like intersecting two spatial layers).<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> So, when you run GIS tasks on R or Python you basically tell R or Python what you want to do and they talk to the software, let it do the job, and return the results to you. This means that R and Python are not much different in their capability at GIS tasks as they are dependent on the common open source software for many GIS tasks. When GDAL and GEOS get better, R and Python get better (with a short lag). Both of them have good spatial visualization tools as well. Moreover, both R and Python can communicate with QGIS and ArcGIS (as long you as have them installed of course) and use their functionalities from within R and Python via the bridging packages: <code>RQGIS</code> and <code>PyQGIS</code> for QGIS, and <code>R-ArcGIS</code> and <code>ArcPy</code>.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> So, if you are more familiar with Python than R, go ahead and go with Python. From now on, my discussions assume that you are going for the R option, as otherwise, you would not be reading the rest of the book anyway.</p>
 </div>
 <div id="r-vs-arcgis-or-qgis" class="section level3 unnumbered">
 <h3>R vs ArcGIS or QGIS</h3>
@@ -291,7 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="https://r-spatial.github.io/sf/">Simple Features for R</a>
 <!-- + [Nick Eubank](https://www.nickeubank.com/gis-in-r/) --></li>
 </ul>
-<p>Thanks to all these resources, it has become much easier to self-teach R for GIS work than six or seven years ago when I first started using R for GIS. Even though I have not read through all these resources carefully, I am pretty sure every topic found in this book can also be found <em>somewhere</em> in these resources (except the demonstrations). So, you may wonder why on earth you can benefit from reading this book. It all boils down to search costs. Researchers in different disciplines require different sets of spatial data skills. The available resources tend to be very general covering so many topics that economists are very unlikely to use. It is particularly hard for those who do not have much experience in GIS to identify whether particular skills are essential or not. So, they could spend so much time learning something that is not really useful. The value of this book lies in its deliberate incomprehensiveness. It only packages materials that satisfy the need of most economists, cutting out many topics that are likely to be of limited use for economists.</p>
+<p>Thanks to all these resources, it has become much easier to self-teach R for GIS work than six or seven years ago when I first started using R for GIS. Even though I have not read through all these resources carefully, I am pretty sure every topic found in this book can also be found <em>somewhere</em> in these resources (except the demonstrations). So, you may wonder why on earth you can benefit from reading this book. It all boils down to search costs. Researchers in different disciplines require different sets of spatial data skills. The available resources are either very general covering so many topics that economists are very unlikely to use. It is particularly hard for those who do not have much experience in GIS to identify whether particular skills are essential or not. So, they could spend so much time learning something that is not really useful. The value of this book lies in its deliberate incomprehensiveness. It only packages materials that satisfy the need of most economists, cutting out many topics that are likely to be of limited use for economists.</p>
 <p>For those who are looking for more comprehensive treatments of spatial data handling and processing in one book, I personally like <a href="https://geocompr.robinlovelace.net/">Geocomputation with R</a> a lot. Increasingly, the developer of R packages created a website dedicated to their R packages, where you can often find vignettes (tutorials), like <a href="https://r-spatial.github.io/sf/">Simple Features for R</a>.</p>
 </div>
 <div id="what-is-going-to-be-covered-in-this-book" class="section level2 unnumbered">
@@ -368,7 +342,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Codes:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">runif</span>(<span class="dv">5</span>)</a></code></pre></div>
 <p>Outcomes:</p>
-<pre><code>## [1] 0.4573223 0.8283895 0.5893027 0.6577827 0.1885216</code></pre>
+<pre><code>## [1] 0.8531461 0.4350912 0.3035055 0.1187459 0.5014099</code></pre>
 </div>
 <div id="parentheses-around-codes" class="section level3 unnumbered">
 <h3>Parentheses around codes</h3>
@@ -376,7 +350,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">(</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">  a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">)</a></code></pre></div>
-<pre><code>## [1] 0.75961570 0.17598155 0.03225424 0.56067465 0.68609742</code></pre>
+<pre><code>## [1] 0.9183912 0.6353461 0.6618441 0.9917403 0.5803830</code></pre>
 <p>The parentheses prints what’s inside of a newly created object (here <code>a</code>) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created.</p>
 <p>This one prints nothing.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">5</span>)</a></code></pre></div>
