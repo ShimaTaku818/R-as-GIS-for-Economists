@@ -623,7 +623,7 @@ cat("
 
 **Objective**
 
-Understand the impact of past precipitation on crop choice in Iowa (IA). 
++ Understand the impact of past precipitation on crop choice in Iowa (IA). 
 
 ---
 
@@ -1074,7 +1074,7 @@ IL_corn_planted <- getQuickstat(
 IL_corn_planted
 ```
 
-A nice thing about this function is that the data is downloaded as an `sf` object with county geometry with `geometry = TRUE`. So, you can immediately plot it (Figure \@ref(fig:map-il-corn-acreage)) and use it for later spatial interactions without having to merge the downloaded data to an independent county boundary data.^[`theme_for_map` is a user defined object that defines the theme of figures generated using `ggplot2` for this section. You can find it in **Chap_1_Demonstration.R**.]. 
+A nice thing about this function is that the data is downloaded as an `sf` object with county geometry with `geometry = TRUE`. So, you can immediately plot it (Figure \@ref(fig:map-il-corn-acreage)) and use it for later spatial interactions without having to merge the downloaded data to an independent county boundary data.^[`theme_for_map` is a user defined object that defines the theme of figures generated using `ggplot2` for this section. You can find it in **Chap_1_Demonstration.R**.] 
 
 ```{r map-il-corn-acreage, fig.cap = "Map of Con Planted Acreage in Illinois in 2018"}
 ggplot(IL_corn_planted) +
@@ -1092,6 +1092,7 @@ Let's import the U.S. railroad data and reproject to the CRS of `IL_corn_planted
 
 ```{r Demo5_rail, dependson = "map_il_corn_acreage"}
 rail_roads <- st_read(dsn = "./Data/", layer = "tl_2015_us_rails") %>% 
+  #--- reproject to the CRS of IL_corn_planted ---#
   st_transform(st_crs(IL_corn_planted))
 ```
 
@@ -1193,6 +1194,7 @@ cat("
 ---
 
 **Objective**
+
 + Understand the impact of monthly precipitation on groundwater use for agricultural irrigation
 
 ---

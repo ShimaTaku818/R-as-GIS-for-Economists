@@ -67,7 +67,7 @@ Learn R and maybe take advantage of `R-ArcGIS` or `RQGIS`, which this book does 
 
 + **You know for sure that you need to run only a simple GIS task once and never have to do any GIS tasks ever again?**
 
-Stop reading and ask one of your friends to do the job. Pay him/her $\$20$ per hour, which is way below the opportunity cost of setting up either ArcGIS or QGI and learning to do that simple task on them.
+Stop reading and ask one of your friends to do the job. Pay him/her $\$20$ per hour, which is way below the opportunity cost of setting up either ArcGIS or QGI and learning to do that simple task.
 
 
 ## How is this book different from other online books and resources? {-}
