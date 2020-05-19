@@ -28,7 +28,7 @@ The `sf` package was designed to replace the `sp` package, which has been one of
 
 However, in the future we should see an increasing shift toward the sf package and greater use of sf classes in other packages. I also think that sf is easier to learn to use than sp."
 
-The future has come, and it's not a tough question anymore. I cannot think of any major spatial packages that do not support `sf` package, and `sf` has largely becomes the standard for handling vector data in $R$. Thus, this lecture note does not cover how to use `sp` at all.^[Except we learn how to convert back and forth between `sf` object ans `sp` objects just in case you need `sp` objects.]
+The future has come, and it's not a tough question anymore. I cannot think of any major spatial packages that do not support `sf` package, and `sf` has largely becomes the standard for handling vector data in $R$^[Even if there are packages that do not support `sf`, you can always go back and forth between `sp` and `sf` objects, which we will learn in Chapter \@ref(conv_sp)]. Thus, this lecture note does not cover how to use `sp` at all.
 
 `sf` has several advantages over the `sp` package [@pebesma2018simple].^[There are cases where `sp` is faster completing the same task than `sf`. For example, see the answer to [this question](https://gis.stackexchange.com/questions/324952/spover-vs-sfst-intersection-in-r). But, I doubt the difference between the two is practically important even with bigger data than the test data.] First, it cut off the tie that `sp` had with ESRI shapefile system, which has a somewhat loose way of representing spatial data. Instead, it uses _simple feature access_, which is an open standard supported by Open Geospatial Consortium (OGC). Another important benefit is its compatibility with the `tidyverse` package, which includes widely popular packages like `ggplot2` and `dplyr`. Consequently, map-making with `ggplot()` and data wrangling with a family of `dplyr` functions come very natural to many $R$ users. `sp` objects have different slots for spatial information and attributes data, and they are not amenable to `dplyr` way of data transformation.
 
@@ -701,7 +701,8 @@ CRS:            EPSG:4269
 6      7 445515.0 4509168     I   90248 POINT (-99.64524 40.73164)
 ```
 
-## Conversion to and from sp
+## Conversion to and from sp {#conv_sp}
+
 Though unlikely, you may find instances where `sp` objects are necessary or desirable.^[For example, those who run spatial econometric methods using `spdep`, creating neighbors from polygons is a bit faster using `sp` objects than using `sf` objects.] In that case, it is good to know how to convert an `sf` object to an `sp` object, vice versa. You can convert an `sf` object to its `sp` counterpart using `as(sf_object, "Spatial")`:
 
 
