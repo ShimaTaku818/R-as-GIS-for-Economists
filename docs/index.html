@@ -173,6 +173,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.5.2" data-path="demo.html"><a href="demo.html#project-demonstration-4"><i class="fa fa-check"></i><b>1.5.2</b> Project Demonstration</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="2" data-path="vector-basics.html"><a href="vector-basics.html"><i class="fa fa-check"></i><b>2</b> Handle vector data using the sf package</a><ul>
+<li class="chapter" data-level="" data-path="vector-basics.html"><a href="vector-basics.html#before-you-start-1"><i class="fa fa-check"></i>Before you start</a><ul>
+<li><a href="vector-basics.html#sf-or-sp"><code>sf</code> or <code>sp</code>?</a></li>
+<li class="chapter" data-level="" data-path="vector-basics.html"><a href="vector-basics.html#direction-for-replication-1"><i class="fa fa-check"></i>Direction for replication</a></li>
+</ul></li>
+<li class="chapter" data-level="2.1" data-path="vector-basics.html"><a href="vector-basics.html#spatial-data-structure"><i class="fa fa-check"></i><b>2.1</b> Spatial Data Structure</a></li>
+<li class="chapter" data-level="2.2" data-path="vector-basics.html"><a href="vector-basics.html#simple-feature-geometry-simple-feature-geometry-list-column-and-simple-feature"><i class="fa fa-check"></i><b>2.2</b> Simple feature geometry, simple feature geometry list-column, and simple feature</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="vector-basics.html"><a href="vector-basics.html#simple-feature-geometry-sfg"><i class="fa fa-check"></i><b>2.2.1</b> Simple feature geometry (<code>sfg</code>)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="vector-basics.html"><a href="vector-basics.html#create-simple-feature-geometry-list-column-sfc-and-simple-feature-sf-from-scratch"><i class="fa fa-check"></i><b>2.2.2</b> Create simple feature geometry list-column (<code>sfc</code>) and simple feature (<code>sf</code>) from scratch</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="vector-basics.html"><a href="vector-basics.html#reading-and-writing-vector-data"><i class="fa fa-check"></i><b>2.3</b> Reading and writing vector data</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="vector-basics.html"><a href="vector-basics.html#reading-a-shapefile"><i class="fa fa-check"></i><b>2.3.1</b> Reading a shapefile</a></li>
+<li class="chapter" data-level="2.3.2" data-path="vector-basics.html"><a href="vector-basics.html#writing-to-a-shapefile"><i class="fa fa-check"></i><b>2.3.2</b> Writing to a shapefile</a></li>
+<li class="chapter" data-level="2.3.3" data-path="vector-basics.html"><a href="vector-basics.html#better-alternatives"><i class="fa fa-check"></i><b>2.3.3</b> Better alternatives</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="vector-basics.html"><a href="vector-basics.html#projection-with-a-different-coordinate-reference-systems"><i class="fa fa-check"></i><b>2.4</b> Projection with a different Coordinate Reference Systems</a></li>
+<li class="chapter" data-level="2.5" data-path="vector-basics.html"><a href="vector-basics.html#turning-a-data.frame-of-points-into-an-sf"><i class="fa fa-check"></i><b>2.5</b> Turning a data.frame of points into an <code>sf</code></a></li>
+<li class="chapter" data-level="2.6" data-path="vector-basics.html"><a href="vector-basics.html#conversion-to-and-from-sp"><i class="fa fa-check"></i><b>2.6</b> Conversion to and from sp</a></li>
+<li class="chapter" data-level="2.7" data-path="vector-basics.html"><a href="vector-basics.html#non-spatial-transformation-of-sf"><i class="fa fa-check"></i><b>2.7</b> Non-spatial transformation of sf</a></li>
+<li class="chapter" data-level="2.8" data-path="vector-basics.html"><a href="vector-basics.html#non-interactive-geometrical-operations"><i class="fa fa-check"></i><b>2.8</b> Non-interactive geometrical operations</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="vector-basics.html"><a href="vector-basics.html#st_buffer"><i class="fa fa-check"></i><b>2.8.1</b> st_buffer</a></li>
+<li class="chapter" data-level="2.8.2" data-path="vector-basics.html"><a href="vector-basics.html#st_area"><i class="fa fa-check"></i><b>2.8.2</b> st_area</a></li>
+<li class="chapter" data-level="2.8.3" data-path="vector-basics.html"><a href="vector-basics.html#st_centroid"><i class="fa fa-check"></i><b>2.8.3</b> st_centroid</a></li>
+<li class="chapter" data-level="2.8.4" data-path="vector-basics.html"><a href="vector-basics.html#st_length"><i class="fa fa-check"></i><b>2.8.4</b> st_length</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -213,7 +239,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>Welcome</h1>
 <p>This book is being developed as part of my effort to put together course materials for my data science course targeted at upper-level undergraduate and graduate students at the University of Nebraska Lincoln. This books aims particularly at <strong>spatial data processing for an econometric project</strong>, where spatial variables become part of an econometric analysis. Over the years, I have seen so many students and researchers who spend so much time just processing spatial data (often involving clicking the ArcGIS (or QGIS) user interface to death), which is a waste of time from the perspective of academic productivity. My hope is that this book will help researchers become more proficient in spatial data processing and enhance the overall productivity of the fields of economics for which spatial data are essential.</p>
 <p><strong>About me</strong></p>
-<p>I am an Assistant Professor at the Department of Agricultural Economics at University of Nebraska Lincoln, where I also teach Econometrics for Master’s students. My research interests lie in precision agriculture, water economics, and agricultural policy. My personal website is <a href="http://taromieno.netlify.com/">here</a>.</p>
+<p>I am an Assistant Professor at the Department of Agricultural Economics at the University of Nebraska Lincoln, where I also teach Econometrics for Master’s students. My research interests lie in precision agriculture, water economics, and agricultural policy. My personal website is <a href="http://taromieno.netlify.com/">here</a>.</p>
 <p><strong>Comments and Suggestions?</strong></p>
 <p>Any constructive comments and suggestions about how I can improve the book are all welcome. Please send me an email at <a href="mailto:tmieno2@unl.edu" class="email">tmieno2@unl.edu</a> or create an issue on <a href="https://github.com/tmieno2/R-as-GIS-for-Economists">the github page</a> of this book.</p>
 <hr>

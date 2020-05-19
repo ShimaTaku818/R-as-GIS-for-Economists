@@ -750,10 +750,9 @@ For this particular context, the following code will do the job:
 
 ```r
 #--- spatial join ---#
+(
 KS_wells_County <- st_join(KS_wells, KS_corn_price)
-
-#--- take a look ---#
-KS_wells_County
+)
 ```
 
 ```
@@ -987,7 +986,10 @@ tm_shape(IA_corn) +
   tm_layout(frame = FALSE, legend.outside = TRUE)
 ```
 
-<img src="SpatialInteractionVectorVector_files/figure-html/map-IA-corn, "Map of Iowa counties color-differentiated by corn planted acreage"-1.png" width="672" />
+<div class="figure">
+<img src="SpatialInteractionVectorVector_files/figure-html/map-IA-corn-1.png" alt="Map of Iowa counties color-differentiated by corn planted acreage" width="672" />
+<p class="caption">(\#fig:map-IA-corn)Map of Iowa counties color-differentiated by corn planted acreage</p>
+</div>
 
 Now import the HUC units data:
 

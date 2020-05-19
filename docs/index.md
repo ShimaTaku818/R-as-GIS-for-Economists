@@ -1,7 +1,7 @@
 --- 
 title: "R as GIS for Economists"
 author: "Taro Mieno"
-date: "2020-05-14"
+date: "2020-05-18"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [RGIS.bib]
@@ -10,13 +10,13 @@ link-citations: yes
 description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
 ---
 
-# Preface {-}
+# Welcome {-}
 
 This book is being developed as part of my effort to put together course materials for my data science course targeted at upper-level undergraduate and graduate students at the University of Nebraska Lincoln. This books aims particularly at **spatial data processing for an econometric project**, where spatial variables become part of an econometric analysis. Over the years, I have seen so many students and researchers who spend so much time just processing spatial data (often involving clicking the ArcGIS (or QGIS) user interface to death), which is a waste of time from the perspective of academic productivity. My hope is that this book will help researchers become more proficient in spatial data processing and enhance the overall productivity of the fields of economics for which spatial data are essential.  
 
 **About me**
 
-I am an Assistant Professor at the Department of Agricultural Economics at University of Nebraska Lincoln, where I also teach Econometrics for Master's students. My research interests lie in precision agriculture, water economics, and agricultural policy. My personal website is [here](http://taromieno.netlify.com/). 
+I am an Assistant Professor at the Department of Agricultural Economics at the University of Nebraska Lincoln, where I also teach Econometrics for Master's students. My research interests lie in precision agriculture, water economics, and agricultural policy. My personal website is [here](http://taromieno.netlify.com/). 
 
 **Comments and Suggestions?**
 
@@ -24,6 +24,8 @@ Any constructive comments and suggestions about how I can improve the book are a
 
 <hr>
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+
+# Preface {-}
 
 ## Why R as GIS for Economists? {-}
 
@@ -37,29 +39,29 @@ Here I compare them briefly and discuss why R is a good option.
 
 ### R vs Python {-}
 
-Both R and Python are actually heavily dependent on open source software GDAL and GEOS for their core GIS operations (GDAL for reading spatial data, and GEOS for geometrical operations like intersecting two spatial layers).^[For example, see the very first sentence of [this page](https://cran.r-project.org/web/packages/sf/index.html)] So, when you run GIS tasks on R or Python you basically tell R or Python what you want to do and they talk to the software, let them do the job, and return the results back to us. This means that R and Python are not very different in its capability at GIS tasks as they are dependent on the common open source software for many GIS tasks. When GDAL and GEOS get better, R and Python get better (with a short lag). Both of them have good spatial visualization tools as well. Moreover, both R and Python can communicate with QGIS and ArcGIS (as long you as have them installed of course) and use their functionalities from within R and Python via the bridging packages: `RQGIS` and `PyQGIS` for QGIS, and `R-ArcGIS` and `ArcPy`.^[We do not learn them in this lecture note because I do not see the benefits of using them.] So, if you are more familiar with Python than R, go ahead and go for the Python option. From now on, my discussions assume that you are going for the R option, as otherwise, you would not be reading the rest of the book anyway.
+Both R and Python are actually heavily dependent on open source software GDAL and GEOS for their core GIS operations (GDAL for reading spatial data, and GEOS for geometrical operations like intersecting two spatial layers).^[For example, see the very first sentence of [this page](https://cran.r-project.org/web/packages/sf/index.html)] So, when you run GIS tasks on R or Python you basically tell R or Python what you want to do and they talk to the software, let it do the job, and return the results to you. This means that R and Python are much different in their capability at GIS tasks as they are dependent on the common open source software for many GIS tasks. When GDAL and GEOS get better, R and Python get better (with a short lag). Both of them have good spatial visualization tools as well. Moreover, both R and Python can communicate with QGIS and ArcGIS (as long you as have them installed of course) and use their functionalities from within R and Python via the bridging packages: `RQGIS` and `PyQGIS` for QGIS, and `R-ArcGIS` and `ArcPy`.^[We do not learn them in this lecture note because I do not see the benefits of using them.] So, if you are more familiar with Python than R, go ahead and go with Python. From now on, my discussions assume that you are going for the R option, as otherwise, you would not be reading the rest of the book anyway.
 
 ### R vs ArcGIS or QGIS {-}
 
-ArcGIS is commercial software and it is quite expensive (you are likely to be able to get a significant discount if you are a student at or work for a University). On the other hand, QGIS is open source and free. It has seen significant developments over the decade, and I would say it is just as competitive as ArcGIS. QGIS also uses open source geospatial software GDAL, GEOS, and others (SAGA, GRASS GIS). Both of them have a graphical interface that helps you implement various GIS tasks unlike R which requires programming. 
+ArcGIS is commercial software and it is quite expensive (you are likely to be able to get a significant discount if you are a student at or work for a University). On the other hand, QGIS is open source and free. It has seen significant development over the decade, and I would say it is just as competitive as ArcGIS. QGIS also uses open source geospatial software GDAL, GEOS, and others (SAGA, GRASS GIS). Both of them have a graphical interface that helps you implement various GIS tasks unlike R which requires programming. 
 
-Now, since R can use ArcGIS and QGIS through the bridging packages, a more precise question we should be asking is whether you should program GIS tasks using R (possibly using the bridging packages) or manually implement GIS tasks using the graphical interface of ArcGIS or QGIS. The answer is programming GIS tasks using R. First, manual GIS operations are hard to repeat. It is often the case that in the course of a project you need to redo the same GIS task except that the underlying datasets have changed. If you have programmed the process with R, you just run the same code and that's it. You get the desired results. If you did not program it, you need to go through many clicks on the graphical interface all over again, potentially trying to remember how you actually did it last time.^[You could take a step by step note of what you did though.] Second and more important, manual operations are not scalable. It has become much more common that we need to process many large spatial datasets. Imagine you are doing the same operations on $1,000$ files using a graphical interface, or even $50$ files. Do you know who is good at doing the same tasks over and over again without complaining? A computer. Just let them do what they like to do. You have better things do. 
+Now, since R can use ArcGIS and QGIS through the bridging packages, a more precise question we should be asking is whether you should program GIS tasks using R (possibly using the bridging packages) or manually implement GIS tasks using the graphical interface of ArcGIS or QGIS. The answer is programming GIS tasks using R. First, manual GIS operations are hard to repeat. It is often the case that in the course of a project you need to redo the same GIS task except that the underlying datasets have changed. If you have programmed the process with R, you just run the same code and that's it. You get the desired results. If you did not program it, you need to go through many clicks on the graphical interface all over again, potentially trying to remember how you actually did it the last time.^[You could take a step-by-step note of what you did though.] Second and more important, manual operations are not scalable. It has become much more common that we need to process many large spatial datasets. Imagine you are doing the same operations on $1,000$ files using a graphical interface, or even $50$ files. Do you know what is good at doing the same tasks over and over again without complaining? A computer. Just let it do what it likes to do. You have better things do. 
 
-Finally, should you learn ArcGIS or QGIS in addition to (or before) R? I am doubtful. As economists, GIS tasks we need to do are not super convoluted most of the time. Suppose $\Omega_R$ and $\Omega_{AQ}$ represent the set of GIS tasks R and $ArcGIS/QGIS$ can implement, respectively. Further, let $\Omega_E$ represent the set of skills economists need to implement. Then, $\Omega_E \in \Omega_R$ $99\%$ (or maybe $95\%$ to be safe) of the time and $\Omega_E \not\subset \Omega_{AQ}\setminus\Omega_R$ $99\%$ of the time. Personally, I have never had to rely on either ArcGIS or QGIS for my research projects after I learn how to use R as GIS. 
+Finally, should you learn ArcGIS or QGIS in addition to (or before) R? I am doubtful. As economists, the GIS tasks we need to do are not super convoluted most of the time. Suppose $\Omega_R$ and $\Omega_{AQ}$ represent the set of GIS tasks R and $ArcGIS/QGIS$ can implement, respectively. Further, let $\Omega_E$ represent the set of skills economists need to implement. Then, $\Omega_E \in \Omega_R$ $99\%$ (or maybe $95\%$ to be safe) of the time and $\Omega_E \not\subset \Omega_{AQ}\setminus\Omega_R$ $99\%$ of the time. Personally, I have never had to rely on either ArcGIS or QGIS for my research projects after I learned how to use R as GIS. 
 
-One of the things ArcGIS and QGIS can do but R cannot do ($\Omega_{AQ}\setminus\Omega_R$) is creating spatial objects by hand using a graphical user interface, like drawing polygons and lines. Another thing that R lags behind ArcGIS and QGIS is 3D data visualization. But, I must say neither of them is essential for economists at the moment. Finally, sometime it is easier and faster to make a map using ArcGIS and QGIS especially for a complicated map.^[Let me know if you know something that is essential for economists that only ArcGIS or QGIS can do. I will add that to the list her.] 
+One of the things ArcGIS and QGIS can do but R cannot do ($\Omega_{AQ}\setminus\Omega_R$) is create spatial objects by hand using a graphical user interface, like drawing polygons and lines. Another thing that R lags behind ArcGIS and QGIS is 3D data visualization. But, I must say neither of them is essential for economists at the moment. Finally, sometime it is easier and faster to make a map using ArcGIS and QGIS especially for a complicated map.^[Let me know if you know something that is essential for economists that only ArcGIS or QGIS can do. I will add that to the list here.] 
 
 ### Summary {-}
 
 + **You have never used any GIS software?**
 
-Learn R first. If you find out you really really cannot complete the tasks you would like to do on R, then turn to other options. 
+Learn R first. If you find out you really cannot complete the tasks you would like to do using R, then turn to other options. 
 
 + **You have used ArcGIS or QGIS and do not like them because they crash often?**
 
-Why don't you try R?^[I am not saying R does not crash. R does crash. But, often times, the fault is yours, not the software's.] You may realize you actually do not need them.
+Why don't you try R?^[I am not saying R does not crash. R does crash. But, often times, the fault is yours, rather than the software's.] You may realize you actually do not need them.
 
-+ **You have used ArcGIS or QGIS before and are so comfortable with them, but need to program repetitive GIS tasks?**
++ **You have used ArcGIS or QGIS before and are very comfortable with them, but you need to program repetitive GIS tasks?**
 
 Learn R and maybe take advantage of `R-ArcGIS` or `RQGIS`, which this book does not cover.
 
@@ -87,7 +89,7 @@ We are seeing an explosion of online (and free) resources that teach how to use 
 + [Simple Features for R](https://r-spatial.github.io/sf/)
 <!-- + [Nick Eubank](https://www.nickeubank.com/gis-in-r/) -->
 
-Thanks to all these resources, it has become much easier to self-teach R for GIS work than six or seven years ago when I first started using R for GIS. Even though I have not read through all these resources carefully, I am pretty sure every topic found in this book can also be found _somewhere_ in these resources (except the demonstrations). So, you may wonder why on earth you can benefit from reading this book. It all boils down to search costs. Researchers in different disciplines require different sets of spatial data skills. The available resources are either very general covering so many topics that economists are very unlikely to use. It is particularly hard for those who do not have much experience in GIS to identify whether particular skills are essential or not. So, they could spend so much time learning something that is not really useful. The value of this book lies in its deliberate incomprehensiveness. It only packages materials that satisfy the need of most economists, cutting out many topics that are likely to be of limited use for economists. 
+Thanks to all these resources, it has become much easier to self-teach R for GIS work than six or seven years ago when I first started using R for GIS. Even though I have not read through all these resources carefully, I am pretty sure every topic found in this book can also be found _somewhere_ in these resources (except the demonstrations). So, you may wonder why on earth you can benefit from reading this book. It all boils down to search costs. Researchers in different disciplines require different sets of spatial data skills. The available resources tend to be very general covering so many topics that economists are very unlikely to use. It is particularly hard for those who do not have much experience in GIS to identify whether particular skills are essential or not. So, they could spend so much time learning something that is not really useful. The value of this book lies in its deliberate incomprehensiveness. It only packages materials that satisfy the need of most economists, cutting out many topics that are likely to be of limited use for economists. 
 
 For those who are looking for more comprehensive treatments of spatial data handling and processing in one book, I personally like [Geocomputation with R](https://geocompr.robinlovelace.net/) a lot. Increasingly, the developer of R packages created a website dedicated to their R packages, where you can often find vignettes (tutorials), like [Simple Features for R](https://r-spatial.github.io/sf/). 
 
@@ -162,7 +164,7 @@ Outcomes:
 
 
 ```
-## [1] 0.6620285 0.5236162 0.7255064 0.3159363 0.6393840
+## [1] 0.76852615 0.59877670 0.98353547 0.07876941 0.25109192
 ```
 
 ### Parentheses around codes {-}
@@ -177,7 +179,7 @@ Sometimes you will see codes enclosed by parenthesis like this:
 ```
 
 ```
-## [1] 0.04843399 0.51585740 0.61120891 0.01559738 0.03947177
+## [1] 0.08014054 0.66606142 0.63173457 0.79217084 0.70675693
 ```
 
 The parentheses prints what's inside of a newly created object (here `a`) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created. 

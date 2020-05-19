@@ -173,6 +173,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.5.2" data-path="demo.html"><a href="demo.html#project-demonstration-4"><i class="fa fa-check"></i><b>1.5.2</b> Project Demonstration</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="2" data-path="vector-basics.html"><a href="vector-basics.html"><i class="fa fa-check"></i><b>2</b> Handle vector data using the sf package</a><ul>
+<li class="chapter" data-level="" data-path="vector-basics.html"><a href="vector-basics.html#before-you-start-1"><i class="fa fa-check"></i>Before you start</a><ul>
+<li><a href="vector-basics.html#sf-or-sp"><code>sf</code> or <code>sp</code>?</a></li>
+<li class="chapter" data-level="" data-path="vector-basics.html"><a href="vector-basics.html#direction-for-replication-1"><i class="fa fa-check"></i>Direction for replication</a></li>
+</ul></li>
+<li class="chapter" data-level="2.1" data-path="vector-basics.html"><a href="vector-basics.html#spatial-data-structure"><i class="fa fa-check"></i><b>2.1</b> Spatial Data Structure</a></li>
+<li class="chapter" data-level="2.2" data-path="vector-basics.html"><a href="vector-basics.html#simple-feature-geometry-simple-feature-geometry-list-column-and-simple-feature"><i class="fa fa-check"></i><b>2.2</b> Simple feature geometry, simple feature geometry list-column, and simple feature</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="vector-basics.html"><a href="vector-basics.html#simple-feature-geometry-sfg"><i class="fa fa-check"></i><b>2.2.1</b> Simple feature geometry (<code>sfg</code>)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="vector-basics.html"><a href="vector-basics.html#create-simple-feature-geometry-list-column-sfc-and-simple-feature-sf-from-scratch"><i class="fa fa-check"></i><b>2.2.2</b> Create simple feature geometry list-column (<code>sfc</code>) and simple feature (<code>sf</code>) from scratch</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="vector-basics.html"><a href="vector-basics.html#reading-and-writing-vector-data"><i class="fa fa-check"></i><b>2.3</b> Reading and writing vector data</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="vector-basics.html"><a href="vector-basics.html#reading-a-shapefile"><i class="fa fa-check"></i><b>2.3.1</b> Reading a shapefile</a></li>
+<li class="chapter" data-level="2.3.2" data-path="vector-basics.html"><a href="vector-basics.html#writing-to-a-shapefile"><i class="fa fa-check"></i><b>2.3.2</b> Writing to a shapefile</a></li>
+<li class="chapter" data-level="2.3.3" data-path="vector-basics.html"><a href="vector-basics.html#better-alternatives"><i class="fa fa-check"></i><b>2.3.3</b> Better alternatives</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="vector-basics.html"><a href="vector-basics.html#projection-with-a-different-coordinate-reference-systems"><i class="fa fa-check"></i><b>2.4</b> Projection with a different Coordinate Reference Systems</a></li>
+<li class="chapter" data-level="2.5" data-path="vector-basics.html"><a href="vector-basics.html#turning-a-data.frame-of-points-into-an-sf"><i class="fa fa-check"></i><b>2.5</b> Turning a data.frame of points into an <code>sf</code></a></li>
+<li class="chapter" data-level="2.6" data-path="vector-basics.html"><a href="vector-basics.html#conversion-to-and-from-sp"><i class="fa fa-check"></i><b>2.6</b> Conversion to and from sp</a></li>
+<li class="chapter" data-level="2.7" data-path="vector-basics.html"><a href="vector-basics.html#non-spatial-transformation-of-sf"><i class="fa fa-check"></i><b>2.7</b> Non-spatial transformation of sf</a></li>
+<li class="chapter" data-level="2.8" data-path="vector-basics.html"><a href="vector-basics.html#non-interactive-geometrical-operations"><i class="fa fa-check"></i><b>2.8</b> Non-interactive geometrical operations</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="vector-basics.html"><a href="vector-basics.html#st_buffer"><i class="fa fa-check"></i><b>2.8.1</b> st_buffer</a></li>
+<li class="chapter" data-level="2.8.2" data-path="vector-basics.html"><a href="vector-basics.html#st_area"><i class="fa fa-check"></i><b>2.8.2</b> st_area</a></li>
+<li class="chapter" data-level="2.8.3" data-path="vector-basics.html"><a href="vector-basics.html#st_centroid"><i class="fa fa-check"></i><b>2.8.3</b> st_centroid</a></li>
+<li class="chapter" data-level="2.8.4" data-path="vector-basics.html"><a href="vector-basics.html#st_length"><i class="fa fa-check"></i><b>2.8.4</b> st_length</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -342,7 +368,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Codes:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">runif</span>(<span class="dv">5</span>)</a></code></pre></div>
 <p>Outcomes:</p>
-<pre><code>## [1] 0.8982412 0.2535162 0.9190784 0.9326857 0.2459199</code></pre>
+<pre><code>## [1] 0.76852615 0.59877670 0.98353547 0.07876941 0.25109192</code></pre>
 </div>
 <div id="parentheses-around-codes" class="section level3 unnumbered">
 <h3>Parentheses around codes</h3>
@@ -350,7 +376,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">(</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">  a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">)</a></code></pre></div>
-<pre><code>## [1] 0.44281774 0.15735752 0.33179035 0.02139052 0.36077320</code></pre>
+<pre><code>## [1] 0.08014054 0.66606142 0.63173457 0.79217084 0.70675693</code></pre>
 <p>The parentheses prints what’s inside of a newly created object (here <code>a</code>) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created.</p>
 <p>This one prints nothing.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">5</span>)</a></code></pre></div>
@@ -379,10 +405,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] compiler_4.0.0  magrittr_1.5    bookdown_0.18   tools_4.0.0    
-##  [5] htmltools_0.4.0 rstudioapi_0.11 yaml_2.2.1      Rcpp_1.0.4.6   
-##  [9] stringi_1.4.6   rmarkdown_2.1   knitr_1.28      stringr_1.4.0  
-## [13] xfun_0.13       digest_0.6.25   rlang_0.4.6     evaluate_0.14</code></pre>
+##  [1] compiler_4.0.0  magrittr_1.5    bookdown_0.18   htmltools_0.4.0
+##  [5] tools_4.0.0     yaml_2.2.1      Rcpp_1.0.4.6    stringi_1.4.6  
+##  [9] rmarkdown_2.1   knitr_1.28      stringr_1.4.0   digest_0.6.25  
+## [13] xfun_0.13       rlang_0.4.6     evaluate_0.14</code></pre>
 
 </div>
 </div>
