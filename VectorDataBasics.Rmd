@@ -42,7 +42,7 @@ In this chapter we learn how to use the `sf` package to handle and operate on sp
 
 + read and write a shapefile and spatial data in other formats (and why you might not want to use the shapefile system any more, but use other alternative formats)
 + project and reproject spatial objects
-+ convert `sf` objects into `sp` objective, vice versa
++ convert `sf` objects into `sp` objects, vice versa
 + confirm that `dplyr` works well with `sf` objects
 + implement non-interactive (does not involve two `sf` objects) geometric operations on `sf` objects
   * create buffers 
@@ -52,7 +52,7 @@ In this chapter we learn how to use the `sf` package to handle and operate on sp
 
 ### `sf` or `sp`? {-}
 
-The `sf` package was designed to replace the `sp` package, which has been one of the most popular and powerful spatial packages in R for more than a decade. It has been about four years since `sf` package was first registered on CRAN. A couple of years back, many other spatial packages did not have support for the package yet. In this [blog post](https://www.r-bloggers.com/should-i-learn-sf-or-sp-for-spatial-r-programming/) that asked the question of whether one should learn `sp` of `sf`, the author said:
+The `sf` package was designed to replace the `sp` package, which has been one of the most popular and powerful spatial packages in R for more than a decade. It has been about four years since the `sf` package was first registered on CRAN. A couple of years back, many other spatial packages did not have support for the package yet. In this [blog post](https://www.r-bloggers.com/should-i-learn-sf-or-sp-for-spatial-r-programming/) the author responded to the questions of whether one should learn `sp` of `sf` saying,
 
 "That's a tough question. If you have time, I would say, learn to use both. sf is pretty new, so a lot of packages that depend on spatial classes still rely on sp. So you will need to know sp if you want to do any integration with many other packages, including raster (as of March 2018).
 
@@ -60,7 +60,7 @@ However, in the future we should see an increasing shift toward the sf package a
 
 The future has come, and it's not a tough question anymore. I cannot think of any major spatial packages that do not support `sf` package, and `sf` has largely becomes the standard for handling vector data in $R$. Thus, this lecture note does not cover how to use `sp` at all.^[Except we learn how to convert back and forth between `sf` object ans `sp` objects just in case you need `sp` objects.]
 
-`sf` has several advantages over `sp` package [@pebesma2018simple].^[There are cases where `sp` is faster completing the same task than `sf`. For example, see the answer to [this question](https://gis.stackexchange.com/questions/324952/spover-vs-sfst-intersection-in-r). But, the I doubt the difference between the two is practically important even with a bigger data than the test data.] First, it cut off the tie that `sp` had with ESRI shapefile system, which has somewhat loose way of representing spatial data. Instead, it uses _simple feature access_, which is an open standard supported by Open Geospatial Consortium (OGC). Another important benefit is its compatibility with the `tidyverse` package, which include widely popular packages like `ggplot2` and `dplyr`. Consequently, map-making with `ggplot()` and data wrangling with a family of `dplyr` functions come very natural to many $R$ users. `sp` objects have different slots for spatial information and attributes data, and they are not amenable to `dplyr` way of data transformation.
+`sf` has several advantages over the `sp` package [@pebesma2018simple].^[There are cases where `sp` is faster completing the same task than `sf`. For example, see the answer to [this question](https://gis.stackexchange.com/questions/324952/spover-vs-sfst-intersection-in-r). But, I doubt the difference between the two is practically important even with bigger data than the test data.] First, it cut off the tie that `sp` had with ESRI shapefile system, which has a somewhat loose way of representing spatial data. Instead, it uses _simple feature access_, which is an open standard supported by Open Geospatial Consortium (OGC). Another important benefit is its compatibility with the `tidyverse` package, which includes widely popular packages like `ggplot2` and `dplyr`. Consequently, map-making with `ggplot()` and data wrangling with a family of `dplyr` functions come very natural to many $R$ users. `sp` objects have different slots for spatial information and attributes data, and they are not amenable to `dplyr` way of data transformation.
 
 ### Direction for replication {-}
 
@@ -72,7 +72,7 @@ All the datasets that you need to import are available [here](https://www.dropbo
 
 ## Spatial Data Structure
 
-Here, we learn how the `sf` package stores spatial data, along with the definition of three key `sf` object classes: simple feature geometry (`sfg`), simple feature geometry list-column (`sfc`), and simple feature (`sf`). The `sf` package provides a simply way of storing geographic information and the attributes of the geographic units in a single dataset. This special type of dataset is called simple feature (`sf`). It is best to take a look at an example to see how this is achieved. We use North Carolina county boundaries with county attributes (Figure \@ref(fig:nc-county)).  
+Here we learn how the `sf` package stores spatial data along with the definition of three key `sf` object classes: simple feature geometry (`sfg`), simple feature geometry list-column (`sfc`), and simple feature (`sf`). The `sf` package provides a simply way of storing geographic information and the attributes of the geographic units in a single dataset. This special type of dataset is called simple feature (`sf`). It is best to take a look at an example to see how this is achieved. We use North Carolina county boundaries with county attributes (Figure \@ref(fig:nc-county)).  
 
 ```{r nc_import}
 #--- a dataset that comes with the sf package ---#
@@ -119,11 +119,11 @@ Finally, the `geometry` variable is a list of individual `sfg`s, called simple f
 dplyr::select(nc, geometry)
 ``` 
 
-Elements of a geometry list-column are allowed to be different in nature from other elements^[Just like a regular `list` object can contain mixed types of elements: numeric, character, etc]. In the `nc` data, all the elements (`sfg`s) in `geometry` column are `MULTIPOLYGON`. However, you could also have `LINESTRING` or `POINT` objects mixed with `MULTIPOLYGONS` objects in a single `sf` object if you would like. 
+Elements of a geometry list-column are allowed to be different in nature from other elements^[This is just like a regular `list` object that can contain mixed types of elements: numeric, character, etc]. In the `nc` data, all the elements (`sfg`s) in `geometry` column are `MULTIPOLYGON`. However, you could also have `LINESTRING` or `POINT` objects mixed with `MULTIPOLYGONS` objects in a single `sf` object if you would like. 
 
 ## Simple feature geometry, simple feature geometry list-column, and simple feature
 
-Here, we learn how different types of `sfg` are constructed. We also learn how to create `sfc` and `sf` from `sfg` from scratch.^[I must say that creating spatial objects from scratch yourself is an unnecessary skill for many of us as an economist. But, it is still good to know the underlying structure of the data. Also, occasionally the need arises. For example, I had to construct spatial objects from scratch when I designed on-farm randomized nitrogen trials. In such cases, it is of course necessary to understand how different types of `sfg` are constructed, create `sfc` from a collection of `sfg`s, and then create an `sf` from an `sfc`.]    
+Here, we learn how different types of `sfg` are constructed. We also learn how to create `sfc` and `sf` from `sfg` from scratch.^[Creating spatial objects from scratch yourself is an unnecessary skill for many of us as economists. But, it is still good to know the underlying structure of the data. Also, occasionally the need arises. For example, I had to construct spatial objects from scratch when I designed on-farm randomized nitrogen trials. In such cases, it is of course necessary to understand how different types of `sfg` are constructed, create `sfc` from a collection of `sfg`s, and then create an `sf` from an `sfc`.]    
 
 ### Simple feature geometry (`sfg`)
 
@@ -131,13 +131,13 @@ The `sf` package uses a class of `sfg` (simple feature geometry) objects to repr
 
 + `POINT`: area-less feature that represents a point (e.g., well, city, farmland) 
 + `LINESTRING`: (e.g., a tributary of a river) 
-+ `MULTILINESTRING`: (e.g., river with more than one tributaries) 
++ `MULTILINESTRING`: (e.g., river with more than one tributary) 
 + `POLYGON`: geometry with a positive area (e.g., county, state, country)
 + `MULTIPOLYGON`: collection of polygons to represent a single object (e.g., countries with islands: U.S., Japan)
 
 ---
 
-`POINT` is the simplest geometry type, and is represented by a vector of two^[or three to represent a point in the three-dimensional space] numeric values. An example below shows how a `POINT` feature can be made from scratch:
+`POINT` is the simplest geometry type and is represented by a vector of two^[or three to represent a point in the three-dimensional space] numeric values. An example below shows how a `POINT` feature can be made from scratch:
 
 ```{r sf_point}
 #--- create a POINT ---#
@@ -151,7 +151,7 @@ The `st_point()` function creates a `POINT` object when supplied with a vector o
 class(a_point)
 ```
 
-You can see that it's indeed a `POINT` object. But, it's also an `sfg` object. So, `a_point` is an `sfg` object of type `POINT`. 
+you can see that it's indeed a `POINT` object. But, it's also an `sfg` object. So, `a_point` is an `sfg` object of type `POINT`. 
 
 ---
 
@@ -253,7 +253,7 @@ df_ex$geometry <- sfc_ex
 df_ex
 ```
 
-At this point, it is not recognized as an `sf` by R yet.
+At this point, it is not yet recognized as an `sf` by R yet.
 
 ```{r class_check}
 #--- see what it looks like (this is not an sf object yet) ---#
@@ -280,11 +280,11 @@ class(sf_ex)
 
 ## Reading and writing vector data
 
-I claimed that you do not need ArcGIS or QGIS $99\%$ of your work as an economist. However, the vast majority of people still use ArcGIS to handle spatial data, which has its own system of storing spatial data^[See [here]() for other various formats in which spatial data are stored.] called shapefile. So, chances are that your collaborators still use shapefiles. Moreover, there are many GIS data online that are available only as shapefiles. So, it is important to learn how to read and write shapefiles. 
+I claimed that you do not need ArcGIS or QGIS $99\%$ of your work as an economist. However, the vast majority of people still use ArcGIS to handle spatial data, which has its own system of storing spatial data^[See [here]() for how spatial datasets can be stores in various other formats.] called shapefile. So, chances are that your collaborators still use shapefiles. Moreover, there are many GIS data online that are available only as shapefiles. So, it is important to learn how to read and write shapefiles. 
 
 ### Reading a shapefile
 
-We can use `st_read()` function to read a shapefile. It reads in a shapefile and then turn the data into an sf object. Let's take a look at an example. 
+We can use `st_read()` to read a shapefile. It reads in a shapefile and then turn the data into an sf object. Let's take a look at an example. 
 
 ```{r import_nc_shp}
 #--- read a NE county boundary shapefile ---#
@@ -301,7 +301,7 @@ Writing an `sf` object as a shapefile is just as easy. You use the `st_write()` 
 st_write(nc_loaded, dsn="./Data", "nc2", driver="ESRI Shapefile", append = FALSE)
 ```
 
-`append = FALSE` forces writing the data when there already exists a file with the same name. Without the option, this happens.
+`append = FALSE` forces writing the data when a file already exists with the same name. Without the option, this happens.
 
 ```{r write_nc_error, error = TRUE}
 st_write(nc_loaded, dsn="./Data", "nc2", driver="ESRI Shapefile")
@@ -309,7 +309,7 @@ st_write(nc_loaded, dsn="./Data", "nc2", driver="ESRI Shapefile")
 
 ### Better alternatives 
 
-Now, if your collaborator is using ArcGIS and demanding that he/she needs a shapefile for his/her work, sure you can use the above command to write a shapefile. But, there is really no need to work with the shapefile system. One of the alternative data formats that are considered superior to the shapefile system is GeoPackage^[[here](https://www.geopackage.org/)], which overcomes various limitations associated with shapefile^[see the last paragraph of [chapter 7.5 of this book](https://csgillespie.github.io/efficientR/data-carpentry.html#data-processing-with-data.table), [this blogpost](https://carto.com/blog/fgdb-gpkg/), or [this](http://switchfromshapefile.org/)]. Unlike the shapefile system, it produces only a single file with .gpkg extension. Note that GeoPackage file can also be easily read into ArcGIS. So, it might be worthwhile to convince your collaborators to stop using shapefiles and start using GeoPackage.  
+Now, if your collaborator is using ArcGIS and demanding that he/she needs a shapefile for his/her work, sure you can use the above command to write a shapefile. But, there is really no need to work with the shapefile system. One of the alternative data formats that is considered superior to the shapefile system is GeoPackage^[[here](https://www.geopackage.org/)], which overcomes various limitations associated with shapefile^[see the last paragraph of [chapter 7.5 of this book](https://csgillespie.github.io/efficientR/data-carpentry.html#data-processing-with-data.table), [this blogpost](https://carto.com/blog/fgdb-gpkg/), or [this](http://switchfromshapefile.org/)]. Unlike the shapefile system, it produces only a single file with .gpkg extension. Note that GeoPackage files can also be easily read into ArcGIS. So, it might be worthwhile to convince your collaborators to stop using shapefiles and start using GeoPackage.  
 
 ```{r gpkg, eval = FALSE}
 #--- write as a gpkg file ---#
@@ -424,7 +424,7 @@ list(a_point, a_polygon) %>% st_sfc() %>% st_as_sf() %>%
 ```
 
  -->
-As you can see `wells_sp` is a class of `SpatialPointsDataFrame`, polygons with data frame supported by the `sp` package. The above syntax works for converting an `sf` of polygons into `SpatialPolygonsDataFrame` as well^[The function does not work for an `sf` object that consists of different geometry types (e.g., POINT and POLYGON). This is because `sp` objects do not allow to have different types of geometries in the single `sp` object. For example, `SpatialPointsDataFrame` consists only of points data.].     
+As you can see `wells_sp` is a class of `SpatialPointsDataFrame`, polygons with data frame supported by the `sp` package. The above syntax works for converting an `sf` of polygons into `SpatialPolygonsDataFrame` as well^[The function does not work for an `sf` object that consists of different geometry types (e.g., POINT and POLYGON). This is because `sp` objects do not allow different types of geometries in the single `sp` object. For example, `SpatialPointsDataFrame` consists only of points data.].     
 
 You can revert `wells_sp` back to an `sf` object using the `st_as_sf()` function, as follows:
 
@@ -517,7 +517,7 @@ But, it is easy to revert it back to an `sf` object again by using the `st_as_sf
 wells_by_nrd_sf_again <- st_as_sf(wells_by_nrd_dt)
 ``` 
 
-So, this means that if you need fast data transformation, you can first turn an `sf` to a `data.table`, transform the data using the `data.table` functionality, and then revert back to `sf`. However, for most economists, the geometry variable itself is not of interest in the sense that it never enters econometric models. For most of us, the geographic information contained in the geometry variable is just a glue to tie two datasets together by geographic referencing. Once we get values of spatial variables of interest, then there is no point in keeping your data an sf object. Personally, whenever I no longer need to carry around the geometry variable, I immediately turn an sf object into a `data.table` for fast data transformation especially when the data is large. 
+So, this means that if you need fast data transformation, you can first turn an `sf` to a `data.table`, transform the data using the `data.table` functionality, and then revert back to `sf`. However, for most economists, the geometry variable itself is not of interest in the sense that it never enters econometric models. For most of us, the geographic information contained in the geometry variable is just a glue to tie two datasets together by geographic referencing. Once we get values of spatial variables of interest, there is no point in keeping your data as an sf object. Personally, whenever I no longer need to carry around the geometry variable, I immediately turn an sf object into a `data.table` for fast data transformation especially when the data is large. 
 
 ## Non-interactive geometrical operations
 
@@ -551,7 +551,7 @@ Let's create buffers around the wells.
 wells_buffer <- st_buffer(urnrd_wells_sf, dist = 1600)
 ```
 
-As you can see, you see bunch of circles around wells with the radius of $1,600$ meters (Figure \@ref(fig:buffer-points-map)).   
+As you can see, there are many circles around wells with the radius of $1,600$ meters (Figure \@ref(fig:buffer-points-map)).   
 
 ```{r buffer-points-map, fig.cap = "Buffers around wells"}
 tm_shape(wells_buffer) +
@@ -561,7 +561,7 @@ tm_shape(urnrd_wells_sf) +
   tm_layout(frame = NA)
 ```
 
-A practical application of buffer creation will be seen in Chapter \@ref(Demo1).
+A practical application of buffer creation can be seen in Chapter \@ref(Demo1).
 
 ---
 
@@ -598,7 +598,7 @@ tm_shape(NE_counties) +
   )
 ```
 
-For example, this can use useful to identify observations are close enough to the border of political boundaries when you want to take advantage of spatial discontinuity of policies across adjacent political boundaries.    
+For example, this can be useful to identify observations which are close to the border of political boundaries when you want to take advantage of spatial discontinuity of policies across adjacent political boundaries.    
 
 ### st_area 
 
@@ -638,7 +638,7 @@ NE_centroids <- st_centroid(NE_counties)
 )
 ```
 
-Here's what the map of the output (Figure \@ref(fig:map-centroids)).
+Here's the map of the output (Figure \@ref(fig:map-centroids)).
 
 ```{r map-centroids, fig.cap = "The centroids of the polygons"}
 tm_shape(NE_counties) +
@@ -651,7 +651,7 @@ tm_layout(
   )
 ```
 
-It can be useful when creating a map with labels because the centroid of polygons tend to be a good place to place labels at like this (Figure \@ref(fig:cent-label)).^[When creating maps with the ggplot2 package, you can use `geom_sf_text()` or `geom_sf_label()`, which automatically finds where to put texts. See some examples [here](https://yutani.rbind.io/post/geom-sf-text-and-geom-sf-label-are-coming/).]
+It can be useful when creating a map with labels because the centroid of polygons tend to be a good place to place labels (Figure \@ref(fig:cent-label)).^[When creating maps with the ggplot2 package, you can use `geom_sf_text()` or `geom_sf_label()`, which automatically finds where to put texts. See some examples [here](https://yutani.rbind.io/post/geom-sf-text-and-geom-sf-label-are-coming/).]
 
 ```{r cent-label, fig.cap = "County names placed at the centroids of the counties"}
 tm_shape(NE_counties) +
@@ -664,7 +664,7 @@ tm_layout(
   )
 ```
 
-It may be also useful when you somehow need to calculate the "distance" between polygons.  
+It may be also useful when you need to calculate the "distance" between polygons.  
 
 ### st_length
 
