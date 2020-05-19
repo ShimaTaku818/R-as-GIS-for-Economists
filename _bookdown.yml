@@ -3,5 +3,5 @@ delete_merged_file: true
 language:
   ui:
     chapter_name: "Chapter "
-rmd_files: ["index.Rmd", "Demonstration.Rmd"]
+rmd_files: ["index.Rmd", "Demonstration.Rmd", "VectorDataBasics.Rmd"]
 output_dir: "docs"
