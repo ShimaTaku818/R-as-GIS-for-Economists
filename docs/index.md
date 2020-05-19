@@ -1,7 +1,7 @@
 --- 
 title: "R as GIS for Economists"
 author: "Taro Mieno"
-date: "2020-05-16"
+date: "2020-05-19"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [RGIS.bib]
@@ -16,7 +16,7 @@ This book is being developed as part of my effort to put together course materia
 
 **About me**
 
-I am an Assistant Professor at the Department of Agricultural Economics at University of Nebraska Lincoln, where I also teach Econometrics for Master's students. My research interests lie in precision agriculture, water economics, and agricultural policy. My personal website is [here](http://taromieno.netlify.com/). 
+I am an Assistant Professor at the Department of Agricultural Economics at the University of Nebraska Lincoln, where I also teach Econometrics for Master's students. My research interests lie in precision agriculture, water economics, and agricultural policy. My personal website is [here](http://taromieno.netlify.com/). 
 
 **Comments and Suggestions?**
 
@@ -39,7 +39,7 @@ Here I compare them briefly and discuss why R is a good option.
 
 ### R vs Python {-}
 
-Both R and Python are actually heavily dependent on open source software GDAL and GEOS for their core GIS operations (GDAL for reading spatial data, and GEOS for geometrical operations like intersecting two spatial layers).^[For example, see the very first sentence of [this page](https://cran.r-project.org/web/packages/sf/index.html)] So, when you run GIS tasks on R or Python you basically tell R or Python what you want to do and they talk to the software, let it do the job, and return the results to you. This means that R and Python are much different in their capability at GIS tasks as they are dependent on the common open source software for many GIS tasks. When GDAL and GEOS get better, R and Python get better (with a short lag). Both of them have good spatial visualization tools as well. Moreover, both R and Python can communicate with QGIS and ArcGIS (as long you as have them installed of course) and use their functionalities from within R and Python via the bridging packages: `RQGIS` and `PyQGIS` for QGIS, and `R-ArcGIS` and `ArcPy`.^[We do not learn them in this lecture note because I do not see the benefits of using them.] So, if you are more familiar with Python than R, go ahead and go with Python. From now on, my discussions assume that you are going for the R option, as otherwise, you would not be reading the rest of the book anyway.
+Both R and Python are actually heavily dependent on open source software GDAL and GEOS for their core GIS operations (GDAL for reading spatial data, and GEOS for geometrical operations like intersecting two spatial layers).^[For example, see the very first sentence of [this page](https://cran.r-project.org/web/packages/sf/index.html)] So, when you run GIS tasks on R or Python you basically tell R or Python what you want to do and they talk to the software, let it do the job, and return the results to you. This means that R and Python are not much different in their capability at GIS tasks as they are dependent on the common open source software for many GIS tasks. When GDAL and GEOS get better, R and Python get better (with a short lag). Both of them have good spatial visualization tools as well. Moreover, both R and Python can communicate with QGIS and ArcGIS (as long you as have them installed of course) and use their functionalities from within R and Python via the bridging packages: `RQGIS` and `PyQGIS` for QGIS, and `R-ArcGIS` and `ArcPy`.^[We do not learn them in this lecture note because I do not see the benefits of using them.] So, if you are more familiar with Python than R, go ahead and go with Python. From now on, my discussions assume that you are going for the R option, as otherwise, you would not be reading the rest of the book anyway.
 
 ### R vs ArcGIS or QGIS {-}
 
@@ -164,7 +164,7 @@ Outcomes:
 
 
 ```
-## [1] 0.2841365 0.8540925 0.5669179 0.2478676 0.9607722
+## [1] 0.5020378 0.5818746 0.1434844 0.3696502 0.8329531
 ```
 
 ### Parentheses around codes {-}
@@ -179,7 +179,7 @@ Sometimes you will see codes enclosed by parenthesis like this:
 ```
 
 ```
-## [1] 0.66322397 0.67929794 0.04663338 0.99966534 0.65137323
+## [1] 0.2823460 0.3348120 0.5620161 0.8514247 0.8122676
 ```
 
 The parentheses prints what's inside of a newly created object (here `a`) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created. 

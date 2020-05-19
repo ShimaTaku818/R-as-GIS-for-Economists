@@ -923,7 +923,7 @@ names      : CDL_2015_19
 values     : 0, 255  (min, max)
 ```
 
-The cells (30 meter by 30 meter) of the imported raster layer take a value ranging from 0 to 255. Corn and soybean are represented by 1 and 5, respectively (Figure ).
+The cells (30 meter by 30 meter) of the imported raster layer take a value ranging from 0 to 255. Corn and soybean are represented by 1 and 5, respectively (Figure \@ref(fig:overlap-cdl-grid)).
 
 Figure \@ref(fig:overlap-cdl-grid) shows the map of one of the IA grids and the CDL cells it overlaps with.
 

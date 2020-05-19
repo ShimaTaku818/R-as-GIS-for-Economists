@@ -24,7 +24,7 @@
 <meta name="author" content="Taro Mieno" />
 
 
-<meta name="date" content="2020-05-16" />
+<meta name="date" content="2020-05-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -261,7 +261,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Here I compare them briefly and discuss why R is a good option.</p>
 <div id="r-vs-python" class="section level3 unnumbered">
 <h3>R vs Python</h3>
-<p>Both R and Python are actually heavily dependent on open source software GDAL and GEOS for their core GIS operations (GDAL for reading spatial data, and GEOS for geometrical operations like intersecting two spatial layers).<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> So, when you run GIS tasks on R or Python you basically tell R or Python what you want to do and they talk to the software, let it do the job, and return the results to you. This means that R and Python are much different in their capability at GIS tasks as they are dependent on the common open source software for many GIS tasks. When GDAL and GEOS get better, R and Python get better (with a short lag). Both of them have good spatial visualization tools as well. Moreover, both R and Python can communicate with QGIS and ArcGIS (as long you as have them installed of course) and use their functionalities from within R and Python via the bridging packages: <code>RQGIS</code> and <code>PyQGIS</code> for QGIS, and <code>R-ArcGIS</code> and <code>ArcPy</code>.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> So, if you are more familiar with Python than R, go ahead and go with Python. From now on, my discussions assume that you are going for the R option, as otherwise, you would not be reading the rest of the book anyway.</p>
+<p>Both R and Python are actually heavily dependent on open source software GDAL and GEOS for their core GIS operations (GDAL for reading spatial data, and GEOS for geometrical operations like intersecting two spatial layers).<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> So, when you run GIS tasks on R or Python you basically tell R or Python what you want to do and they talk to the software, let it do the job, and return the results to you. This means that R and Python are not much different in their capability at GIS tasks as they are dependent on the common open source software for many GIS tasks. When GDAL and GEOS get better, R and Python get better (with a short lag). Both of them have good spatial visualization tools as well. Moreover, both R and Python can communicate with QGIS and ArcGIS (as long you as have them installed of course) and use their functionalities from within R and Python via the bridging packages: <code>RQGIS</code> and <code>PyQGIS</code> for QGIS, and <code>R-ArcGIS</code> and <code>ArcPy</code>.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> So, if you are more familiar with Python than R, go ahead and go with Python. From now on, my discussions assume that you are going for the R option, as otherwise, you would not be reading the rest of the book anyway.</p>
 </div>
 <div id="r-vs-arcgis-or-qgis" class="section level3 unnumbered">
 <h3>R vs ArcGIS or QGIS</h3>
@@ -386,7 +386,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Codes:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">runif</span>(<span class="dv">5</span>)</a></code></pre></div>
 <p>Outcomes:</p>
-<pre><code>## [1] 0.2841365 0.8540925 0.5669179 0.2478676 0.9607722</code></pre>
+<pre><code>## [1] 0.5020378 0.5818746 0.1434844 0.3696502 0.8329531</code></pre>
 </div>
 <div id="parentheses-around-codes" class="section level3 unnumbered">
 <h3>Parentheses around codes</h3>
@@ -394,7 +394,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">(</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">  a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">)</a></code></pre></div>
-<pre><code>## [1] 0.66322397 0.67929794 0.04663338 0.99966534 0.65137323</code></pre>
+<pre><code>## [1] 0.2823460 0.3348120 0.5620161 0.8514247 0.8122676</code></pre>
 <p>The parentheses prints what’s inside of a newly created object (here <code>a</code>) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created.</p>
 <p>This one prints nothing.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">5</span>)</a></code></pre></div>

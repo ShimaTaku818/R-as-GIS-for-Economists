@@ -24,7 +24,7 @@
 <meta name="author" content="Taro Mieno" />
 
 
-<meta name="date" content="2020-05-16" />
+<meta name="date" content="2020-05-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -256,7 +256,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>read and write a shapefile and spatial data in other formats (and why you might not want to use the shapefile system any more, but use other alternative formats)</li>
 <li>project and reproject spatial objects</li>
-<li>convert <code>sf</code> objects into <code>sp</code> objective, vice versa</li>
+<li>convert <code>sf</code> objects into <code>sp</code> objects, vice versa</li>
 <li>confirm that <code>dplyr</code> works well with <code>sf</code> objects</li>
 <li>implement non-interactive (does not involve two <code>sf</code> objects) geometric operations on <code>sf</code> objects
 <ul>
@@ -268,11 +268,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div id="sf-or-sp" class="section level3 unnumbered">
 <h3><code>sf</code> or <code>sp</code>?</h3>
-<p>The <code>sf</code> package was designed to replace the <code>sp</code> package, which has been one of the most popular and powerful spatial packages in R for more than a decade. It has been about four years since <code>sf</code> package was first registered on CRAN. A couple of years back, many other spatial packages did not have support for the package yet. In this <a href="https://www.r-bloggers.com/should-i-learn-sf-or-sp-for-spatial-r-programming/">blog post</a> that asked the question of whether one should learn <code>sp</code> of <code>sf</code>, the author said:</p>
+<p>The <code>sf</code> package was designed to replace the <code>sp</code> package, which has been one of the most popular and powerful spatial packages in R for more than a decade. It has been about four years since the <code>sf</code> package was first registered on CRAN. A couple of years back, many other spatial packages did not have support for the package yet. In this <a href="https://www.r-bloggers.com/should-i-learn-sf-or-sp-for-spatial-r-programming/">blog post</a> the author responded to the questions of whether one should learn <code>sp</code> of <code>sf</code> saying,</p>
 <p>&quot;That’s a tough question. If you have time, I would say, learn to use both. sf is pretty new, so a lot of packages that depend on spatial classes still rely on sp. So you will need to know sp if you want to do any integration with many other packages, including raster (as of March 2018).</p>
 <p>However, in the future we should see an increasing shift toward the sf package and greater use of sf classes in other packages. I also think that sf is easier to learn to use than sp.&quot;</p>
 <p>The future has come, and it’s not a tough question anymore. I cannot think of any major spatial packages that do not support <code>sf</code> package, and <code>sf</code> has largely becomes the standard for handling vector data in <span class="math inline">\(R\)</span>. Thus, this lecture note does not cover how to use <code>sp</code> at all.<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a></p>
-<p><code>sf</code> has several advantages over <code>sp</code> package <span class="citation">(Pebesma <a href="#ref-pebesma2018simple">2018</a>)</span>.<a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a> First, it cut off the tie that <code>sp</code> had with ESRI shapefile system, which has somewhat loose way of representing spatial data. Instead, it uses <em>simple feature access</em>, which is an open standard supported by Open Geospatial Consortium (OGC). Another important benefit is its compatibility with the <code>tidyverse</code> package, which include widely popular packages like <code>ggplot2</code> and <code>dplyr</code>. Consequently, map-making with <code>ggplot()</code> and data wrangling with a family of <code>dplyr</code> functions come very natural to many <span class="math inline">\(R\)</span> users. <code>sp</code> objects have different slots for spatial information and attributes data, and they are not amenable to <code>dplyr</code> way of data transformation.</p>
+<p><code>sf</code> has several advantages over the <code>sp</code> package <span class="citation">(Pebesma <a href="#ref-pebesma2018simple">2018</a>)</span>.<a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a> First, it cut off the tie that <code>sp</code> had with ESRI shapefile system, which has a somewhat loose way of representing spatial data. Instead, it uses <em>simple feature access</em>, which is an open standard supported by Open Geospatial Consortium (OGC). Another important benefit is its compatibility with the <code>tidyverse</code> package, which includes widely popular packages like <code>ggplot2</code> and <code>dplyr</code>. Consequently, map-making with <code>ggplot()</code> and data wrangling with a family of <code>dplyr</code> functions come very natural to many <span class="math inline">\(R\)</span> users. <code>sp</code> objects have different slots for spatial information and attributes data, and they are not amenable to <code>dplyr</code> way of data transformation.</p>
 </div>
 <div id="direction-for-replication-1" class="section level3 unnumbered">
 <h3>Direction for replication</h3>
@@ -287,7 +287,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="spatial-data-structure" class="section level2">
 <h2><span class="header-section-number">2.1</span> Spatial Data Structure</h2>
-<p>Here, we learn how the <code>sf</code> package stores spatial data, along with the definition of three key <code>sf</code> object classes: simple feature geometry (<code>sfg</code>), simple feature geometry list-column (<code>sfc</code>), and simple feature (<code>sf</code>). The <code>sf</code> package provides a simply way of storing geographic information and the attributes of the geographic units in a single dataset. This special type of dataset is called simple feature (<code>sf</code>). It is best to take a look at an example to see how this is achieved. We use North Carolina county boundaries with county attributes (Figure <a href="vector-basics.html#fig:nc-county">2.1</a>).</p>
+<p>Here we learn how the <code>sf</code> package stores spatial data along with the definition of three key <code>sf</code> object classes: simple feature geometry (<code>sfg</code>), simple feature geometry list-column (<code>sfc</code>), and simple feature (<code>sf</code>). The <code>sf</code> package provides a simply way of storing geographic information and the attributes of the geographic units in a single dataset. This special type of dataset is called simple feature (<code>sf</code>). It is best to take a look at an example to see how this is achieved. We use North Carolina county boundaries with county attributes (Figure <a href="vector-basics.html#fig:nc-county">2.1</a>).</p>
 <div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1"><span class="co">#--- a dataset that comes with the sf package ---#</span></a>
 <a class="sourceLine" id="cb87-2" data-line-number="2">nc &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="kw">system.file</span>(<span class="st">&quot;shape/nc.shp&quot;</span>, <span class="dt">package=</span><span class="st">&quot;sf&quot;</span>)) </a></code></pre></div>
 <pre><code>Reading layer `nc&#39; from data source `/Library/Frameworks/R.framework/Versions/4.0/Resources/library/sf/shape/nc.shp&#39; using driver `ESRI Shapefile&#39;
@@ -392,19 +392,19 @@ First 10 features:
 <ul>
 <li><code>POINT</code>: area-less feature that represents a point (e.g., well, city, farmland)</li>
 <li><code>LINESTRING</code>: (e.g., a tributary of a river)</li>
-<li><code>MULTILINESTRING</code>: (e.g., river with more than one tributaries)</li>
+<li><code>MULTILINESTRING</code>: (e.g., river with more than one tributary)</li>
 <li><code>POLYGON</code>: geometry with a positive area (e.g., county, state, country)</li>
 <li><code>MULTIPOLYGON</code>: collection of polygons to represent a single object (e.g., countries with islands: U.S., Japan)</li>
 </ul>
 <hr />
-<p><code>POINT</code> is the simplest geometry type, and is represented by a vector of two<a href="#fn42" class="footnote-ref" id="fnref42"><sup>42</sup></a> numeric values. An example below shows how a <code>POINT</code> feature can be made from scratch:</p>
+<p><code>POINT</code> is the simplest geometry type and is represented by a vector of two<a href="#fn42" class="footnote-ref" id="fnref42"><sup>42</sup></a> numeric values. An example below shows how a <code>POINT</code> feature can be made from scratch:</p>
 <div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1"><span class="co">#--- create a POINT ---#</span></a>
 <a class="sourceLine" id="cb98-2" data-line-number="2">a_point &lt;-<span class="st"> </span><span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))</a></code></pre></div>
 <p>The <code>st_point()</code> function creates a <code>POINT</code> object when supplied with a vector of two numeric values. If you check the class of the newly created object,</p>
 <div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1"><span class="co">#--- check the class of the object ---#</span></a>
 <a class="sourceLine" id="cb99-2" data-line-number="2"><span class="kw">class</span>(a_point)</a></code></pre></div>
 <pre><code>[1] &quot;XY&quot;    &quot;POINT&quot; &quot;sfg&quot;  </code></pre>
-<p>You can see that it’s indeed a <code>POINT</code> object. But, it’s also an <code>sfg</code> object. So, <code>a_point</code> is an <code>sfg</code> object of type <code>POINT</code>.</p>
+<p>you can see that it’s indeed a <code>POINT</code> object. But, it’s also an <code>sfg</code> object. So, <code>a_point</code> is an <code>sfg</code> object of type <code>POINT</code>.</p>
 <hr />
 <p>A <code>LINESTRING</code> objects are represented by a sequence of points:</p>
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1"><span class="co">#--- collection of points in a matrix form ---#</span></a>
@@ -494,7 +494,7 @@ First 10 features:
 2    B LINESTRING (2 3, 3 4, 3 5, ...
 3    C POLYGON ((0 0, 3 0, 3 2, 2 ...
 4    D MULTIPOLYGON (((0 0, 3 0, 3...</code></pre>
-<p>At this point, it is not recognized as an <code>sf</code> by R yet.</p>
+<p>At this point, it is not yet recognized as an <code>sf</code> by R yet.</p>
 <div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1"><span class="co">#--- see what it looks like (this is not an sf object yet) ---#</span></a>
 <a class="sourceLine" id="cb116-2" data-line-number="2"><span class="kw">class</span>(df_ex)</a></code></pre></div>
 <pre><code>[1] &quot;data.frame&quot;</code></pre>
@@ -525,7 +525,7 @@ CRS:            NA
 <p>I claimed that you do not need ArcGIS or QGIS <span class="math inline">\(99\%\)</span> of your work as an economist. However, the vast majority of people still use ArcGIS to handle spatial data, which has its own system of storing spatial data<a href="#fn43" class="footnote-ref" id="fnref43"><sup>43</sup></a> called shapefile. So, chances are that your collaborators still use shapefiles. Moreover, there are many GIS data online that are available only as shapefiles. So, it is important to learn how to read and write shapefiles.</p>
 <div id="reading-a-shapefile" class="section level3">
 <h3><span class="header-section-number">2.3.1</span> Reading a shapefile</h3>
-<p>We can use <code>st_read()</code> function to read a shapefile. It reads in a shapefile and then turn the data into an sf object. Let’s take a look at an example.</p>
+<p>We can use <code>st_read()</code> to read a shapefile. It reads in a shapefile and then turn the data into an sf object. Let’s take a look at an example.</p>
 <div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1"><span class="co">#--- read a NE county boundary shapefile ---#</span></a>
 <a class="sourceLine" id="cb122-2" data-line-number="2">nc_loaded &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="dt">dsn =</span> <span class="st">&quot;./Data&quot;</span>, <span class="st">&quot;nc&quot;</span>) </a></code></pre></div>
 <pre><code>Reading layer `nc&#39; from data source `/Users/tmieno2/Box/Teaching/AAEA R/GIS/Data&#39; using driver `ESRI Shapefile&#39;
@@ -540,14 +540,14 @@ CRS:            4267</code></pre>
 <h3><span class="header-section-number">2.3.2</span> Writing to a shapefile</h3>
 <p>Writing an <code>sf</code> object as a shapefile is just as easy. You use the <code>st_write()</code> function, with the first argument being the name of the <code>sf</code> object you are exporting, and the second being the name of the new shapefile. For example, the code below will export an <code>sf</code> object called <code>nc_loaded</code> as <code>nc2.shp</code> (along with other supporting files).</p>
 <div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1"><span class="kw">st_write</span>(nc_loaded, <span class="dt">dsn=</span><span class="st">&quot;./Data&quot;</span>, <span class="st">&quot;nc2&quot;</span>, <span class="dt">driver=</span><span class="st">&quot;ESRI Shapefile&quot;</span>, <span class="dt">append =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<p><code>append = FALSE</code> forces writing the data when there already exists a file with the same name. Without the option, this happens.</p>
+<p><code>append = FALSE</code> forces writing the data when a file already exists with the same name. Without the option, this happens.</p>
 <div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1"><span class="kw">st_write</span>(nc_loaded, <span class="dt">dsn=</span><span class="st">&quot;./Data&quot;</span>, <span class="st">&quot;nc2&quot;</span>, <span class="dt">driver=</span><span class="st">&quot;ESRI Shapefile&quot;</span>)</a></code></pre></div>
 <pre><code>Writing layer `nc2&#39; to data source `./Data&#39; using driver `ESRI Shapefile&#39;
 Writing 100 features with 1 fields and geometry type Multi Polygon.</code></pre>
 </div>
 <div id="better-alternatives" class="section level3">
 <h3><span class="header-section-number">2.3.3</span> Better alternatives</h3>
-<p>Now, if your collaborator is using ArcGIS and demanding that he/she needs a shapefile for his/her work, sure you can use the above command to write a shapefile. But, there is really no need to work with the shapefile system. One of the alternative data formats that are considered superior to the shapefile system is GeoPackage<a href="#fn45" class="footnote-ref" id="fnref45"><sup>45</sup></a>, which overcomes various limitations associated with shapefile<a href="#fn46" class="footnote-ref" id="fnref46"><sup>46</sup></a>. Unlike the shapefile system, it produces only a single file with .gpkg extension. Note that GeoPackage file can also be easily read into ArcGIS. So, it might be worthwhile to convince your collaborators to stop using shapefiles and start using GeoPackage.</p>
+<p>Now, if your collaborator is using ArcGIS and demanding that he/she needs a shapefile for his/her work, sure you can use the above command to write a shapefile. But, there is really no need to work with the shapefile system. One of the alternative data formats that is considered superior to the shapefile system is GeoPackage<a href="#fn45" class="footnote-ref" id="fnref45"><sup>45</sup></a>, which overcomes various limitations associated with shapefile<a href="#fn46" class="footnote-ref" id="fnref46"><sup>46</sup></a>. Unlike the shapefile system, it produces only a single file with .gpkg extension. Note that GeoPackage files can also be easily read into ArcGIS. So, it might be worthwhile to convince your collaborators to stop using shapefiles and start using GeoPackage.</p>
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1"><span class="co">#--- write as a gpkg file ---#</span></a>
 <a class="sourceLine" id="cb127-2" data-line-number="2"><span class="kw">st_write</span>(nc, <span class="dt">dsn =</span> <span class="st">&quot;./Data/nc.gpkg&quot;</span>)</a>
 <a class="sourceLine" id="cb127-3" data-line-number="3"></a>
@@ -863,7 +863,7 @@ CRS:            unknown
 <pre><code>Error in UseMethod(&quot;st_buffer&quot;): no applicable method for &#39;st_buffer&#39; applied to an object of class &quot;c(&#39;data.table&#39;, &#39;data.frame&#39;)&quot;</code></pre>
 <p>But, it is easy to revert it back to an <code>sf</code> object again by using the <code>st_as_sf()</code> function<a href="#fn57" class="footnote-ref" id="fnref57"><sup>57</sup></a>.</p>
 <div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" data-line-number="1">wells_by_nrd_sf_again &lt;-<span class="st"> </span><span class="kw">st_as_sf</span>(wells_by_nrd_dt)</a></code></pre></div>
-<p>So, this means that if you need fast data transformation, you can first turn an <code>sf</code> to a <code>data.table</code>, transform the data using the <code>data.table</code> functionality, and then revert back to <code>sf</code>. However, for most economists, the geometry variable itself is not of interest in the sense that it never enters econometric models. For most of us, the geographic information contained in the geometry variable is just a glue to tie two datasets together by geographic referencing. Once we get values of spatial variables of interest, then there is no point in keeping your data an sf object. Personally, whenever I no longer need to carry around the geometry variable, I immediately turn an sf object into a <code>data.table</code> for fast data transformation especially when the data is large.</p>
+<p>So, this means that if you need fast data transformation, you can first turn an <code>sf</code> to a <code>data.table</code>, transform the data using the <code>data.table</code> functionality, and then revert back to <code>sf</code>. However, for most economists, the geometry variable itself is not of interest in the sense that it never enters econometric models. For most of us, the geographic information contained in the geometry variable is just a glue to tie two datasets together by geographic referencing. Once we get values of spatial variables of interest, there is no point in keeping your data as an sf object. Personally, whenever I no longer need to carry around the geometry variable, I immediately turn an sf object into a <code>data.table</code> for fast data transformation especially when the data is large.</p>
 </div>
 <div id="non-interactive-geometrical-operations" class="section level2">
 <h2><span class="header-section-number">2.8</span> Non-interactive geometrical operations</h2>
@@ -889,7 +889,7 @@ Figure 2.2: Map of the wells
 <p>Let’s create buffers around the wells.</p>
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1"><span class="co">#--- create a one-mile buffer around the wells ---#</span></a>
 <a class="sourceLine" id="cb163-2" data-line-number="2">wells_buffer &lt;-<span class="st"> </span><span class="kw">st_buffer</span>(urnrd_wells_sf, <span class="dt">dist =</span> <span class="dv">1600</span>)</a></code></pre></div>
-<p>As you can see, you see bunch of circles around wells with the radius of <span class="math inline">\(1,600\)</span> meters (Figure <a href="vector-basics.html#fig:buffer-points-map">2.3</a>).</p>
+<p>As you can see, there are many circles around wells with the radius of <span class="math inline">\(1,600\)</span> meters (Figure <a href="vector-basics.html#fig:buffer-points-map">2.3</a>).</p>
 <div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1"><span class="kw">tm_shape</span>(wells_buffer) <span class="op">+</span></a>
 <a class="sourceLine" id="cb164-2" data-line-number="2"><span class="st">  </span><span class="kw">tm_polygons</span>(<span class="dt">alpha =</span> <span class="dv">0</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb164-3" data-line-number="3"><span class="kw">tm_shape</span>(urnrd_wells_sf) <span class="op">+</span></a>
@@ -901,7 +901,7 @@ Figure 2.2: Map of the wells
 Figure 2.3: Buffers around wells
 </p>
 </div>
-<p>A practical application of buffer creation will be seen in Chapter <a href="demo.html#Demo1">1.1</a>.</p>
+<p>A practical application of buffer creation can be seen in Chapter <a href="demo.html#Demo1">1.1</a>.</p>
 <hr />
 <p>We now create buffers around polygons. First, read NE county boundary data and select three counties (Chase, Dundy, and Perkins).</p>
 <div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1">NE_counties &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;./Data/NE_county_borders.rds&quot;</span>) <span class="op">%&gt;%</span></a>
@@ -933,7 +933,7 @@ Figure 2.4: Map of the three counties
 Figure 2.5: Buffers around the three counties
 </p>
 </div>
-<p>For example, this can use useful to identify observations are close enough to the border of political boundaries when you want to take advantage of spatial discontinuity of policies across adjacent political boundaries.</p>
+<p>For example, this can be useful to identify observations which are close to the border of political boundaries when you want to take advantage of spatial discontinuity of policies across adjacent political boundaries.</p>
 </div>
 <div id="st_area" class="section level3">
 <h3><span class="header-section-number">2.8.2</span> st_area</h3>
@@ -997,7 +997,7 @@ CRS:            EPSG:32614
 1 2840176 POINT (276594.1 4525635) 2302174854
 2 7978172 POINT (271469.9 4489429) 2316908196
 3 3046331 POINT (271156.7 4450826) 2389890531</code></pre>
-<p>Here’s what the map of the output (Figure <a href="vector-basics.html#fig:map-centroids">2.6</a>).</p>
+<p>Here’s the map of the output (Figure <a href="vector-basics.html#fig:map-centroids">2.6</a>).</p>
 <div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb177-1" data-line-number="1"><span class="kw">tm_shape</span>(NE_counties) <span class="op">+</span></a>
 <a class="sourceLine" id="cb177-2" data-line-number="2"><span class="st">  </span><span class="kw">tm_polygons</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb177-3" data-line-number="3"><span class="kw">tm_shape</span>(NE_centroids)<span class="op">+</span></a>
@@ -1012,7 +1012,7 @@ CRS:            EPSG:32614
 Figure 2.6: The centroids of the polygons
 </p>
 </div>
-<p>It can be useful when creating a map with labels because the centroid of polygons tend to be a good place to place labels at like this (Figure <a href="vector-basics.html#fig:cent-label">2.7</a>).<a href="#fn59" class="footnote-ref" id="fnref59"><sup>59</sup></a></p>
+<p>It can be useful when creating a map with labels because the centroid of polygons tend to be a good place to place labels (Figure <a href="vector-basics.html#fig:cent-label">2.7</a>).<a href="#fn59" class="footnote-ref" id="fnref59"><sup>59</sup></a></p>
 <div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1"><span class="kw">tm_shape</span>(NE_counties) <span class="op">+</span></a>
 <a class="sourceLine" id="cb178-2" data-line-number="2"><span class="st">  </span><span class="kw">tm_polygons</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb178-3" data-line-number="3"><span class="kw">tm_shape</span>(NE_centroids)<span class="op">+</span></a>
@@ -1027,7 +1027,7 @@ Figure 2.6: The centroids of the polygons
 Figure 2.7: County names placed at the centroids of the counties
 </p>
 </div>
-<p>It may be also useful when you somehow need to calculate the “distance” between polygons.</p>
+<p>It may be also useful when you need to calculate the “distance” between polygons.</p>
 </div>
 <div id="st_length" class="section level3">
 <h3><span class="header-section-number">2.8.4</span> st_length</h3>
@@ -1155,12 +1155,12 @@ Units: [m]
 <ol start="36">
 <li id="fn36"><p>Yes, it is the same as the package name.<a href="vector-basics.html#fnref36" class="footnote-back">↩</a></p></li>
 <li id="fn37"><p>Except we learn how to convert back and forth between <code>sf</code> object ans <code>sp</code> objects just in case you need <code>sp</code> objects.<a href="vector-basics.html#fnref37" class="footnote-back">↩</a></p></li>
-<li id="fn38"><p>There are cases where <code>sp</code> is faster completing the same task than <code>sf</code>. For example, see the answer to <a href="https://gis.stackexchange.com/questions/324952/spover-vs-sfst-intersection-in-r">this question</a>. But, the I doubt the difference between the two is practically important even with a bigger data than the test data.<a href="vector-basics.html#fnref38" class="footnote-back">↩</a></p></li>
-<li id="fn39"><p>Just like a regular <code>list</code> object can contain mixed types of elements: numeric, character, etc<a href="vector-basics.html#fnref39" class="footnote-back">↩</a></p></li>
-<li id="fn40"><p>I must say that creating spatial objects from scratch yourself is an unnecessary skill for many of us as an economist. But, it is still good to know the underlying structure of the data. Also, occasionally the need arises. For example, I had to construct spatial objects from scratch when I designed on-farm randomized nitrogen trials. In such cases, it is of course necessary to understand how different types of <code>sfg</code> are constructed, create <code>sfc</code> from a collection of <code>sfg</code>s, and then create an <code>sf</code> from an <code>sfc</code>.<a href="vector-basics.html#fnref40" class="footnote-back">↩</a></p></li>
+<li id="fn38"><p>There are cases where <code>sp</code> is faster completing the same task than <code>sf</code>. For example, see the answer to <a href="https://gis.stackexchange.com/questions/324952/spover-vs-sfst-intersection-in-r">this question</a>. But, I doubt the difference between the two is practically important even with bigger data than the test data.<a href="vector-basics.html#fnref38" class="footnote-back">↩</a></p></li>
+<li id="fn39"><p>This is just like a regular <code>list</code> object that can contain mixed types of elements: numeric, character, etc<a href="vector-basics.html#fnref39" class="footnote-back">↩</a></p></li>
+<li id="fn40"><p>Creating spatial objects from scratch yourself is an unnecessary skill for many of us as economists. But, it is still good to know the underlying structure of the data. Also, occasionally the need arises. For example, I had to construct spatial objects from scratch when I designed on-farm randomized nitrogen trials. In such cases, it is of course necessary to understand how different types of <code>sfg</code> are constructed, create <code>sfc</code> from a collection of <code>sfg</code>s, and then create an <code>sf</code> from an <code>sfc</code>.<a href="vector-basics.html#fnref40" class="footnote-back">↩</a></p></li>
 <li id="fn41"><p>You will hardly see the other geometry types: MULTIPOINT and GEOMETRYCOLLECTION. You may see GEOMETRYCOLLECTION after intersecting two spatial objects. You can see <a href="https://r-spatial.github.io/sf/articles/sf1.html#sfg-simple-feature-geometry-1">here</a> if you are interested in learning what they are.<a href="vector-basics.html#fnref41" class="footnote-back">↩</a></p></li>
 <li id="fn42"><p>or three to represent a point in the three-dimensional space<a href="vector-basics.html#fnref42" class="footnote-back">↩</a></p></li>
-<li id="fn43"><p>See <a href="">here</a> for other various formats in which spatial data are stored.<a href="vector-basics.html#fnref43" class="footnote-back">↩</a></p></li>
+<li id="fn43"><p>See <a href="">here</a> for how spatial datasets can be stores in various other formats.<a href="vector-basics.html#fnref43" class="footnote-back">↩</a></p></li>
 <li id="fn44"><p>When storing a spatial dataset, ArcGIS divides the information into separate files. All of them have the same prefix, but have different extensions. We typically say we read a shapefile, but we really are importing all these files including the shapefile with the .shp extension. When you read those data, you just refer to the common prefix because you really are importing all the files, not just a .shp file.<a href="vector-basics.html#fnref44" class="footnote-back">↩</a></p></li>
 <li id="fn45"><p><a href="https://www.geopackage.org/">here</a><a href="vector-basics.html#fnref45" class="footnote-back">↩</a></p></li>
 <li id="fn46"><p>see the last paragraph of <a href="https://csgillespie.github.io/efficientR/data-carpentry.html#data-processing-with-data.table">chapter 7.5 of this book</a>, <a href="https://carto.com/blog/fgdb-gpkg/">this blogpost</a>, or <a href="http://switchfromshapefile.org/">this</a><a href="vector-basics.html#fnref46" class="footnote-back">↩</a></p></li>
@@ -1172,7 +1172,7 @@ Units: [m]
 <li id="fn52"><p>In this example, we are using the same data with two different CRS. But, you get the point.<a href="vector-basics.html#fnref52" class="footnote-back">↩</a></p></li>
 <li id="fn53"><p>Yes, YOU need to know the CRS of your data.<a href="vector-basics.html#fnref53" class="footnote-back">↩</a></p></li>
 <li id="fn54"><p>For example, those who run spatial econometric methods using <code>spdep</code>, creating neighbors from polygons is a bit faster using <code>sp</code> objects than using <code>sf</code> objects.<a href="vector-basics.html#fnref54" class="footnote-back">↩</a></p></li>
-<li id="fn55"><p>The function does not work for an <code>sf</code> object that consists of different geometry types (e.g., POINT and POLYGON). This is because <code>sp</code> objects do not allow to have different types of geometries in the single <code>sp</code> object. For example, <code>SpatialPointsDataFrame</code> consists only of points data.<a href="vector-basics.html#fnref55" class="footnote-back">↩</a></p></li>
+<li id="fn55"><p>The function does not work for an <code>sf</code> object that consists of different geometry types (e.g., POINT and POLYGON). This is because <code>sp</code> objects do not allow different types of geometries in the single <code>sp</code> object. For example, <code>SpatialPointsDataFrame</code> consists only of points data.<a href="vector-basics.html#fnref55" class="footnote-back">↩</a></p></li>
 <li id="fn56"><p>For those interested in learning the <code>sp</code> package, <a href="https://rspatial.org/">this website</a> is a good resource.<a href="vector-basics.html#fnref56" class="footnote-back">↩</a></p></li>
 <li id="fn57"><p>This was not the case before. Turning an <code>sf</code> object to a <code>data.table</code> object used to replace sfg with NA.<a href="vector-basics.html#fnref57" class="footnote-back">↩</a></p></li>
 <li id="fn58"><p>For the complete list of available geometrical operations under the <code>sf</code> package, see <a href="https://cran.r-project.org/web/packages/sf/vignettes/sf1.html">here</a>.<a href="vector-basics.html#fnref58" class="footnote-back">↩</a></p></li>

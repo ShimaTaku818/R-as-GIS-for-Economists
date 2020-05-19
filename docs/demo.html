@@ -24,7 +24,7 @@
 <meta name="author" content="Taro Mieno" />
 
 
-<meta name="date" content="2020-05-16" />
+<meta name="date" content="2020-05-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1241,7 +1241,7 @@ crs        : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=
 source     : /private/var/folders/t4/5gnqprbn38nftyxkyk5hdwmd8hnypy/T/RtmpUSOffv/CDL_2015_19.tif 
 names      : CDL_2015_19 
 values     : 0, 255  (min, max)</code></pre>
-<p>The cells (30 meter by 30 meter) of the imported raster layer take a value ranging from 0 to 255. Corn and soybean are represented by 1 and 5, respectively (visualization of the CDL data is on the right).</p>
+<p>The cells (30 meter by 30 meter) of the imported raster layer take a value ranging from 0 to 255. Corn and soybean are represented by 1 and 5, respectively (Figure <a href="demo.html#fig:overlap-cdl-grid">1.10</a>).</p>
 <p>Figure <a href="demo.html#fig:overlap-cdl-grid">1.10</a> shows the map of one of the IA grids and the CDL cells it overlaps with.</p>
 <div class="figure"><span id="fig:overlap-cdl-grid"></span>
 <img src="Demonstration_files/figure-html/overlap-cdl-grid-1.png" alt="Spatial overlap of a IA grid and CDL layer" width="672" />
@@ -1277,7 +1277,7 @@ Figure 1.10: Spatial overlap of a IA grid and CDL layer
 <a class="sourceLine" id="cb50-7" data-line-number="7"><span class="st">  </span><span class="co">#--- corn share divided by soy share ---#</span></a>
 <a class="sourceLine" id="cb50-8" data-line-number="8"><span class="st">  </span>.[, c_s_ratio <span class="op">:</span><span class="er">=</span><span class="st"> </span>corn_share <span class="op">/</span><span class="st"> </span>soy_share]</a></code></pre></div>
 <hr />
-<p>We are still missing daily precipitation data at the moment. We have decided to use daily weather data from PRISM. Daily PRISM data is a raster data with the cell size of 4 km by 4 km. Figure <a href="demo.html#fig:Demo4-show-prism-data">1.11</a> the right presents precipitation data downloaded for April 1, 2010. It covers the entire contiguous U.S.</p>
+<p>We are still missing daily precipitation data at the moment. We have decided to use daily weather data from PRISM. Daily PRISM data is a raster data with the cell size of 4 km by 4 km. Figure <a href="demo.html#fig:Demo4-show-prism-data">1.11</a> presents precipitation data downloaded for April 1, 2010. It covers the entire contiguous U.S.</p>
 <div class="figure"><span id="fig:Demo4-show-prism-data"></span>
 <img src="Demonstration_files/figure-html/Demo4-show-prism-data-1.png" alt="Map of PRISM raster data layer" width="672" />
 <p class="caption">
