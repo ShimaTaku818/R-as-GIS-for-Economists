@@ -161,7 +161,7 @@ ggplot() +
 
 ### st_intersects()  
 
-This function identifies which `sfg` object in an `sf` (or `sfc`) intersects with `sfg` object(s) in another `sf`. For example, you can use the function to identify which well is located within which NRD. `st_intersects()` is the most commonly used topological relations, and it is the default topological relation used when performing spatial subsetting and joining, which we will cover later. 
+This function identifies which `sfg` object in an `sf` (or `sfc`) intersects with `sfg` object(s) in another `sf`. For example, you can use the function to identify which well is located within which county. `st_intersects()` is the most commonly used topological relations. You may not find yourself using `st_intersects()`, but it is important to understand what it does as it is the default topological relation used when performing spatial subsetting and joining, which we will cover later.  
 
 ---
 
@@ -192,7 +192,7 @@ The output is a list of which polygon(s) each of the lines intersect with.
 
 **polygons and polygons**
 
-For polygons vs polygons interaction, `st_intersects()` identifies any polygons that either touches (even at a point) or share some area.
+For polygons vs polygons interaction, `st_intersects()` identifies any polygons that either touches (even at a point like polygons 1 and 3) or share some area.
 
 ```{r, cache=TRUE}
 st_intersects(polygons, polygons)
@@ -200,7 +200,7 @@ st_intersects(polygons, polygons)
 
 ### st_intersection() {#st_intersection}
 
-Instead of getting just indices of intersecting objects, __st_intersection()__ returns intersecting spatial objects. 
+Instead of getting just indices of intersecting objects, __st_intersection()__ returns intersecting spatial objects. Another important feature of the function is that non-intersecting parts of the `sf` objects will be cut out and do not remain in the resulting object. This feature can be very useful. See below for the details.
 
 ---
 
@@ -216,7 +216,7 @@ intersections <- st_intersection(lines[2, ], polygons) %>%
 intersections
 ```
 
-As you can see in Figure \@ref(fig:lines-polygons-int) below, each instance of the intersections of the line and polygons become an observation (line 2-polygon 1 and line 2-polygon 2). Note also that the part of the line that did not intersect is cut out and does not remain in the returned `sf`.^[See Chapter 1, Demonstration 3 for an example of lines-polygons intersection in an economic study.]
+As you can see in Figure \@ref(fig:lines-polygons-int) below, each instance of the intersections of the line and polygons become an observation (line 2-polygon 1 and line 2-polygon 2). Note also that the part of the line that did not intersect is cut out and does not remain in the returned `sf`.^[See Chapter 1, Demonstration 3 for an example of lines-polygons intersection in an economic study.] This feature can be useful as you can see in Demonstration 4 (Chapter \@ref(fig: )) 
 
 ```{r lines-polygons-int, fig.cap = "The outcome of the intersections of the lines and polygons"}
 ggplot() +
@@ -276,7 +276,7 @@ ggplot() +
   geom_sf_text(data = points_set_2, aes(label = id), color = "blue") 
 ```
 
-We want to know which of the blue points (points_set_2) are located within 0.2 from each of the red points (points_set_1). The following figure (Figure \@ref(fig:points-points-within)) gives use the answer visually.
+We want to know which of the blue points (points_set_2) are located within 0.2 from each of the red points (points_set_1). The following figure (Figure \@ref(fig:points-points-within)) gives us the answer visually.
 
 ```{r points-points-within, fig.cap = "The blue points within 0.2 radius of the red points"}
 #--- create 0.2 buffers around points in points_set_1 ---#
@@ -334,12 +334,14 @@ tm_shape(hpa) +
 The goal here is to select only the counties that intersects with the HPA boundary. When subsetting a data.frame by specifying the row numbers you would like to select, you can do 
 
 ```{r eval = FALSE}
+#--- NOT RUN ---#
 data.frame[vector of row numbers, ]
 ```
 
 Spatial subsetting of sf objects works in a similar syntax:   
 
 ```{r syntax_subset, eval = FALSE}
+#--- NOT RUN ---#
 sf_1[sf_2, ]
 ```
 
@@ -349,9 +351,9 @@ where you are subsetting sf_1 based on sf_2. Instead of row numbers, you provide
 counties_in_hpa <- KS_counties[hpa, ]
 ```
 
-See the results below in Figure \@ref(fig:).
+See the results below in Figure \@ref(fig:default-subset).
 
-```{r default_subset, fig.cap = "The results of spatially subsetting KS counties based on HPA boundary"}
+```{r default-subset, fig.cap = "The results of spatially subsetting KS counties based on HPA boundary"}
 #--- add US counties layer ---#
 tm_shape(counties_in_hpa) +
   tm_polygons() +
@@ -365,6 +367,7 @@ You can see that only the counties that intersect with the HPA boundary remained
 You can specify the spatial operation to be used as an option as in 
 
 ```{r eval = FALSE}
+#--- NOT RUN ---#
 sf_1[sf_2, op = topological_relation_type] 
 ```
 
@@ -496,13 +499,13 @@ dplyr::select(rail_roads, LINEARID, intersect_ks)
 
 ## Spatial Join
 
-By spatial join, we mean spatial operations that involve the followings:
+By spatial join, we mean spatial operations that involve all of the followings:
 
-1. overlay one spatial layer (target layer) onto another spatial layer (source layer) 
-2. for each of the observation in the target layer
-+ identify which objects in the source layer it geographically intersects (or being close) with  
-+ extract values associated with the intersecting objects in the source layer (and summarize if necessary), 
-+ assign the extracted value to the object in the target layer
++ overlay one spatial layer (target layer) onto another spatial layer (source layer) 
++ for each of the observation in the target layer
+  * identify which objects in the source layer it geographically intersects (or being close) with  
+  * extract values associated with the intersecting objects in the source layer (and summarize if necessary), 
+  * assign the extracted value to the object in the target layer
 
 For economists, this is probably the most common motivation of using GIS software, with the ultimate goal being including the spatially joined variables as covariates in regression analysis. 
 
@@ -513,9 +516,9 @@ We can classify spatial join into four categories by the type of the underlying 
 + raster-vector: raster data (target) against vector data (source)  
 + raster-raster: raster data (target) against raster data (source)  
 
-Among the four, our focus here is the first case. The second case will be discussed in Chapter 5. We will not cover the third and fourth cases in this class.^[This is because it is almost always the case that our target data is a vector data (e.g., city or farm fields as points, political boundaries as polygons, etc).]  
+Among the four, our focus here is the first case. The second case will be discussed in Chapter 5. We will not cover the third and fourth cases in this course. This is because it is almost always the case that our target data is a vector data (e.g., city or farm fields as points, political boundaries as polygons, etc).  
 
-Category 1 can be further broken down into different sub categories depending on the type of spatial objects (point, line, and polygon). Here, we will ignore any spatial joins that involve lines. This is because objects represented by lines are rarely observations units in econometric analysis nor the source data that we will extract values from.^[Note that we did not extract any attribute values of railroads in Chapter 1, Demonstration 4. We just calculated the travel length of the railroads, which does not fall under our definition of spatial join.]. So, here is the list of the types of spatial joins we will learn.  
+Category 1 can be further broken down into different sub categories depending on the type of spatial objects (point, line, and polygon). Here, we will ignore any spatial joins that involve lines. This is because objects represented by lines are rarely observations units in econometric analysis nor the source data that we will extract values from.^[Note that we did not extract any attribute values of railroads in Chapter 1, Demonstration 4. We just calculated the travel length of the railroads, which does not fall under our definition of spatial join.] So, here is the list of the types of spatial joins we will learn.  
 
 1. points (target) against polygons (source)
 2. polygons (target) against points (source)
@@ -532,6 +535,7 @@ Category 1 can be further broken down into different sub categories depending on
 Case 1, for each of the observations (points) in the target data, finds which polygon in the source file it intersects, and then assign the value associated with the polygon to the point^[You can see a practical example of this case in action in Demonstration 1 of Chapter X.]. In order to achieve this, we can use the `st_join()` function, whose syntax is as follows:    
 
 ```{r syntax_st_join, eval = FALSE}
+#--- NOT RUN ---#
 st_join(target_sf, source_sf)
 ```
 
@@ -570,7 +574,7 @@ You can see from Figure \@ref(fig:map-corn-wells) below that all the wells insid
 tm_shape(KS_counties) +
   tm_polygons() +
 tm_shape(KS_wells_County) +
-  tm_symbols(col = "corn_price", size = 0.2) +
+  tm_symbols(col = "corn_price", size = 0.1) +
   tm_layout(frame = FALSE, legend.outside = TRUE)
 ```
 
@@ -598,7 +602,7 @@ KS_County_wells %>%
 
 Of course, it is just as easy to get other types of statistics by simply modifying the `summarize()` part.
 
-However, this two step process can be actually done in one step using the `aggregate()` function as follows:
+However, this two-step process can be actually done in one step using `aggregate()`, in which you specify how you want to aggregate with the `FUN` option as follows:
 
 ```{r demo_aggregate}
 #--- mean ---#
@@ -669,36 +673,68 @@ tm_shape(HUC_IA) +
   tm_layout(frame = FALSE, legend.outside = TRUE)
 ```
 
+Spatial joining will produce the following. 
+
 ```{r join_HUC_acres}
+(
 HUC_joined <- st_join(HUC_IA, IA_corn)
+)
 ```
+
+Each of the intersecting HUC-county combinations becomes an observation with its resulting geometry same as the geometry of the HUC unit. To see this, let's take a look at one of the HUC units.
+
+The HUC unit with `HUC_CODE ==10170203` intersects with four County.
+
+```{r filter_the_first_one}
+#--- get the HUC unit with `HUC_CODE ==10170203`  ---#
+(
+temp_HUC_county <- filter(HUC_joined, HUC_CODE == 10170203)
+)
+```
+
+Figure \@ref(fig:four-county-huc) shows the map of the four observations. 
+
+```{r four-county-huc, fig.cap = "Map of the HUC unit"}
+tm_shape(temp_HUC_county) +
+  tm_polygons() +
+  tm_layout(frame = FALSE)
+```
+
+So, all of the four observations have the identical geometry, which is the geometry of the HUC unit, meaning that the `st_join()` did not leave the information about the nature of the intersection of the HUC unit and the four county. Again, remember that the default option is `st_intersects()`, which checks whether spatial objects intersect or not, nothing more. If you are just calculating the simple average of corn acres ignoring the degree of spatial overlaps, this is just fine. However, if you would like to calculate area-weighted average, you are not left with sufficient information. 
 
 ---
 
-To find an area-weighted average, we can first use `st_intersection()`. For each of the polygons in the target layer, this function, finds the intersecting polygons from the source data, and then divide the target polygon into parts based on the boundary of the intersecting polygons. 
+To find an area-weighted average, we can use `st_intersection()`. For each of the polygons in the target layer, this function, finds the intersecting polygons from the source data, and then divide the target polygon into parts based on the boundary of the intersecting polygons. 
 
 ```{r intersection}
+(
 HUC_intersections <- st_intersection(HUC_IA, IA_corn) %>% 
-  arrange(HUC_CODE) %>% 
   mutate(huc_county = paste0(HUC_CODE, "-", county_code))
+)
 ```
 
-The key difference from the `st_join()` example (see \@ref(st_intersection)) is that it returns a geometry variable that represents the intersecting area of the HUC units and the counties as shown in Figure \@ref(fig:inter-ex) below. 
+The key difference from the `st_join()` example is that each  observation of the returned data is a unique HUC-county intersection. Figure \@ref(fig:inter-ex) below is a map of all the intersections of the HUC unit with `HUC_CODE ==10170203` and the four intersecting county. 
 
 ```{r inter-ex, fig.cap = "Intersections of a HUC unit and Iowa counties"}
-tm_shape(filter(HUC_intersections, HUC_CODE == "07020009")) + 
+tm_shape(filter(HUC_intersections, HUC_CODE == "10170203")) + 
   tm_polygons(col = "huc_county") +
   tm_layout(frame = FALSE)
 ```
 
+Note also that the attributes of county data are joined as you can see `acres` in the output above. So, `st_intersection()` is really a spatial kind of spatial join where the resulting observations are the intersections of the target and source `sf` objects. 
+
+In order to find the area-weighted average of corn acres, you can use `st_area()` first to calculate the area of the intersections, and then find the area-weighted average as follows:
+
 ```{r map_area_weighted}
+(
 HUC_aw_acres <- HUC_intersections %>% 
   #--- get area ---#
   mutate(area = as.numeric(st_area(.))) %>% 
   #--- get area-weight by HUC unit ---#
   group_by(HUC_CODE) %>% 
   mutate(weight = area / sum(area)) %>% 
-  #--- calculate area-weighted corn acreage ---#
-  summarize(aw_acres = sum(weight * acres))  
+  #--- calculate area-weighted corn acreage by HUC unit ---#
+  summarize(aw_acres = sum(weight * acres))
+)
 ```
 

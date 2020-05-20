@@ -528,7 +528,7 @@ where $yield_i$, $N_i$, $EC_i$, and $v_i$ are corn yield, nitrogen rate, EC, and
 * create maps using the `ggplot2` package
   - use `ggplot2::geom_sf()`
 * create subplots within experimental plots
-  - use-defined function that makes use of `st_geometry()` 
+  - user-defined function that makes use of `st_geometry()` 
 * identify corn yield, as-applied nitrogen, and electric conductivity (EC) data points within each of the experimental plots and find their averages
   - use `sf::st_join()` and   `sf::aggregate()`
 
@@ -781,7 +781,7 @@ lm(yield ~ aa_NH3 + I(aa_NH3^2) + I(aa_NH3*ec) + I(aa_NH3^2*ec), data = reg_data
 
 **Objective**
 
-Understand the impact of past precipitation on crop choice in Iowa (IA). 
++ Understand the impact of past precipitation on crop choice in Iowa (IA). 
 
 ---
 
@@ -1308,7 +1308,7 @@ First 10 features:
 10 MULTIPOLYGON (((-89.9205 42...
 ```
 
-A nice thing about this function is that the data is downloaded as an `sf` object with county geometry with `geometry = TRUE`. So, you can immediately plot it (Figure \@ref(fig:map-il-corn-acreage)) and use it for later spatial interactions without having to merge the downloaded data to an independent county boundary data.^[`theme_for_map` is a user defined object that defines the theme of figures generated using `ggplot2` for this section. You can find it in **Chap_1_Demonstration.R**.]. 
+A nice thing about this function is that the data is downloaded as an `sf` object with county geometry with `geometry = TRUE`. So, you can immediately plot it (Figure \@ref(fig:map-il-corn-acreage)) and use it for later spatial interactions without having to merge the downloaded data to an independent county boundary data.^[`theme_for_map` is a user defined object that defines the theme of figures generated using `ggplot2` for this section. You can find it in **Chap_1_Demonstration.R**.] 
 
 
 ```r
@@ -1333,6 +1333,7 @@ Let's import the U.S. railroad data and reproject to the CRS of `IL_corn_planted
 
 ```r
 rail_roads <- st_read(dsn = "./Data/", layer = "tl_2015_us_rails") %>% 
+  #--- reproject to the CRS of IL_corn_planted ---#
   st_transform(st_crs(IL_corn_planted))
 ```
 
@@ -1493,6 +1494,7 @@ lm(Value ~ length_in_m, data = reg_data) %>%
 ---
 
 **Objective**
+
 + Understand the impact of monthly precipitation on groundwater use for agricultural irrigation
 
 ---

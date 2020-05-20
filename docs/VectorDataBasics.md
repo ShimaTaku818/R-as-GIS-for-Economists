@@ -22,7 +22,7 @@ In this chapter we learn how to use the `sf` package to handle and operate on sp
 
 ### `sf` or `sp`? {-}
 
-The `sf` package was designed to replace the `sp` package, which has been one of the most popular and powerful spatial packages in R for more than a decade. It has been about four years since the `sf` package was first registered on CRAN. A couple of years back, many other spatial packages did not have support for the package yet. In this [blog post](https://www.r-bloggers.com/should-i-learn-sf-or-sp-for-spatial-r-programming/) the author responded to the questions of whether one should learn `sp` of `sf` saying,
+The `sf` package was designed to replace the `sp` package, which has been one of the most popular and powerful spatial packages in R for more than a decade. It has been about four years since the `sf` package was first registered on CRAN. A couple of years back, many other spatial packages did not have support for the package yet. In this [blog post](https://www.r-bloggers.com/should-i-learn-sf-or-sp-for-spatial-r-programming/) the author responded to the questions of whether one should learn `sp` or `sf` saying,
 
 "That's a tough question. If you have time, I would say, learn to use both. sf is pretty new, so a lot of packages that depend on spatial classes still rely on sp. So you will need to know sp if you want to do any integration with many other packages, including raster (as of March 2018).
 
@@ -144,7 +144,7 @@ st_geometry(nc[1, ])[[1]][[1]]
 [27,] -81.47276 36.23436
 ```
 
-As you can see, the `sfg` consists of a number of points (pairs of two numbers). Connecting the points in the order they are stored delineate the Ashe County boundary.
+As you can see, the `sfg` consists of a number of points (pairs of two numbers). Connecting the points in the order they are stored delineates the Ashe County boundary.
 
 
 ```r
@@ -429,7 +429,7 @@ class(sf_ex)
 
 ## Reading and writing vector data
 
-I claimed that you do not need ArcGIS or QGIS $99\%$ of your work as an economist. However, the vast majority of people still use ArcGIS to handle spatial data, which has its own system of storing spatial data^[See [here]() for how spatial datasets can be stores in various other formats.] called shapefile. So, chances are that your collaborators still use shapefiles. Moreover, there are many GIS data online that are available only as shapefiles. So, it is important to learn how to read and write shapefiles. 
+I claimed that you do not need ArcGIS or QGIS for $99\%$ of your work as an economist. However, the vast majority of people still use ArcGIS to handle spatial data, which has its own system of storing spatial data^[See [here]() for how spatial datasets can be stores in various other formats.] called shapefile. So, chances are that your collaborators still use shapefiles. Moreover, there are many GIS data online that are available only as shapefiles. So, it is important to learn how to read and write shapefiles. 
 
 ### Reading a shapefile
 
@@ -441,16 +441,7 @@ We can use `st_read()` to read a shapefile. It reads in a shapefile and then tur
 nc_loaded <- st_read(dsn = "./Data", "nc") 
 ```
 
-```
-Reading layer `nc' from data source `/Users/tmieno2/Box/Teaching/AAEA R/GIS/Data' using driver `ESRI Shapefile'
-Simple feature collection with 100 features and 1 field
-geometry type:  MULTIPOLYGON
-dimension:      XY
-bbox:           xmin: -84.32385 ymin: 33.88199 xmax: -75.45698 ymax: 36.58965
-CRS:            4267
-```
-
-Typically, you have two arguments to specify for `st_read()`. The first one is `dsn`, which is basically the path to the shapefile you want to import. The second one is the name of the shapefile. Notice that you do not add `.shp` extension to the file name: `nc`, not `nc.shp`.^[When storing a spatial dataset, ArcGIS divides the information into separate files. All of them have the same prefix, but have different extensions. We typically say we read a shapefile, but we really are importing all these files including the shapefile with the .shp extension. When you read those data, you just refer to the common prefix because you really are importing all the files, not just a .shp file.].
+Typically, you have two arguments to specify for `st_read()`. The first one is `dsn`, which is basically the path to folder in which the shapefile you want to import is stored. The second one is the name of the shapefile. Notice that you do not add `.shp` extension to the file name: `nc`, not `nc.shp`.^[When storing a spatial dataset, ArcGIS divides the information into separate files. All of them have the same prefix, but have different extensions. We typically say we read a shapefile, but we really are importing all these files including the shapefile with the .shp extension. When you read those data, you just refer to the common prefix because you really are importing all the files, not just a .shp file.].
 
 ### Writing to a shapefile
 
@@ -475,7 +466,7 @@ Writing 100 features with 1 fields and geometry type Multi Polygon.
 
 ### Better alternatives 
 
-Now, if your collaborator is using ArcGIS and demanding that he/she needs a shapefile for his/her work, sure you can use the above command to write a shapefile. But, there is really no need to work with the shapefile system. One of the alternative data formats that is considered superior to the shapefile system is GeoPackage^[[here](https://www.geopackage.org/)], which overcomes various limitations associated with shapefile^[see the last paragraph of [chapter 7.5 of this book](https://csgillespie.github.io/efficientR/data-carpentry.html#data-processing-with-data.table), [this blogpost](https://carto.com/blog/fgdb-gpkg/), or [this](http://switchfromshapefile.org/)]. Unlike the shapefile system, it produces only a single file with .gpkg extension. Note that GeoPackage files can also be easily read into ArcGIS. So, it might be worthwhile to convince your collaborators to stop using shapefiles and start using GeoPackage.  
+Now, if your collaborator is using ArcGIS and demanding that he/she needs a shapefile for his/her work, sure you can use the above command to write a shapefile. But, there is really no need to work with the shapefile system. One of the alternative data formats that is considered superior to the shapefile system is GeoPackage^[[here](https://www.geopackage.org/)], which overcomes various limitations associated with shapefile^[see the last paragraph of [chapter 7.5 of this book](https://csgillespie.github.io/efficientR/data-carpentry.html#data-processing-with-data.table), [this blogpost](https://carto.com/blog/fgdb-gpkg/), or [this](http://switchfromshapefile.org/)]. Unlike the shapefile system, it produces only a single file with .gpkg extension.^[Am I the only one who gets very frustrated when your collaborator attaches 15 files for three geographic objects to an email? It could have been just three files using the GeoPackage format.] Note that GeoPackage files can also be easily read into ArcGIS. So, it might be worthwhile to convince your collaborators to stop using shapefiles and start using GeoPackage.  
 
 
 ```r
@@ -483,6 +474,9 @@ Now, if your collaborator is using ArcGIS and demanding that he/she needs a shap
 st_write(nc, dsn = "./Data/nc.gpkg")
 
 #--- read a gpkg file ---#
+(
+nc <- st_read("./Data/nc.gpkg")
+)
 ```
 
 Or better yet, if your collaborator uses R (or if it is only you who is going to use the data), then just save it as an rds file using `saveRDS()`, which can be of course read using `readRDS()`.
@@ -493,11 +487,45 @@ Or better yet, if your collaborator uses R (or if it is only you who is going to
 saveRDS(nc, "/Users/tmieno2/Box/Teaching/AAEA R/GIS/nc_county.rds")
 
 #--- read an rds ---#
+(
 nc <- readRDS("/Users/tmieno2/Box/Teaching/AAEA R/GIS/nc_county.rds")
+)
+```
+
+```
+Simple feature collection with 100 features and 14 fields
+geometry type:  MULTIPOLYGON
+dimension:      XY
+bbox:           xmin: -84.32385 ymin: 33.88199 xmax: -75.45698 ymax: 36.58965
+CRS:            4267
+First 10 features:
+    AREA PERIMETER CNTY_ CNTY_ID        NAME  FIPS FIPSNO CRESS_ID BIR74 SID74
+1  0.114     1.442  1825    1825        Ashe 37009  37009        5  1091     1
+2  0.061     1.231  1827    1827   Alleghany 37005  37005        3   487     0
+3  0.143     1.630  1828    1828       Surry 37171  37171       86  3188     5
+4  0.070     2.968  1831    1831   Currituck 37053  37053       27   508     1
+5  0.153     2.206  1832    1832 Northampton 37131  37131       66  1421     9
+6  0.097     1.670  1833    1833    Hertford 37091  37091       46  1452     7
+7  0.062     1.547  1834    1834      Camden 37029  37029       15   286     0
+8  0.091     1.284  1835    1835       Gates 37073  37073       37   420     0
+9  0.118     1.421  1836    1836      Warren 37185  37185       93   968     4
+10 0.124     1.428  1837    1837      Stokes 37169  37169       85  1612     1
+   NWBIR74 BIR79 SID79 NWBIR79                       geometry
+1       10  1364     0      19 MULTIPOLYGON (((-81.47276 3...
+2       10   542     3      12 MULTIPOLYGON (((-81.23989 3...
+3      208  3616     6     260 MULTIPOLYGON (((-80.45634 3...
+4      123   830     2     145 MULTIPOLYGON (((-76.00897 3...
+5     1066  1606     3    1197 MULTIPOLYGON (((-77.21767 3...
+6      954  1838     5    1237 MULTIPOLYGON (((-76.74506 3...
+7      115   350     2     139 MULTIPOLYGON (((-76.00897 3...
+8      254   594     2     371 MULTIPOLYGON (((-76.56251 3...
+9      748  1190     2     844 MULTIPOLYGON (((-78.30876 3...
+10     160  2038     5     176 MULTIPOLYGON (((-80.02567 3...
 ```
 
 The use of rds files can be particularly attractive when the dataset is large because rds files are typically more memory efficient than shapefiles, eating up less of your disk memory. 
 
+As you can see here, it is a myth that spatial datasets have to be stored as shapefiles.
 
 ## Projection with a different Coordinate Reference Systems 
 
@@ -595,7 +623,7 @@ PROJCS["NAD83 / UTM zone 17N",
 
 As you can see in its CRS information, the projection system is now UTM zone 17N. 
 
-You often need to change the CRS of an `sf` object when you interact (e.g., spatial subsetting, joining, etc) it with another `sf` object. In such a case, you can extract the CRS of the other `sf` object using `st_crs()` and use it for transformation^[In this example, we are using the same data with two different CRS. But, you get the point.]. 
+You often need to change the CRS of an `sf` object when you interact (e.g., spatial subsetting, joining, etc) it with another `sf` object. In such a case, you can extract the CRS of the other `sf` object using `st_crs()` and use it for transformation.^[In this example, we are using the same data with two different CRS. But, you get the point.] So, you do not need to find the EPSG of the CRS of the `sf` object you are interacting it with.
 
 
 ```r
@@ -643,13 +671,56 @@ PROJCS["NAD83 / UTM zone 17N",
 
 ## Turning a data.frame of points into an `sf` 
 
-Often times, you have a dataset with geographic coordinates as variables in a csv or other formats, which would not be recognized as a spatial dataset by R immediately when it is read into R. In this case, you need to identify which variables represent the geographic coordinates from the data set, and create an `sf` yourself. Fortunately, it is easy to do so using the `st_as_sf()` function.
+Often times, you have a dataset with geographic coordinates as variables in a csv or other formats, which would not be recognized as a spatial dataset by R immediately when it is read into R. In this case, you need to identify which variables represent the geographic coordinates from the data set, and create an `sf` yourself. Fortunately, it is easy to do so using the `st_as_sf()` function. Let's first read a dataset (irrigation wells in Nebraska):
 
 
 ```r
-#--- read well registration data ---#
-wells <- readRDS('./Data/registration.rds') 
+#--- read irrigation well registration data ---#
+(
+wells <- readRDS('./Data/well_registration.rds') 
+)
+```
 
+```
+        wellid ownerid        nrdname acres  regdate section     longdd
+     1:      2  106106 Central Platte   160 12/30/55       3  -99.58401
+     2:      3   14133   South Platte    46  4/29/31       8 -102.62495
+     3:      4   14133   South Platte    46  4/29/31       8 -102.62495
+     4:      5   14133   South Platte    46  4/29/31       8 -102.62495
+     5:      6   15837 Central Platte   160  8/29/32      20  -99.62580
+    ---                                                                
+105818: 244568  135045 Upper Big Blue    NA  8/26/16      30  -97.58872
+105819: 244569  105428    Little Blue    NA  8/26/16      24  -97.60752
+105820: 244570  135045 Upper Big Blue    NA  8/26/16      30  -97.58294
+105821: 244571  135045 Upper Big Blue    NA  8/26/16      25  -97.59775
+105822: 244572  105428    Little Blue    NA  8/26/16      15  -97.64086
+           latdd
+     1: 40.69825
+     2: 41.11699
+     3: 41.11699
+     4: 41.11699
+     5: 40.73268
+    ---         
+105818: 40.89017
+105819: 40.13257
+105820: 40.88722
+105821: 40.89639
+105822: 40.13380
+```
+
+```r
+#--- check the class ---#
+class(wells)
+```
+
+```
+[1] "data.table" "data.frame"
+```
+
+As you can see the data is not an `sf` object. In this dataset, `longdd` and `latdd` represent longitude and latitude, respectively. We now turn the dataset into an `sf` object:
+
+
+```r
 #--- recognize it as an sf ---#
 wells_sf <- st_as_sf(wells, coords = c("longdd","latdd"))
 
@@ -663,13 +734,13 @@ geometry type:  POINT
 dimension:      XY
 bbox:           xmin: -102.6249 ymin: 40.69824 xmax: -99.58401 ymax: 41.11699
 CRS:            NA
-  wellid long_utm lat_utm useid ownerid                   geometry
-1      2 450660.7 4505424     I  106106 POINT (-99.58401 40.69825)
-2      3 195648.1 4558080     I   14133 POINT (-102.6249 41.11699)
-3      4 195648.1 4558080     I   14133 POINT (-102.6249 41.11699)
-4      5 195648.1 4558080     I   14133 POINT (-102.6249 41.11699)
-5      6 447157.4 4509271     I   15837  POINT (-99.6258 40.73268)
-6      7 445515.0 4509168     I   90248 POINT (-99.64524 40.73164)
+  wellid ownerid        nrdname acres  regdate                   geometry
+1      2  106106 Central Platte   160 12/30/55 POINT (-99.58401 40.69825)
+2      3   14133   South Platte    46  4/29/31 POINT (-102.6249 41.11699)
+3      4   14133   South Platte    46  4/29/31 POINT (-102.6249 41.11699)
+4      5   14133   South Platte    46  4/29/31 POINT (-102.6249 41.11699)
+5      6   15837 Central Platte   160  8/29/32  POINT (-99.6258 40.73268)
+6      7   90248 Central Platte   120  2/15/35 POINT (-99.64524 40.73164)
 ```
 
 Note that the CRS of `wells_sf` is NA. Obviously, $R$ does not know the reference system without you telling it. We know^[Yes, YOU need to know the CRS of your data.] that the geographic coordinates in the wells data is NAD 83 ($epsg=4269$) for this dataset. So, we can assign the right CRS using either `st_set_crs()` or `st_crs()`.
@@ -708,7 +779,7 @@ Though unlikely, you may find instances where `sp` objects are necessary or desi
 
 ```r
 #--- conversion ---#
-wells_sp <- as(wells_sf,"Spatial")
+wells_sp <- as(wells_sf, "Spatial")
 
 #--- check the class ---#
 class(wells_sp)
@@ -726,7 +797,7 @@ list(a_point, a_polygon) %>% st_sfc() %>% st_as_sf() %>%
 ```
 
  -->
-As you can see `wells_sp` is a class of `SpatialPointsDataFrame`, polygons with data frame supported by the `sp` package. The above syntax works for converting an `sf` of polygons into `SpatialPolygonsDataFrame` as well^[The function does not work for an `sf` object that consists of different geometry types (e.g., POINT and POLYGON). This is because `sp` objects do not allow different types of geometries in the single `sp` object. For example, `SpatialPointsDataFrame` consists only of points data.].     
+As you can see `wells_sp` is a class of `SpatialPointsDataFrame`, points with a `data.frame` supported by the `sp` package. The above syntax works for converting an `sf` of polygons into `SpatialPolygonsDataFrame` as well^[The function does not work for an `sf` object that consists of different geometry types (e.g., POINT and POLYGON). This is because `sp` objects do not allow different types of geometries in the single `sp` object. For example, `SpatialPointsDataFrame` consists only of points data.].     
 
 You can revert `wells_sp` back to an `sf` object using the `st_as_sf()` function, as follows:
 
@@ -747,7 +818,7 @@ We do not cover how to use the `sp` package as the benefit of learning it has be
 
 ## Non-spatial transformation of sf 
 
-An important feature of an `sf` object is that it is basically a `data.frame` with geometric information stored as a variable (column). This means that transforming an `sf` object works just like transforming a `data.frame`. Basically, everything you can do to a `data.frame`, you can do to an `sf` as well. The code below just provides an example of basic operations including `select()`, `filter()`, and `mutate()` in action with an `sf` object to just confirm that `dplyr`  operations works with an sf object just like a `data.frame`.   
+An important feature of an `sf` object is that it is basically a `data.frame` with geometric information stored as a variable (column). This means that transforming an `sf` object works just like transforming a `data.frame`. Basically, everything you can do to a `data.frame`, you can do to an `sf` as well. The code below just provides an example of basic operations including `select()`, `filter()`, and `mutate()` in action with an `sf` object to just confirm that `dplyr`  operations works with an `sf` object just like a `data.frame`.   
 
 
 ```r
@@ -774,6 +845,11 @@ First 10 features:
 9      11 Middle Republican   807   5/6/38  POINT (-101.1193 40.3527)
 10     12 Middle Republican   148 11/29/77 POINT (-101.1146 40.35631)
 ```
+
+Notice that `geometry` column will be retained after `select()` even if you did not tell R to keep it above.
+
+Let's apply `select()`, `filter()`, and `mutate()` to the dataset.
+
 
 ```r
 #--- do some transformations ---#
@@ -887,10 +963,9 @@ Finally, `data.table` does not work as well with sf objects as `dplyr` does.
 
 ```r
 #--- convert an sf to data.table ---#
+(
 wells_by_nrd_dt <- data.table(wells_by_nrd)
-
-#--- take a look ---#
-wells_by_nrd_dt
+)
 ```
 
 ```
@@ -935,9 +1010,28 @@ wells_by_nrd_sf_again <- st_as_sf(wells_by_nrd_dt)
 
 So, this means that if you need fast data transformation, you can first turn an `sf` to a `data.table`, transform the data using the `data.table` functionality, and then revert back to `sf`. However, for most economists, the geometry variable itself is not of interest in the sense that it never enters econometric models. For most of us, the geographic information contained in the geometry variable is just a glue to tie two datasets together by geographic referencing. Once we get values of spatial variables of interest, there is no point in keeping your data as an sf object. Personally, whenever I no longer need to carry around the geometry variable, I immediately turn an sf object into a `data.table` for fast data transformation especially when the data is large. 
 
+Those who know `dtplyr` package (it takes advantage of the speed of `data.table` while you can keep using `dplyr` syntax and functions) may wonder if it works well with `sf` objects. Nope:
+
+
+```r
+library(dtplyr)
+
+#--- convert an "lazy" data.table ---#
+wells_ldt <- lazy_dt(wells_sf)  
+
+#--- try  ---#
+st_buffer(wells_ldt, dist = 2)
+```
+
+```
+Error in UseMethod("st_buffer"): no applicable method for 'st_buffer' applied to an object of class "c('dtplyr_step_first', 'dtplyr_step')"
+```
+
+By the way, this package is awesome if you really love `dplyr`, but want the speed of `data.table`. `dtplyr` is of course slightly slower than `data.table` because an internal translation of `dplyr` language to `data.table` language has to happen first.^[I personally use `data.table` unless it is necessary to use `dplyr` like when dealing with `sf` objects. It is more concise than `dplyr`, which is somewhat verbose (yet expressive because of it). Ultimately, it is your personal preference which to use. You might be interested in reading [this discussion](https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly) about the comparative advantages and disadvantages of the two packages.] 
+
 ## Non-interactive geometrical operations
 
-There are various geometrical operations that are particularly useful for economists. Here, some of the most commonly used geometrical operations are introduced^[For the complete list of available geometrical operations under the `sf` package, see [here](https://cran.r-project.org/web/packages/sf/vignettes/sf1.html).]. You can see the practical use of some of these functions in Chapter \@ref(demo).
+There are various geometrical operations that are particularly useful for economists. Here, some of the most commonly used geometrical operations are introduced^[For the complete list of available geometrical operations under the `sf` package, see [here](https://cran.r-project.org/web/packages/sf/vignettes/sf1.html).]. You can see the practical use of some of these functions in Chapter \@ref(demo4).
  
 ### st_buffer 
 
