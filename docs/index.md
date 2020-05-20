@@ -1,7 +1,7 @@
 --- 
 title: "R as GIS for Economists"
 author: "Taro Mieno"
-date: "2020-05-19"
+date: "2020-05-20"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [RGIS.bib]
@@ -164,7 +164,7 @@ Outcomes:
 
 
 ```
-## [1] 0.9426991 0.3883436 0.9484198 0.5172579 0.1127596
+## [1] 0.1825060 0.3725695 0.9901684 0.4538784 0.7708875
 ```
 
 ### Parentheses around codes {-}
@@ -179,7 +179,7 @@ Sometimes you will see codes enclosed by parenthesis like this:
 ```
 
 ```
-## [1] 0.9567504 0.9279209 0.2888205 0.0911092 0.5332951
+## [1] 0.9050476 0.5607299 0.7950876 0.1118508 0.8713483
 ```
 
 The parentheses prints what's inside of a newly created object (here `a`) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created. 

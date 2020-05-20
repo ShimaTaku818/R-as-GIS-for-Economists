@@ -24,7 +24,7 @@
 <meta name="author" content="Taro Mieno" />
 
 
-<meta name="date" content="2020-05-19" />
+<meta name="date" content="2020-05-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -200,6 +200,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html"><i class="fa fa-check"></i><b>3</b> Spatial Interactions of Vector Data: Subsetting and Joining</a><ul>
+<li class="chapter" data-level="" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#before-you-start-2"><i class="fa fa-check"></i>Before you start</a><ul>
+<li class="chapter" data-level="" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#direction-for-replication-2"><i class="fa fa-check"></i>Direction for replication</a></li>
+</ul></li>
 <li class="chapter" data-level="3.1" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#topological-relations"><i class="fa fa-check"></i><b>3.1</b> Topological relations</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#st_intersects"><i class="fa fa-check"></i><b>3.1.1</b> st_intersects()</a></li>
 <li class="chapter" data-level="3.1.2" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#st_intersection"><i class="fa fa-check"></i><b>3.1.2</b> st_intersection()</a></li>
@@ -281,8 +284,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>set a folder (any folder) as the working directory using <code>setwd()</code><br />
 </li>
-<li>create a folder called “Data” inside the folder designated as the working directory (if you have created a “Data” folder to replicate demonstrations in Chapter <a href="demo.html#demo">1</a>, then skip this step.)</li>
-<li>download the pertinent datasets from <a href="https://www.dropbox.com/sh/cyx9clgmshwc8eo/AAApv03Qpx84IGKCyF5v2rJ6a?dl=0">here</a> and put them in the “Data” folder</li>
+<li>create a folder called “Data” inside the folder designated as the working directory (if you have created a “Data” folder to replicate demonstrations in Chapter <a href="demo.html#demo">1</a>, then skip this step)</li>
+<li>download the pertinent datasets from <a href="https://www.dropbox.com/sh/c2mxn7bfxepd3wm/AAB77AgOnaCg27gosbAJvrLKa?dl=0">here</a> and put them in the “Data” folder</li>
 </ul>
 </div>
 </div>
@@ -923,7 +926,7 @@ CRS:            unknown
 <p>But, it is easy to revert it back to an <code>sf</code> object again by using the <code>st_as_sf()</code> function<a href="#fn58" class="footnote-ref" id="fnref58"><sup>58</sup></a>.</p>
 <div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1">wells_by_nrd_sf_again &lt;-<span class="st"> </span><span class="kw">st_as_sf</span>(wells_by_nrd_dt)</a></code></pre></div>
 <p>So, this means that if you need fast data transformation, you can first turn an <code>sf</code> to a <code>data.table</code>, transform the data using the <code>data.table</code> functionality, and then revert back to <code>sf</code>. However, for most economists, the geometry variable itself is not of interest in the sense that it never enters econometric models. For most of us, the geographic information contained in the geometry variable is just a glue to tie two datasets together by geographic referencing. Once we get values of spatial variables of interest, there is no point in keeping your data as an sf object. Personally, whenever I no longer need to carry around the geometry variable, I immediately turn an sf object into a <code>data.table</code> for fast data transformation especially when the data is large.</p>
-<p>Those who know <code>dtplyr</code> package (it takes advantage of the speed of <code>data.table</code> while you can keep using <code>dplyr</code> syntax and functions) may wonder if it works well with <code>sf</code> objects. Nope:</p>
+<p>Those who know the <a href="https://github.com/tidyverse/dtplyr"><code>dtplyr</code> package</a> (it takes advantage of the speed of <code>data.table</code> while you can keep using <code>dplyr</code> syntax and functions) may wonder if it works well with <code>sf</code> objects. Nope:</p>
 <div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1"><span class="kw">library</span>(dtplyr)</a>
 <a class="sourceLine" id="cb165-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb165-3" data-line-number="3"><span class="co">#--- convert an &quot;lazy&quot; data.table ---#</span></a>
@@ -948,7 +951,7 @@ CRS:            unknown
 <p>Here is the spatial distribution of the wells (Figure <a href="vector-basics.html#fig:urnrd-wells">2.2</a>).</p>
 <div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" data-line-number="1"><span class="kw">tm_shape</span>(urnrd_wells_sf) <span class="op">+</span></a>
 <a class="sourceLine" id="cb168-2" data-line-number="2"><span class="st">  </span><span class="kw">tm_symbols</span>(<span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb168-3" data-line-number="3"><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">frame =</span> <span class="ot">NA</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb168-3" data-line-number="3"><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">frame =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <div class="figure"><span id="fig:urnrd-wells"></span>
 <img src="VectorDataBasics_files/figure-html/urnrd-wells-1.png" alt="Map of the wells" width="672" />
 <p class="caption">

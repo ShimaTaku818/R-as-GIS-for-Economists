@@ -7,7 +7,20 @@
 
 
 
-**Introduction**
+## Before you start {-}
+
+In this chapter we learn the interactions of more than one spatial objects. We first look at **topological relations** of two spatial objects (how they are spatially related with each other): specifically, `st_intersects()` and `st_is_within_distance()`. `st_intersects()` is particularly important as it is by far the most common topological relation economists will use and also because it is the default topological relation that `sf` uses for spatial subsetting and spatial joining. 
+
+We then follow with spatial subsetting: filtering spatial data by the geographic features of another spatial data. Finally, we will learn spatial joining. Spatial joining is the act of assigning attribute values from a spatial data to another spatial data based on how the two spatial datasets are spatially related (topological relations). This is the most important spatial operation for economists who want to use spatial variables in their econometric analysis. For those who have used the `sp` package, it is like `sp::over()`.
+
+### Direction for replication {-}
+
+All the datasets that you need to import are available [here](https://www.dropbox.com/sh/fk149061msu06cj/AACMzyavFJrtOobST3KuxDsQa?dl=0). In this chapter, the path to files is set relative to my own working directory (which is hidden). To run the codes without having to mess with paths to the files, follow these steps:
+
++ set a folder (any folder) as the working directory using `setwd()`  
++ create a folder called "Data" inside the folder designated as the working directory (if you have created a "Data" folder previously, skip this step)
++ download the pertinent datasets from [here](https://www.dropbox.com/sh/fk149061msu06cj/AACMzyavFJrtOobST3KuxDsQa?dl=0) and put them in the "Data" folder
+
 
 ## Topological relations
 
@@ -999,7 +1012,7 @@ Now import the HUC units data:
 
 ```r
 #--- import HUC units ---#
-HUC_IA <- st_read(dsn = "./Data/huc250k_shp", layer = "huc250k") %>% 
+HUC_IA <- st_read(dsn = "./Data", layer = "huc250k") %>% 
   dplyr::select(HUC_CODE) %>% 
   #--- reproject to the CRS of IA ---#
   st_transform(st_crs(IA_corn)) %>% 

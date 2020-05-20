@@ -67,8 +67,8 @@ The future has come, and it's not a tough question anymore. I cannot think of an
 All the datasets that you need to import are available [here](https://www.dropbox.com/sh/c2mxn7bfxepd3wm/AAB77AgOnaCg27gosbAJvrLKa?dl=0). In this chapter, the path to files is set relative to my own working directory (which is hidden). To run the codes without having to mess with paths to the files, follow these steps:
 
 + set a folder (any folder) as the working directory using `setwd()`  
-+ create a folder called "Data" inside the folder designated as the working directory (if you have created a "Data" folder to replicate demonstrations in Chapter \@ref(demo), then skip this step.)
-+ download the pertinent datasets from [here](https://www.dropbox.com/sh/cyx9clgmshwc8eo/AAApv03Qpx84IGKCyF5v2rJ6a?dl=0) and put them in the "Data" folder
++ create a folder called "Data" inside the folder designated as the working directory (if you have created a "Data" folder to replicate demonstrations in Chapter \@ref(demo), then skip this step)
++ download the pertinent datasets from [here](https://www.dropbox.com/sh/c2mxn7bfxepd3wm/AAB77AgOnaCg27gosbAJvrLKa?dl=0) and put them in the "Data" folder
 
 ## Spatial Data Structure
 
@@ -540,7 +540,7 @@ wells_by_nrd_sf_again <- st_as_sf(wells_by_nrd_dt)
 
 So, this means that if you need fast data transformation, you can first turn an `sf` to a `data.table`, transform the data using the `data.table` functionality, and then revert back to `sf`. However, for most economists, the geometry variable itself is not of interest in the sense that it never enters econometric models. For most of us, the geographic information contained in the geometry variable is just a glue to tie two datasets together by geographic referencing. Once we get values of spatial variables of interest, there is no point in keeping your data as an sf object. Personally, whenever I no longer need to carry around the geometry variable, I immediately turn an sf object into a `data.table` for fast data transformation especially when the data is large. 
 
-Those who know `dtplyr` package (it takes advantage of the speed of `data.table` while you can keep using `dplyr` syntax and functions) may wonder if it works well with `sf` objects. Nope:
+Those who know the [`dtplyr` package](https://github.com/tidyverse/dtplyr) (it takes advantage of the speed of `data.table` while you can keep using `dplyr` syntax and functions) may wonder if it works well with `sf` objects. Nope:
 
 ```{r try_dtplyr, error = TRUE}
 library(dtplyr)
@@ -576,7 +576,7 @@ Here is the spatial distribution of the wells (Figure \@ref(fig:urnrd-wells)).
 ```{r urnrd-wells, fig.cap = "Map of the wells"}
 tm_shape(urnrd_wells_sf) +
   tm_symbols(col = "red", size = 0.1) +
-  tm_layout(frame = NA)
+  tm_layout(frame = FALSE)
 ```
 
 Let's create buffers around the wells.

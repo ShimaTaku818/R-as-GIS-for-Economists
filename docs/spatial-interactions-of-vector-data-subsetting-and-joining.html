@@ -24,7 +24,7 @@
 <meta name="author" content="Taro Mieno" />
 
 
-<meta name="date" content="2020-05-19" />
+<meta name="date" content="2020-05-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -200,6 +200,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html"><i class="fa fa-check"></i><b>3</b> Spatial Interactions of Vector Data: Subsetting and Joining</a><ul>
+<li class="chapter" data-level="" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#before-you-start-2"><i class="fa fa-check"></i>Before you start</a><ul>
+<li class="chapter" data-level="" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#direction-for-replication-2"><i class="fa fa-check"></i>Direction for replication</a></li>
+</ul></li>
 <li class="chapter" data-level="3.1" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#topological-relations"><i class="fa fa-check"></i><b>3.1</b> Topological relations</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#st_intersects"><i class="fa fa-check"></i><b>3.1.1</b> st_intersects()</a></li>
 <li class="chapter" data-level="3.1.2" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#st_intersection"><i class="fa fa-check"></i><b>3.1.2</b> st_intersection()</a></li>
@@ -251,7 +254,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </script>
 <div id="spatial-interactions-of-vector-data-subsetting-and-joining" class="section level1">
 <h1><span class="header-section-number">Chapter 3</span> Spatial Interactions of Vector Data: Subsetting and Joining</h1>
-<p><strong>Introduction</strong></p>
+<div id="before-you-start-2" class="section level2 unnumbered">
+<h2>Before you start</h2>
+<p>In this chapter we learn the interactions of more than one spatial objects. We first look at <strong>topological relations</strong> of two spatial objects (how they are spatially related with each other): specifically, <code>st_intersects()</code> and <code>st_is_within_distance()</code>. <code>st_intersects()</code> is particularly important as it is by far the most common topological relation economists will use and also because it is the default topological relation that <code>sf</code> uses for spatial subsetting and spatial joining.</p>
+<p>We then follow with spatial subsetting: filtering spatial data by the geographic features of another spatial data. Finally, we will learn spatial joining. Spatial joining is the act of assigning attribute values from a spatial data to another spatial data based on how the two spatial datasets are spatially related (topological relations). This is the most important spatial operation for economists who want to use spatial variables in their econometric analysis. For those who have used the <code>sp</code> package, it is like <code>sp::over()</code>.</p>
+<div id="direction-for-replication-2" class="section level3 unnumbered">
+<h3>Direction for replication</h3>
+<p>All the datasets that you need to import are available <a href="https://www.dropbox.com/sh/fk149061msu06cj/AACMzyavFJrtOobST3KuxDsQa?dl=0">here</a>. In this chapter, the path to files is set relative to my own working directory (which is hidden). To run the codes without having to mess with paths to the files, follow these steps:</p>
+<ul>
+<li>set a folder (any folder) as the working directory using <code>setwd()</code><br />
+</li>
+<li>create a folder called “Data” inside the folder designated as the working directory (if you have created a “Data” folder previously, skip this step)</li>
+<li>download the pertinent datasets from <a href="https://www.dropbox.com/sh/fk149061msu06cj/AACMzyavFJrtOobST3KuxDsQa?dl=0">here</a> and put them in the “Data” folder</li>
+</ul>
+</div>
+</div>
 <div id="topological-relations" class="section level2">
 <h2><span class="header-section-number">3.1</span> Topological relations</h2>
 <p>Before we learn spatial subsetting and joining, we first look at topological relations. Topological relations refer to the way multiple spatial objects are spatially related to one another. You can identify various types of spatial relations using the <code>sf</code> package. Our main focus is on the intersections of spatial objects, which can be found using <code>st_intersects()</code>.<a href="#fn63" class="footnote-ref" id="fnref63"><sup>63</sup></a> We also briefly cover <code>st_is_within_distance()</code><a href="#fn64" class="footnote-ref" id="fnref64"><sup>64</sup></a>.</p>
@@ -949,7 +966,7 @@ Figure 3.15: Map of Iowa counties color-differentiated by corn planted acreage
 </div>
 <p>Now import the HUC units data:</p>
 <div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb258-1" data-line-number="1"><span class="co">#--- import HUC units ---#</span></a>
-<a class="sourceLine" id="cb258-2" data-line-number="2">HUC_IA &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="dt">dsn =</span> <span class="st">&quot;./Data/huc250k_shp&quot;</span>, <span class="dt">layer =</span> <span class="st">&quot;huc250k&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb258-2" data-line-number="2">HUC_IA &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="dt">dsn =</span> <span class="st">&quot;./Data&quot;</span>, <span class="dt">layer =</span> <span class="st">&quot;huc250k&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb258-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(HUC_CODE) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb258-4" data-line-number="4"><span class="st">  </span><span class="co">#--- reproject to the CRS of IA ---#</span></a>
 <a class="sourceLine" id="cb258-5" data-line-number="5"><span class="st">  </span><span class="kw">st_transform</span>(<span class="kw">st_crs</span>(IA_corn)) <span class="op">%&gt;%</span><span class="st"> </span></a>
