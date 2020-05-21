@@ -24,14 +24,14 @@
 <meta name="author" content="Taro Mieno" />
 
 
-<meta name="date" content="2020-05-14" />
+<meta name="date" content="2020-05-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="demonstration-5-groundwater-use-for-agricultural-irrigation.html"/>
+<link rel="prev" href="spatial-interactions-of-vector-data-subsetting-and-joining.html"/>
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -130,46 +130,94 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">R as GIS for Economists</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
-<li class="chapter" data-level="" data-path="why-r-as-gis-for-economists.html"><a href="why-r-as-gis-for-economists.html"><i class="fa fa-check"></i>Why R as GIS for Economists?</a><ul>
-<li class="chapter" data-level="" data-path="why-r-as-gis-for-economists.html"><a href="why-r-as-gis-for-economists.html#r-vs-python"><i class="fa fa-check"></i>R vs Python</a></li>
-<li class="chapter" data-level="" data-path="why-r-as-gis-for-economists.html"><a href="why-r-as-gis-for-economists.html#r-vs-arcgis-or-qgis"><i class="fa fa-check"></i>R vs ArcGIS or QGIS</a></li>
-<li class="chapter" data-level="" data-path="why-r-as-gis-for-economists.html"><a href="why-r-as-gis-for-economists.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#why-r-as-gis-for-economists"><i class="fa fa-check"></i>Why R as GIS for Economists?</a><ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#r-vs-python"><i class="fa fa-check"></i>R vs Python</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#r-vs-arcgis-or-qgis"><i class="fa fa-check"></i>R vs ArcGIS or QGIS</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#summary"><i class="fa fa-check"></i>Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="how-is-this-book-different-from-other-online-books-and-resources.html"><a href="how-is-this-book-different-from-other-online-books-and-resources.html"><i class="fa fa-check"></i>How is this book different from other online books and resources?</a></li>
-<li class="chapter" data-level="" data-path="what-is-going-to-be-covered-in-this-book.html"><a href="what-is-going-to-be-covered-in-this-book.html"><i class="fa fa-check"></i>What is going to be covered in this book?</a></li>
-<li class="chapter" data-level="" data-path="conventions-of-the-book-and-some-notes.html"><a href="conventions-of-the-book-and-some-notes.html"><i class="fa fa-check"></i>Conventions of the book and some notes</a><ul>
-<li class="chapter" data-level="" data-path="conventions-of-the-book-and-some-notes.html"><a href="conventions-of-the-book-and-some-notes.html#texts-in-gray-boxes"><i class="fa fa-check"></i>Texts in gray boxes</a></li>
-<li class="chapter" data-level="" data-path="conventions-of-the-book-and-some-notes.html"><a href="conventions-of-the-book-and-some-notes.html#colored-boxes"><i class="fa fa-check"></i>Colored Boxes</a></li>
-<li class="chapter" data-level="" data-path="conventions-of-the-book-and-some-notes.html"><a href="conventions-of-the-book-and-some-notes.html#parentheses-around-codes"><i class="fa fa-check"></i>Parentheses around codes</a></li>
-<li class="chapter" data-level="" data-path="conventions-of-the-book-and-some-notes.html"><a href="conventions-of-the-book-and-some-notes.html#footnotes"><i class="fa fa-check"></i>Footnotes</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#how-is-this-book-different-from-other-online-books-and-resources"><i class="fa fa-check"></i>How is this book different from other online books and resources?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#what-is-going-to-be-covered-in-this-book"><i class="fa fa-check"></i>What is going to be covered in this book?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#conventions-of-the-book-and-some-notes"><i class="fa fa-check"></i>Conventions of the book and some notes</a><ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#texts-in-gray-boxes"><i class="fa fa-check"></i>Texts in gray boxes</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#colored-boxes"><i class="fa fa-check"></i>Colored Boxes</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#parentheses-around-codes"><i class="fa fa-check"></i>Parentheses around codes</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#footnotes"><i class="fa fa-check"></i>Footnotes</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="session-information.html"><a href="session-information.html"><i class="fa fa-check"></i>Session Information</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#session-information"><i class="fa fa-check"></i>Session Information</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="demo.html"><a href="demo.html"><i class="fa fa-check"></i><b>1</b> R as GIS: Demonstrations</a><ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#target-audience"><i class="fa fa-check"></i>Target Audience</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#direction-for-replication"><i class="fa fa-check"></i>Direction for replication</a></li>
+<li class="chapter" data-level="" data-path="demo.html"><a href="demo.html#before-you-start"><i class="fa fa-check"></i>Before you start</a><ul>
+<li class="chapter" data-level="" data-path="demo.html"><a href="demo.html#target-audience"><i class="fa fa-check"></i>Target Audience</a></li>
+<li class="chapter" data-level="" data-path="demo.html"><a href="demo.html#direction-for-replication"><i class="fa fa-check"></i>Direction for replication</a></li>
 </ul></li>
-<li class="chapter" data-level="1.1" data-path="demonstration-1-the-impact-of-groundwater-pumping-on-depth-to-water-table.html"><a href="demonstration-1-the-impact-of-groundwater-pumping-on-depth-to-water-table.html"><i class="fa fa-check"></i><b>1.1</b> Demonstration 1: The impact of groundwater pumping on depth to water table</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="demonstration-1-the-impact-of-groundwater-pumping-on-depth-to-water-table.html"><a href="demonstration-1-the-impact-of-groundwater-pumping-on-depth-to-water-table.html#project-overview"><i class="fa fa-check"></i><b>1.1.1</b> Project Overview</a></li>
-<li class="chapter" data-level="1.1.2" data-path="demonstration-1-the-impact-of-groundwater-pumping-on-depth-to-water-table.html"><a href="demonstration-1-the-impact-of-groundwater-pumping-on-depth-to-water-table.html#project-demonstration"><i class="fa fa-check"></i><b>1.1.2</b> Project Demonstration</a></li>
+<li class="chapter" data-level="1.1" data-path="demo.html"><a href="demo.html#Demo1"><i class="fa fa-check"></i><b>1.1</b> Demonstration 1: The impact of groundwater pumping on depth to water table</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="demo.html"><a href="demo.html#project-overview"><i class="fa fa-check"></i><b>1.1.1</b> Project Overview</a></li>
+<li class="chapter" data-level="1.1.2" data-path="demo.html"><a href="demo.html#project-demonstration"><i class="fa fa-check"></i><b>1.1.2</b> Project Demonstration</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="demonstration-2-precision-agriculture.html"><a href="demonstration-2-precision-agriculture.html"><i class="fa fa-check"></i><b>1.2</b> Demonstration 2: Precision Agriculture</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="demonstration-2-precision-agriculture.html"><a href="demonstration-2-precision-agriculture.html#project-overview-1"><i class="fa fa-check"></i><b>1.2.1</b> Project Overview</a></li>
-<li class="chapter" data-level="1.2.2" data-path="demonstration-2-precision-agriculture.html"><a href="demonstration-2-precision-agriculture.html#project-demonstration-1"><i class="fa fa-check"></i><b>1.2.2</b> Project Demonstration</a></li>
+<li class="chapter" data-level="1.2" data-path="demo.html"><a href="demo.html#demonstration-2-precision-agriculture"><i class="fa fa-check"></i><b>1.2</b> Demonstration 2: Precision Agriculture</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="demo.html"><a href="demo.html#project-overview-1"><i class="fa fa-check"></i><b>1.2.1</b> Project Overview</a></li>
+<li class="chapter" data-level="1.2.2" data-path="demo.html"><a href="demo.html#project-demonstration-1"><i class="fa fa-check"></i><b>1.2.2</b> Project Demonstration</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="demonstration-3-land-use-and-weather.html"><a href="demonstration-3-land-use-and-weather.html"><i class="fa fa-check"></i><b>1.3</b> Demonstration 3: Land Use and Weather</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="demonstration-3-land-use-and-weather.html"><a href="demonstration-3-land-use-and-weather.html#project-overview-2"><i class="fa fa-check"></i><b>1.3.1</b> Project Overview</a></li>
-<li class="chapter" data-level="1.3.2" data-path="demonstration-3-land-use-and-weather.html"><a href="demonstration-3-land-use-and-weather.html#project-demonstration-2"><i class="fa fa-check"></i><b>1.3.2</b> Project Demonstration</a></li>
+<li class="chapter" data-level="1.3" data-path="demo.html"><a href="demo.html#demonstration-3-land-use-and-weather"><i class="fa fa-check"></i><b>1.3</b> Demonstration 3: Land Use and Weather</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="demo.html"><a href="demo.html#project-overview-2"><i class="fa fa-check"></i><b>1.3.1</b> Project Overview</a></li>
+<li class="chapter" data-level="1.3.2" data-path="demo.html"><a href="demo.html#project-demonstration-2"><i class="fa fa-check"></i><b>1.3.2</b> Project Demonstration</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="demonstration-4-the-impact-of-railroad-presence-on-corn-planted-acreage.html"><a href="demonstration-4-the-impact-of-railroad-presence-on-corn-planted-acreage.html"><i class="fa fa-check"></i><b>1.4</b> Demonstration 4: The Impact of Railroad Presence on Corn Planted Acreage</a><ul>
-<li class="chapter" data-level="1.4.1" data-path="demonstration-4-the-impact-of-railroad-presence-on-corn-planted-acreage.html"><a href="demonstration-4-the-impact-of-railroad-presence-on-corn-planted-acreage.html#project-overview-3"><i class="fa fa-check"></i><b>1.4.1</b> Project Overview</a></li>
-<li class="chapter" data-level="1.4.2" data-path="demonstration-4-the-impact-of-railroad-presence-on-corn-planted-acreage.html"><a href="demonstration-4-the-impact-of-railroad-presence-on-corn-planted-acreage.html#project-demonstration-3"><i class="fa fa-check"></i><b>1.4.2</b> Project Demonstration</a></li>
+<li class="chapter" data-level="1.4" data-path="demo.html"><a href="demo.html#demo4"><i class="fa fa-check"></i><b>1.4</b> Demonstration 4: The Impact of Railroad Presence on Corn Planted Acreage</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="demo.html"><a href="demo.html#project-overview-3"><i class="fa fa-check"></i><b>1.4.1</b> Project Overview</a></li>
+<li class="chapter" data-level="1.4.2" data-path="demo.html"><a href="demo.html#project-demonstration-3"><i class="fa fa-check"></i><b>1.4.2</b> Project Demonstration</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="demonstration-5-groundwater-use-for-agricultural-irrigation.html"><a href="demonstration-5-groundwater-use-for-agricultural-irrigation.html"><i class="fa fa-check"></i><b>1.5</b> Demonstration 5: Groundwater use for agricultural irrigation</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="demonstration-5-groundwater-use-for-agricultural-irrigation.html"><a href="demonstration-5-groundwater-use-for-agricultural-irrigation.html#project-overview-4"><i class="fa fa-check"></i><b>1.5.1</b> Project Overview</a></li>
-<li class="chapter" data-level="1.5.2" data-path="demonstration-5-groundwater-use-for-agricultural-irrigation.html"><a href="demonstration-5-groundwater-use-for-agricultural-irrigation.html#project-demonstration-4"><i class="fa fa-check"></i><b>1.5.2</b> Project Demonstration</a></li>
+<li class="chapter" data-level="1.5" data-path="demo.html"><a href="demo.html#demonstration-5-groundwater-use-for-agricultural-irrigation"><i class="fa fa-check"></i><b>1.5</b> Demonstration 5: Groundwater use for agricultural irrigation</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="demo.html"><a href="demo.html#project-overview-4"><i class="fa fa-check"></i><b>1.5.1</b> Project Overview</a></li>
+<li class="chapter" data-level="1.5.2" data-path="demo.html"><a href="demo.html#project-demonstration-4"><i class="fa fa-check"></i><b>1.5.2</b> Project Demonstration</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="vector-basics.html"><a href="vector-basics.html"><i class="fa fa-check"></i><b>2</b> Handle vector data using the sf package</a><ul>
+<li class="chapter" data-level="" data-path="vector-basics.html"><a href="vector-basics.html#before-you-start-1"><i class="fa fa-check"></i>Before you start</a><ul>
+<li><a href="vector-basics.html#sf-or-sp"><code>sf</code> or <code>sp</code>?</a></li>
+<li class="chapter" data-level="" data-path="vector-basics.html"><a href="vector-basics.html#direction-for-replication-1"><i class="fa fa-check"></i>Direction for replication</a></li>
+</ul></li>
+<li class="chapter" data-level="2.1" data-path="vector-basics.html"><a href="vector-basics.html#spatial-data-structure"><i class="fa fa-check"></i><b>2.1</b> Spatial Data Structure</a></li>
+<li class="chapter" data-level="2.2" data-path="vector-basics.html"><a href="vector-basics.html#simple-feature-geometry-simple-feature-geometry-list-column-and-simple-feature"><i class="fa fa-check"></i><b>2.2</b> Simple feature geometry, simple feature geometry list-column, and simple feature</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="vector-basics.html"><a href="vector-basics.html#simple-feature-geometry-sfg"><i class="fa fa-check"></i><b>2.2.1</b> Simple feature geometry (<code>sfg</code>)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="vector-basics.html"><a href="vector-basics.html#create-simple-feature-geometry-list-column-sfc-and-simple-feature-sf-from-scratch"><i class="fa fa-check"></i><b>2.2.2</b> Create simple feature geometry list-column (<code>sfc</code>) and simple feature (<code>sf</code>) from scratch</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="vector-basics.html"><a href="vector-basics.html#reading-and-writing-vector-data"><i class="fa fa-check"></i><b>2.3</b> Reading and writing vector data</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="vector-basics.html"><a href="vector-basics.html#reading-a-shapefile"><i class="fa fa-check"></i><b>2.3.1</b> Reading a shapefile</a></li>
+<li class="chapter" data-level="2.3.2" data-path="vector-basics.html"><a href="vector-basics.html#writing-to-a-shapefile"><i class="fa fa-check"></i><b>2.3.2</b> Writing to a shapefile</a></li>
+<li class="chapter" data-level="2.3.3" data-path="vector-basics.html"><a href="vector-basics.html#better-alternatives"><i class="fa fa-check"></i><b>2.3.3</b> Better alternatives</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="vector-basics.html"><a href="vector-basics.html#projection-with-a-different-coordinate-reference-systems"><i class="fa fa-check"></i><b>2.4</b> Projection with a different Coordinate Reference Systems</a></li>
+<li class="chapter" data-level="2.5" data-path="vector-basics.html"><a href="vector-basics.html#turning-a-data.frame-of-points-into-an-sf"><i class="fa fa-check"></i><b>2.5</b> Turning a data.frame of points into an <code>sf</code></a></li>
+<li class="chapter" data-level="2.6" data-path="vector-basics.html"><a href="vector-basics.html#conv_sp"><i class="fa fa-check"></i><b>2.6</b> Conversion to and from sp</a></li>
+<li class="chapter" data-level="2.7" data-path="vector-basics.html"><a href="vector-basics.html#non-spatial-transformation-of-sf"><i class="fa fa-check"></i><b>2.7</b> Non-spatial transformation of sf</a></li>
+<li class="chapter" data-level="2.8" data-path="vector-basics.html"><a href="vector-basics.html#non-interactive-geometrical-operations"><i class="fa fa-check"></i><b>2.8</b> Non-interactive geometrical operations</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="vector-basics.html"><a href="vector-basics.html#st_buffer"><i class="fa fa-check"></i><b>2.8.1</b> st_buffer</a></li>
+<li class="chapter" data-level="2.8.2" data-path="vector-basics.html"><a href="vector-basics.html#st_area"><i class="fa fa-check"></i><b>2.8.2</b> st_area</a></li>
+<li class="chapter" data-level="2.8.3" data-path="vector-basics.html"><a href="vector-basics.html#st_centroid"><i class="fa fa-check"></i><b>2.8.3</b> st_centroid</a></li>
+<li class="chapter" data-level="2.8.4" data-path="vector-basics.html"><a href="vector-basics.html#st_length"><i class="fa fa-check"></i><b>2.8.4</b> st_length</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html"><i class="fa fa-check"></i><b>3</b> Spatial Interactions of Vector Data: Subsetting and Joining</a><ul>
+<li class="chapter" data-level="" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#before-you-start-2"><i class="fa fa-check"></i>Before you start</a><ul>
+<li class="chapter" data-level="" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#direction-for-replication-2"><i class="fa fa-check"></i>Direction for replication</a></li>
+</ul></li>
+<li class="chapter" data-level="3.1" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#topological-relations"><i class="fa fa-check"></i><b>3.1</b> Topological relations</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#st_intersects"><i class="fa fa-check"></i><b>3.1.1</b> st_intersects()</a></li>
+<li class="chapter" data-level="3.1.2" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#st_intersection"><i class="fa fa-check"></i><b>3.1.2</b> st_intersection()</a></li>
+<li class="chapter" data-level="3.1.3" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#st_is_within_distance"><i class="fa fa-check"></i><b>3.1.3</b> st_is_within_distance()</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#spatial-subsetting-or-flagging"><i class="fa fa-check"></i><b>3.2</b> Spatial Subsetting (or Flagging)</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#polygons-vs-polygons"><i class="fa fa-check"></i><b>3.2.1</b> polygons vs polygons</a></li>
+<li class="chapter" data-level="3.2.2" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#points-vs-polygons"><i class="fa fa-check"></i><b>3.2.2</b> points vs polygons</a></li>
+<li class="chapter" data-level="3.2.3" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#lines-vs-polygons"><i class="fa fa-check"></i><b>3.2.3</b> lines vs polygons</a></li>
+<li class="chapter" data-level="3.2.4" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#flagging-instead-of-subsetting"><i class="fa fa-check"></i><b>3.2.4</b> Flagging instead of subsetting</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#spatial-join"><i class="fa fa-check"></i><b>3.3</b> Spatial Join</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#case-1-points-target-vs-polygons-source"><i class="fa fa-check"></i><b>3.3.1</b> Case 1: points (target) vs polygons (source)</a></li>
+<li class="chapter" data-level="3.3.2" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#case-2-polygons-target-vs-points-source"><i class="fa fa-check"></i><b>3.3.2</b> Case 2: polygons (target) vs points (source)</a></li>
+<li class="chapter" data-level="3.3.3" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html#polygon-polygon"><i class="fa fa-check"></i><b>3.3.3</b> Case 3: polygons (target) vs polygons (source)</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -208,6 +256,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>References</h1>
 
 <div id="refs" class="references">
+<div>
+<p>Pebesma, Edzer. 2018. “Simple Features for R: Standardized Support for Spatial Vector Data.” <em>R Journal</em> 10 (1).</p>
+</div>
 <div>
 <p>Wickham, Hadley, and Jay Hesselberth. 2020. <em>Pkgdown: Make Static Html Documentation for a Package</em>. <a href="https://CRAN.R-project.org/package=pkgdown">https://CRAN.R-project.org/package=pkgdown</a>.</p>
 </div>
@@ -259,12 +310,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="demonstration-5-groundwater-use-for-agricultural-irrigation.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="spatial-interactions-of-vector-data-subsetting-and-joining.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>
