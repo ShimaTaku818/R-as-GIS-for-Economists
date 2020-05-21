@@ -280,7 +280,7 @@ class(sf_ex)
 
 ## Reading and writing vector data
 
-I claimed that you do not need ArcGIS or QGIS for $99\%$ of your work as an economist. However, the vast majority of people still use ArcGIS to handle spatial data, which has its own system of storing spatial data^[See [here]() for how spatial datasets can be stores in various other formats.] called shapefile. So, chances are that your collaborators still use shapefiles. Moreover, there are many GIS data online that are available only as shapefiles. So, it is important to learn how to read and write shapefiles. 
+The vast majority of people still use ArcGIS to handle spatial data, which has its own system of storing spatial data^[See [here]() for how spatial datasets can be stores in various other formats.] called shapefile. So, chances are that your collaborators use shapefiles. Moreover, there are many GIS data online that are available only as shapefiles. So, it is important to learn how to read and write shapefiles. 
 
 ### Reading a shapefile
 
