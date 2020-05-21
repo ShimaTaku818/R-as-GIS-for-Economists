@@ -103,19 +103,19 @@ The book starts with the very basics of spatial data handling (e.g., importing a
 	* land use and weather
 	* corn planted acreage and railroads
 	* groundwater pumping and weather
-+ Chapter 2: The basics of vector data handling using `sf` package (coming soon)
++ Chapter 2: The basics of vector data handling using `sf` package (available)
 	* spatial data structure in `sf`
 	* import and export vector data
 	* (re)projection of spatial datasets
 	* single-layer geometrical operations (e.g., create buffers, find centroids)
 	* other miscellaneous basic operations
-+ Chapter 3: Spatial interactions of vector datasets (coming soon)
++ Chapter 3: Spatial interactions of vector datasets (available)
 	* spatially subsetting one layer based on another layer
 	* extracting values from one layer to another layer^[`over` function in `sp` language]
 + Chapter 4: The basics of raster data handling using `raster` and `terra` packages (coming soon)
 	* import and export raster data
 	* stacking raster data
-+ Chapter 5: Spatial interactions of vector and raster datasets (wait a bit)
++ Chapter 5: Spatial interactions of vector and raster datasets (coming soon)
 	* extracting values from a raster layer to a vector layer
 + Chapter 6: Efficient spatial data processing (wait a bit)  
 	* parallelization 
@@ -125,7 +125,7 @@ The book starts with the very basics of spatial data handling (e.g., importing a
 	* PRISM (`prism`)
 	* Daymet (`daymetr`)
 	* USGS (`dataRetrieval`)
-+ Chapter 8: Parallel computation (wait a bit)
++ Chapter 8: Parallel computation (coming soon)
 
 As you can see above, this book does not spend any time on the very basics of GIS concepts. Before you start reading the book, you should know the followings at least (it's not much): 
 
@@ -164,7 +164,7 @@ Outcomes:
 
 
 ```
-## [1] 0.5546368 0.6440837 0.1432006 0.1568434 0.4860179
+## [1] 0.47360737 0.66398798 0.01248106 0.48687351 0.02793657
 ```
 
 ### Parentheses around codes {-}
@@ -179,7 +179,7 @@ Sometimes you will see codes enclosed by parenthesis like this:
 ```
 
 ```
-## [1] 0.29691691 0.02363599 0.59356275 0.47155577 0.89163055
+## [1] 0.16432466 0.42115773 0.02972612 0.82799054 0.06789138
 ```
 
 The parentheses prints what's inside of a newly created object (here `a`) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created. 
