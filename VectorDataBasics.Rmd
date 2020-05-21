@@ -316,21 +316,17 @@ Now, if your collaborator is using ArcGIS and demanding that he/she needs a shap
 st_write(nc, dsn = "./Data/nc.gpkg")
 
 #--- read a gpkg file ---#
-(
 nc <- st_read("./Data/nc.gpkg")
-)
 ```
 
 Or better yet, if your collaborator uses R (or if it is only you who is going to use the data), then just save it as an rds file using `saveRDS()`, which can be of course read using `readRDS()`.
 
-```{r save_read_nc_as_rds}
+```{r save_read_nc_as_rds, eval = F}
 #--- save as an rds ---#
 saveRDS(nc, "/Users/tmieno2/Box/Teaching/AAEA R/GIS/nc_county.rds")
 
 #--- read an rds ---#
-(
 nc <- readRDS("/Users/tmieno2/Box/Teaching/AAEA R/GIS/nc_county.rds")
-)
 ```
 
 The use of rds files can be particularly attractive when the dataset is large because rds files are typically more memory efficient than shapefiles, eating up less of your disk memory. 
