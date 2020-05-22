@@ -44,7 +44,7 @@ point_3 <- st_point(c(1, 3))
 points <- list(point_1, point_2, point_3) %>% 
   st_sfc() %>% 
   st_as_sf() %>% 
-  mutate(name = c("point 1", "point 2", "point 3"))
+  mutate(point_name = c("point 1", "point 2", "point 3"))
 )
 ```
 
@@ -54,10 +54,10 @@ geometry type:  POINT
 dimension:      XY
 bbox:           xmin: 1 ymin: 1 xmax: 2 ymax: 3
 CRS:            NA
-            x    name
-1 POINT (2 2) point 1
-2 POINT (1 1) point 2
-3 POINT (1 3) point 3
+            x point_name
+1 POINT (2 2)    point 1
+2 POINT (1 1)    point 2
+3 POINT (1 3)    point 3
 ```
 
 ---
@@ -75,7 +75,7 @@ line_2 <- st_linestring(rbind(c(1.5, 0.5), c(2.5, 2)))
 lines <- list(line_1, line_2) %>% 
   st_sfc() %>% 
   st_as_sf() %>% 
-  mutate(name = c("line 1", "line 2"))
+  mutate(line_name = c("line 1", "line 2"))
 )
 ```
 
@@ -85,9 +85,9 @@ geometry type:  LINESTRING
 dimension:      XY
 bbox:           xmin: 0 ymin: 0 xmax: 2.5 ymax: 2
 CRS:            NA
-                            x   name
-1   LINESTRING (0 0, 2.5 0.5) line 1
-2 LINESTRING (1.5 0.5, 2.5 2) line 2
+                            x line_name
+1   LINESTRING (0 0, 2.5 0.5)    line 1
+2 LINESTRING (1.5 0.5, 2.5 2)    line 2
 ```
 
 ---
@@ -114,7 +114,7 @@ polygon_3 <- st_polygon(list(
 polygons <- list(polygon_1, polygon_2, polygon_3) %>% 
   st_sfc() %>% 
   st_as_sf() %>% 
-  mutate(name = c("polygon 1", "polygon 2", "polygon 3"))
+  mutate(polygon_name = c("polygon 1", "polygon 2", "polygon 3"))
 )
 ```
 
@@ -124,10 +124,10 @@ geometry type:  POLYGON
 dimension:      XY
 bbox:           xmin: 0 ymin: 0 xmax: 2.5 ymax: 3.5
 CRS:            NA
-                               x      name
-1 POLYGON ((0 0, 2 0, 2 2, 0 ... polygon 1
-2 POLYGON ((0.5 1.5, 0.5 3.5,... polygon 2
-3 POLYGON ((0.5 2.5, 0.5 3.2,... polygon 3
+                               x polygon_name
+1 POLYGON ((0 0, 2 0, 2 2, 0 ...    polygon 1
+2 POLYGON ((0.5 1.5, 0.5 3.5,...    polygon 2
+3 POLYGON ((0.5 2.5, 0.5 3.2,...    polygon 3
 ```
 
 ---
@@ -137,11 +137,11 @@ Figure \@ref(fig:plot-point-polygons) shows how they look:
 
 ```r
 ggplot() +
-  geom_sf(data = polygons, aes(fill = name), alpha = 0.3) +
+  geom_sf(data = polygons, aes(fill = polygon_name), alpha = 0.3) +
   scale_fill_discrete(name = "Polygons") +
-  geom_sf(data = lines, aes(color = name)) +
+  geom_sf(data = lines, aes(color = line_name)) +
   scale_color_discrete(name = "Lines") + 
-  geom_sf(data = points, aes(shape = name), size = 3) +
+  geom_sf(data = points, aes(shape = point_name), size = 3) +
   scale_shape_discrete(name = "Points")  
 ```
 
@@ -220,93 +220,6 @@ Sparse geometry binary predicate list of length 3, where the predicate was `inte
  3: 1, 2, 3
 ```
 
-### st_intersection() {#st_intersection}
-
-Instead of getting just indices of intersecting objects, __st_intersection()__ returns intersecting spatial objects. Another important feature of the function is that non-intersecting parts of the `sf` objects will be cut out and do not remain in the resulting object. This feature can be very useful. See below for the details.
-
----
-
-**lines and polygons**
-
-The following code gets the intersection of line 2 and the polygons.
-
-
-```r
-intersections <- st_intersection(lines[2, ], polygons) %>% 
-  mutate(int_name = paste0(name, "-", name.1))
-
-#--- take a look ---#
-intersections
-```
-
-```
-Simple feature collection with 2 features and 3 fields
-geometry type:  LINESTRING
-dimension:      XY
-bbox:           xmin: 1.5 ymin: 0.5 xmax: 2.5 ymax: 2
-CRS:            NA
-    name    name.1                              x         int_name
-1 line 2 polygon 1   LINESTRING (1.5 0.5, 2 1.25) line 2-polygon 1
-2 line 2 polygon 2 LINESTRING (2.166667 1.5, 2... line 2-polygon 2
-```
-
-As you can see in Figure \@ref(fig:lines-polygons-int) below, each instance of the intersections of the line and polygons become an observation (line 2-polygon 1 and line 2-polygon 2). Note also that the part of the line that did not intersect is cut out and does not remain in the returned `sf`.^[See Chapter 1, Demonstration 3 for an example of lines-polygons intersection in an economic study.] This feature can be useful as you can see in Demonstration 4 (Chapter \@ref(fig: )) 
-
-
-```r
-ggplot() +
-  #--- here are all the original polygons  ---#
-  geom_sf(data = polygons, aes(fill = name), alpha = 0.1) +
-  #--- here is what is returned after st_intersection ---#
-  geom_sf(data = intersections, aes(color = int_name), size = 1.5)
-```
-
-<div class="figure">
-<img src="SpatialInteractionVectorVector_files/figure-html/lines-polygons-int-1.png" alt="The outcome of the intersections of the lines and polygons" width="672" />
-<p class="caption">(\#fig:lines-polygons-int)The outcome of the intersections of the lines and polygons</p>
-</div>
-
----
-
-**polygons and polygons**
-
-The following code gets the intersection of polygon 1 and polygon 3 with polygon 2.
-
-
-```r
-intersections <- st_intersection(polygons[c(1,3), ], polygons[2, ]) %>% 
-  mutate(int_name = paste0(name, "-", name.1))
-
-#--- take a look ---#
-intersections
-```
-
-```
-Simple feature collection with 2 features and 3 fields
-geometry type:  POLYGON
-dimension:      XY
-bbox:           xmin: 0.5 ymin: 1.5 xmax: 2.3 ymax: 3.2
-CRS:            NA
-       name    name.1                              x            int_name
-1 polygon 1 polygon 2 POLYGON ((0.5 2, 2 2, 2 1.5... polygon 1-polygon 2
-2 polygon 3 polygon 2 POLYGON ((0.5 2.5, 0.5 3.2,... polygon 3-polygon 2
-```
-
-As you can see in Figure \@ref(fig:polygons-polygons-int), each instance of the intersections of polygons 1 and 3 against polygon 2 becomes an observation (polygon 1-polygon 2 and polygon 3-polygon 2). Just like the lines-polygons case, the non-intersecting part of polygons 1 and 3 are cut out and do not remain in the returned `sf`. We will see later that `st_intersection()` can be used to find area-weighted values from the intersecting polygons with help from `st_area()`.  
-
-
-```r
-ggplot() +
-  #--- here are all the original polygons  ---#
-  geom_sf(data = polygons, aes(fill = name), alpha = 0.1) +
-  #--- here is what is returned after st_intersection ---#
-  geom_sf(data = intersections, aes(fill = int_name))
-```
-
-<div class="figure">
-<img src="SpatialInteractionVectorVector_files/figure-html/polygons-polygons-int-1.png" alt="The outcome of the intersections of polygon 2 and polygons 1 and 3" width="672" />
-<p class="caption">(\#fig:polygons-polygons-int)The outcome of the intersections of polygon 2 and polygons 1 and 3</p>
-</div>
 
 ### st_is_within_distance()  
 
@@ -542,7 +455,7 @@ tm_shape(hpa) +
 #%%%%%%%%%%%%%%%%%%%%%
 -->
 
-### lines vs polygons
+### lines vs polygons {#lines_polygons}
 
 The following map (Figure \@ref(fig:mapl-lines-county)) shows the Kansas counties and U.S. railroads.
 
@@ -712,7 +625,7 @@ We can classify spatial join into four categories by the type of the underlying 
 
 Among the four, our focus here is the first case. The second case will be discussed in Chapter 5. We will not cover the third and fourth cases in this course because it is almost always the case that our target data is a vector data (e.g., city or farm fields as points, political boundaries as polygons, etc).  
 
-Category 1 can be further broken down into different sub categories depending on the type of spatial object (point, line, and polygon). Here, we will ignore any spatial joins that involve lines. This is because objects represented by lines are rarely observation units in econometric analysis nor the source data from which we will extract values.^[Note that we did not extract any attribute values of railroads in Chapter 1, Demonstration 4. We just calculated the travel length of the railroads, which does not fall under our definition of spatial join.] Here is the list of the types of spatial joins we will learn.  
+Category 1 can be further broken down into different sub categories depending on the type of spatial object (point, line, and polygon). Here, we will ignore any spatial joins that involve lines. This is because objects represented by lines are rarely observation units in econometric analysis nor the source data from which we will extract values.^[Note that we did not extract any attribute values of the railroads in Chapter 1, Demonstration 4. We just calculated the travel length of the railroads, meaning that the geometry of railroads themselves were of interest instead of values associated with the railroads.] Here is the list of the types of spatial joins we will learn.  
 
 1. points (target) against polygons (source)
 2. polygons (target) against points (source)
@@ -1118,11 +1031,124 @@ tm_shape(temp_HUC_county) +
 <p class="caption">(\#fig:four-county-huc)Map of the HUC unit</p>
 </div>
 
-So, all of the four observations have identical geometry, which is the geometry of the HUC unit, meaning that the `st_join()` did not leave the information about the nature of the intersection of the HUC unit and the four counties. Again, remember that the default option is `st_intersects()`, which checks whether spatial objects intersect or not, nothing more. If you are just calculating the simple average of corn acres ignoring the degree of spatial overlaps, this is just fine. However, if you would like to calculate area-weighted average, you do not have sufficient information. 
+So, all of the four observations have identical geometry, which is the geometry of the HUC unit, meaning that the `st_join()` did not leave the information about the nature of the intersection of the HUC unit and the four counties. Again, remember that the default option is `st_intersects()`, which checks whether spatial objects intersect or not, nothing more. If you are just calculating the simple average of corn acres ignoring the degree of spatial overlaps, this is just fine. However, if you would like to calculate area-weighted average, you do not have sufficient information. You will see how to find area-weighted average below.
+
+## Spatial Intersection (transformative join)
+
+Sometimes you face the need to crop spatial objects by polygon boundaries. For example, we found total length of the railroad **inside** of each county in Demonstration 4 in Chapter \@ref(demo4) by cutting off the parts of the railroads that extend beyond the boundary a county. Also, we just saw that area-weighted averages cannot be found using `st_join()` because it does not provide how much area of each HUC unit is intersecting with each of its intersecting counties. If we can get the geometry of the intersecting part of the HUC unit and the county, then we can calculate are of the intersecting part, which in turn allows us to find the area-weighted averages. For these purposes, we can use `sf::st_intersection()`.    
+
+### st_intersection() {#st_intersection}
+
+Instead of getting just indices of intersecting objects like `st_intersect()`,`st_intersection()` returns intersecting spatial objects with the non-intersecting parts of the `sf` objects cut out. Moreover, attributed values of the source `sf` will be merged to its intersecting `sfg` in the target `sf`. We will see how it works for lines-polygons and polygons-polygons cases using the toy examples we used to explain how `st_intersects()` work. Here is the figure of the lines and polygons (Figure \@ref(fig:plot-lines-polygons)):
+
+
+```r
+ggplot() +
+  geom_sf(data = polygons, aes(fill = name), alpha = 0.3) +
+  scale_fill_discrete(name = "Polygons") +
+  geom_sf(data = lines, aes(color = name)) +
+  scale_color_discrete(name = "Lines") 
+```
+
+<div class="figure">
+<img src="SpatialInteractionVectorVector_files/figure-html/plot-lines-polygons-1.png" alt="Visualization of the points, lines, and polygons" width="672" />
+<p class="caption">(\#fig:plot-lines-polygons)Visualization of the points, lines, and polygons</p>
+</div>
 
 ---
 
-To find an area-weighted average, we can use `st_intersection()`. For each of the polygons in the target layer, this function, finds the intersecting polygons from the source data, and then divide the target polygon into parts based on the boundary of the intersecting polygons. 
+**lines and polygons**
+
+The following code gets the intersection of the lines and the polygons.
+
+
+```r
+(
+intersections_lp <- st_intersection(lines, polygons) %>% 
+  mutate(int_name = paste0(line_name, "-", polygon_name))
+)
+```
+
+```
+Simple feature collection with 3 features and 3 fields
+geometry type:  LINESTRING
+dimension:      XY
+bbox:           xmin: 0 ymin: 0 xmax: 2.5 ymax: 2
+CRS:            NA
+  line_name polygon_name                              x         int_name
+1    line 1    polygon 1        LINESTRING (0 0, 2 0.4) line 1-polygon 1
+2    line 2    polygon 1   LINESTRING (1.5 0.5, 2 1.25) line 2-polygon 1
+3    line 2    polygon 2 LINESTRING (2.166667 1.5, 2... line 2-polygon 2
+```
+
+As you can see in the output, each instance of the intersections of the lines and polygons become an observation (line 1-polygon 1, line 2-polygon 1, and line 2-polygon 2). The part of the lines that did not intersect with any of the polygons is cut out and does not remain in the returned `sf`. To see this, see Figure \@ref(fig:lines-polygons-int) below: 
+
+
+```r
+ggplot() +
+  #--- here are all the original polygons  ---#
+  geom_sf(data = polygons, aes(fill = polygon_name), alpha = 0.3) +
+  #--- here is what is returned after st_intersection ---#
+  geom_sf(data = intersections_lp, aes(color = int_name), size = 1.5)
+```
+
+<div class="figure">
+<img src="SpatialInteractionVectorVector_files/figure-html/lines-polygons-int-1.png" alt="The outcome of the intersections of the lines and polygons" width="672" />
+<p class="caption">(\#fig:lines-polygons-int)The outcome of the intersections of the lines and polygons</p>
+</div>
+
+This further allows us to calculate the length of the part of the lines that are completely contained in polygons, just like we did in Chapter \@ref(demo4). Note also that the attribute (`polygon_name`) of the source `sf` (the polygons) are merged to their intersecting lines. Therefore, `st_intersection()` is transforming the original geometries while joining attributes (this is why I call this transformative join). 
+
+
+---
+
+**polygons and polygons**
+
+The following code gets the intersection of polygon 1 and polygon 3 with polygon 2.
+
+
+```r
+(
+intersections_pp <- st_intersection(polygons[c(1,3), ], polygons[2, ]) %>% 
+  mutate(int_name = paste0(polygon_name, "-", polygon_name.1))
+)
+```
+
+```
+Simple feature collection with 2 features and 3 fields
+geometry type:  POLYGON
+dimension:      XY
+bbox:           xmin: 0.5 ymin: 1.5 xmax: 2.3 ymax: 3.2
+CRS:            NA
+  polygon_name polygon_name.1                              x
+1    polygon 1      polygon 2 POLYGON ((0.5 2, 2 2, 2 1.5...
+2    polygon 3      polygon 2 POLYGON ((0.5 2.5, 0.5 3.2,...
+             int_name
+1 polygon 1-polygon 2
+2 polygon 3-polygon 2
+```
+
+As you can see in Figure \@ref(fig:polygons-polygons-int), each instance of the intersections of polygons 1 and 3 against polygon 2 becomes an observation (polygon 1-polygon 2 and polygon 3-polygon 2). Just like the lines-polygons case, the non-intersecting part of polygons 1 and 3 are cut out and do not remain in the returned `sf`. We will see later that `st_intersection()` can be used to find area-weighted values from the intersecting polygons with help from `st_area()`.  
+
+
+```r
+ggplot() +
+  #--- here are all the original polygons  ---#
+  geom_sf(data = polygons, aes(fill = polygon_name), alpha = 0.3) +
+  #--- here is what is returned after st_intersection ---#
+  geom_sf(data = intersections_pp, aes(fill = int_name))
+```
+
+<div class="figure">
+<img src="SpatialInteractionVectorVector_files/figure-html/polygons-polygons-int-1.png" alt="The outcome of the intersections of polygon 2 and polygons 1 and 3" width="672" />
+<p class="caption">(\#fig:polygons-polygons-int)The outcome of the intersections of polygon 2 and polygons 1 and 3</p>
+</div>
+
+### Area-weighted average 
+
+Let's now get back to the example of HUC units and county-level corn acres data. We would like to find area-weighted average of corn acres instead of the simple average of corn acres.
+
+Using `st_intersection()`, for each of the HUC polygons, we find the intersecting counties, and then divide it into parts based on the boundary of the intersecting polygons. 
 
 
 ```r
@@ -1152,7 +1178,7 @@ First 10 features:
 10 07100005         081 2018 184500 POLYGON ((420999.1 4772191,... 07100005-081
 ```
 
-The key difference from the `st_join()` example is that each  observation of the returned data is a unique HUC-county intersection. Figure \@ref(fig:inter-ex) below is a map of all the intersections of the HUC unit with `HUC_CODE ==10170203` and the four intersecting counties. 
+The key difference from the `st_join()` example is that each observation of the returned data is a unique HUC-county intersection. Figure \@ref(fig:inter-ex) below is a map of all the intersections of the HUC unit with `HUC_CODE ==10170203` and the four intersecting counties. 
 
 
 ```r
@@ -1166,7 +1192,7 @@ tm_shape(filter(HUC_intersections, HUC_CODE == "10170203")) +
 <p class="caption">(\#fig:inter-ex)Intersections of a HUC unit and Iowa counties</p>
 </div>
 
-Note also that the attributes of county data are joined as you can see `acres` in the output above. So, `st_intersection()` is really a spatial kind of spatial join where the resulting observations are the intersections of the target and source `sf` objects. 
+Note also that the attributes of county data are joined as you can see `acres` in the output above. As I said earlier, `st_intersection()` is a spatial kind of spatial join where the resulting observations are the intersections of the target and source `sf` objects. 
 
 In order to find the area-weighted average of corn acres, you can use `st_area()` first to calculate the area of the intersections, and then find the area-weighted average as follows:
 
