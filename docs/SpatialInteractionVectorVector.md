@@ -1035,7 +1035,7 @@ So, all of the four observations have identical geometry, which is the geometry 
 
 ## Spatial Intersection (transformative join)
 
-Sometimes you face the need to crop spatial objects by polygon boundaries. For example, we found total length of the railroad **inside** of each county in Demonstration 4 in Chapter \@ref(demo4) by cutting off the parts of the railroads that extend beyond the boundary a county. Also, we just saw that area-weighted averages cannot be found using `st_join()` because it does not provide how much area of each HUC unit is intersecting with each of its intersecting counties. If we can get the geometry of the intersecting part of the HUC unit and the county, then we can calculate are of the intersecting part, which in turn allows us to find the area-weighted averages. For these purposes, we can use `sf::st_intersection()`.    
+Sometimes you face the need to crop spatial objects by polygon boundaries. For example, we found the total length of the railroads **inside** of each county in Demonstration 4 in Chapter \@ref(demo4) by cutting off the parts of the railroads that extend beyond the boundary of counties. Also, we just saw that area-weighted averages cannot be found using `st_join()` because it does not provide information about how much area of each HUC unit is intersecting with each of its intersecting counties. If we can get the geometry of the intersecting part of the HUC unit and the county, then we can calculate its area, which in turn allows us to find area-weighted averages of joined attributes. For these purposes, we can use `sf::st_intersection()`.    
 
 ### st_intersection() {#st_intersection}
 
