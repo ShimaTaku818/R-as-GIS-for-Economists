@@ -478,7 +478,7 @@ We can select only railroads that intersect with Kansas.
 railroads_KS <- rail_roads[KS_counties, ]
 ```
 
-As you can see in Figure \@ref(fig:map-rail-ks) below, only the railroads that intersect with Kansas were selected. Note the lines that go beyond the Kansas boundary are also selected. Remember, the default is `st_intersect()`. If you would like the lines beyond the state boundary to be cut out but the intersecting parts of those lines to remain, use `st_intersection()`.
+As you can see in Figure \@ref(fig:map-rail-ks) below, only the railroads that intersect with Kansas were selected. Note the lines that go beyond the Kansas boundary are also selected. Remember, the default is `st_intersect()`. If you would like the lines beyond the state boundary to be cut out but the intersecting parts of those lines to remain, use `st_intersection()`, which is explained in Chapter \@ref(st_intersection).
 
 
 ```r
@@ -1035,7 +1035,7 @@ So, all of the four observations have identical geometry, which is the geometry 
 
 ## Spatial Intersection (transformative join)
 
-Sometimes you face the need to crop spatial objects by polygon boundaries. For example, we found the total length of the railroads **inside** of each county in Demonstration 4 in Chapter \@ref(demo4) by cutting off the parts of the railroads that extend beyond the boundary of counties. Also, we just saw that area-weighted averages cannot be found using `st_join()` because it does not provide information about how much area of each HUC unit is intersecting with each of its intersecting counties. If we can get the geometry of the intersecting part of the HUC unit and the county, then we can calculate its area, which in turn allows us to find area-weighted averages of joined attributes. For these purposes, we can use `sf::st_intersection()`.    
+Sometimes you face the need to crop spatial objects by polygon boundaries. For example, we found the total length of the railroads **inside** of each county in Demonstration 4 in Chapter \@ref(demo4) by cutting off the parts of the railroads that extend beyond the boundary of counties. Also, we just saw that area-weighted averages cannot be found using `st_join()` because it does not provide information about how much area of each HUC unit is intersecting with each of its intersecting counties. If we can get the geometry of the intersecting part of the HUC unit and the county, then we can calculate its area, which in turn allows us to find area-weighted averages of joined attributes. For these purposes, we can use `sf::st_intersection()`. Below, how `st_intersection()` works for lines-polygons and polygons-polygons intersections. Intersections that involve points using `st_intersection()` is the same as using `st_join()` because points are length-less and area-less (nothing to cut). Thus, it is not discussed here.
 
 ### st_intersection() {#st_intersection}
 

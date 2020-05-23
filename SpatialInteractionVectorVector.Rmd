@@ -402,7 +402,7 @@ We can select only railroads that intersect with Kansas.
 railroads_KS <- rail_roads[KS_counties, ]
 ```
 
-As you can see in Figure \@ref(fig:map-rail-ks) below, only the railroads that intersect with Kansas were selected. Note the lines that go beyond the Kansas boundary are also selected. Remember, the default is `st_intersect()`. If you would like the lines beyond the state boundary to be cut out but the intersecting parts of those lines to remain, use `st_intersection()`.
+As you can see in Figure \@ref(fig:map-rail-ks) below, only the railroads that intersect with Kansas were selected. Note the lines that go beyond the Kansas boundary are also selected. Remember, the default is `st_intersect()`. If you would like the lines beyond the state boundary to be cut out but the intersecting parts of those lines to remain, use `st_intersection()`, which is explained in Chapter \@ref(st_intersection).
 
 ```{r map-rail-ks, fig.cap = "Railroads that intersect Kansas county boundaries"}
 tm_shape(railroads_KS) +
