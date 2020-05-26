@@ -37,6 +37,9 @@ suppressMessages(library(lubridate))
 suppressMessages(library(tidyverse))
 #--- source functions ---#
 source("Codes/Chap_1_Demonstration.R")
+
+#--- set seed ---#
+set.seed(2473498)
 ```
 
 ## Before you start {-}
