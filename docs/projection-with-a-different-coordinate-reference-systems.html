@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 R as GIS: Demonstrations | R as GIS for Economists</title>
+  <title>2.4 Projection with a different Coordinate Reference Systems | R as GIS for Economists</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 R as GIS: Demonstrations | R as GIS for Economists" />
+  <meta property="og:title" content="2.4 Projection with a different Coordinate Reference Systems | R as GIS for Economists" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 R as GIS: Demonstrations | R as GIS for Economists" />
+  <meta name="twitter:title" content="2.4 Projection with a different Coordinate Reference Systems | R as GIS for Economists" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="session-information.html"/>
-<link rel="next" href="before-you-start.html"/>
+<link rel="prev" href="reading-and-writing-vector-data.html"/>
+<link rel="next" href="turning-a-data-frame-of-points-into-an-sf.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -255,16 +255,129 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
   gtag('config', 'UA-59758608-3');
 </script>
-<div id="demo" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> R as GIS: Demonstrations</h1>
+<div id="projection-with-a-different-coordinate-reference-systems" class="section level2">
+<h2><span class="header-section-number">2.4</span> Projection with a different Coordinate Reference Systems</h2>
+<p>You often need to reproject an <code>sf</code> using a different coordinate reference system (CRS) because you need it to have the same CRS as an <code>sf</code> object that you are interacting it with (spatial join) or mapping it with. In order to check the current CRS for an <code>sf</code> object, you can use the <code>st_crs()</code> function.</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1"><span class="kw">st_crs</span>(nc)</a></code></pre></div>
+<pre><code>Coordinate Reference System:
+  User input: 4267 
+  wkt:
+GEOGCS[&quot;NAD27&quot;,
+    DATUM[&quot;North_American_Datum_1927&quot;,
+        SPHEROID[&quot;Clarke 1866&quot;,6378206.4,294.9786982138982,
+            AUTHORITY[&quot;EPSG&quot;,&quot;7008&quot;]],
+        AUTHORITY[&quot;EPSG&quot;,&quot;6267&quot;]],
+    PRIMEM[&quot;Greenwich&quot;,0,
+        AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],
+    UNIT[&quot;degree&quot;,0.0174532925199433,
+        AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],
+    AUTHORITY[&quot;EPSG&quot;,&quot;4267&quot;]]</code></pre>
+<p><code>wkt</code> stands for <strong>Well Known Text</strong><a href="#fn48" class="footnote-ref" id="fnref48"><sup>48</sup></a>, which is one of many many formats to store CRS information.<a href="#fn49" class="footnote-ref" id="fnref49"><sup>49</sup></a> 4267 is the SRID (Spatial Reference System Identifier) defined by the European Petroleum Survey Group (EPSG) for the CRS<a href="#fn50" class="footnote-ref" id="fnref50"><sup>50</sup></a>.</p>
+<p>When you transform your <code>sf</code> using a different CRS, you can use its EPSG number if the CRS has an EPSG number.<a href="#fn51" class="footnote-ref" id="fnref51"><sup>51</sup></a> Let’s transform the <code>sf</code> to <code>WGS 84</code> (another commonly used GCS), whose EPSG number is 4326. We can use the <code>st_transform()</code> function to achieve that, with the first argument being the <code>sf</code> object you are transforming and the second being the EPSG number of the new CRS.</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1"><span class="co">#--- transform ---#</span></a>
+<a class="sourceLine" id="cb130-2" data-line-number="2">nc_wgs84 &lt;-<span class="st"> </span><span class="kw">st_transform</span>(nc, <span class="dv">4326</span>)</a>
+<a class="sourceLine" id="cb130-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb130-4" data-line-number="4"><span class="co">#--- check if the transformation was successful ---#</span></a>
+<a class="sourceLine" id="cb130-5" data-line-number="5"><span class="kw">st_crs</span>(nc_wgs84)</a></code></pre></div>
+<pre><code>Coordinate Reference System:
+  User input: EPSG:4326 
+  wkt:
+GEOGCS[&quot;WGS 84&quot;,
+    DATUM[&quot;WGS_1984&quot;,
+        SPHEROID[&quot;WGS 84&quot;,6378137,298.257223563,
+            AUTHORITY[&quot;EPSG&quot;,&quot;7030&quot;]],
+        AUTHORITY[&quot;EPSG&quot;,&quot;6326&quot;]],
+    PRIMEM[&quot;Greenwich&quot;,0,
+        AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],
+    UNIT[&quot;degree&quot;,0.0174532925199433,
+        AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],
+    AUTHORITY[&quot;EPSG&quot;,&quot;4326&quot;]]</code></pre>
+<p>Notice that <code>wkt</code> was also altered accordingly to reflect the change in CRS: datum was changed to WGS 84. Now, let’s transform (reproject) the data using <code>NAD83 / UTM zone 17N</code> CRS. Its EPSG number is <span class="math inline">\(26917\)</span>.<a href="#fn52" class="footnote-ref" id="fnref52"><sup>52</sup></a> So, the following code does the job.</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1"><span class="co">#--- transform ---#</span></a>
+<a class="sourceLine" id="cb132-2" data-line-number="2">nc_utm17N &lt;-<span class="st"> </span><span class="kw">st_transform</span>(nc_wgs84, <span class="dv">26917</span>)</a>
+<a class="sourceLine" id="cb132-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb132-4" data-line-number="4"><span class="co">#--- check if the transformation was successful ---#</span></a>
+<a class="sourceLine" id="cb132-5" data-line-number="5"><span class="kw">st_crs</span>(nc_utm17N)</a></code></pre></div>
+<pre><code>Coordinate Reference System:
+  User input: EPSG:26917 
+  wkt:
+PROJCS[&quot;NAD83 / UTM zone 17N&quot;,
+    GEOGCS[&quot;NAD83&quot;,
+        DATUM[&quot;North_American_Datum_1983&quot;,
+            SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,
+                AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],
+            TOWGS84[0,0,0,0,0,0,0],
+            AUTHORITY[&quot;EPSG&quot;,&quot;6269&quot;]],
+        PRIMEM[&quot;Greenwich&quot;,0,
+            AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],
+        UNIT[&quot;degree&quot;,0.0174532925199433,
+            AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],
+        AUTHORITY[&quot;EPSG&quot;,&quot;4269&quot;]],
+    PROJECTION[&quot;Transverse_Mercator&quot;],
+    PARAMETER[&quot;latitude_of_origin&quot;,0],
+    PARAMETER[&quot;central_meridian&quot;,-81],
+    PARAMETER[&quot;scale_factor&quot;,0.9996],
+    PARAMETER[&quot;false_easting&quot;,500000],
+    PARAMETER[&quot;false_northing&quot;,0],
+    UNIT[&quot;metre&quot;,1,
+        AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],
+    AXIS[&quot;Easting&quot;,EAST],
+    AXIS[&quot;Northing&quot;,NORTH],
+    AUTHORITY[&quot;EPSG&quot;,&quot;26917&quot;]]</code></pre>
+<p>As you can see in its CRS information, the projection system is now UTM zone 17N.</p>
+<p>You often need to change the CRS of an <code>sf</code> object when you interact (e.g., spatial subsetting, joining, etc) it with another <code>sf</code> object. In such a case, you can extract the CRS of the other <code>sf</code> object using <code>st_crs()</code> and use it for transformation.<a href="#fn53" class="footnote-ref" id="fnref53"><sup>53</sup></a> So, you do not need to find the EPSG of the CRS of the <code>sf</code> object you are interacting it with.</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1"><span class="co">#--- transform ---#</span></a>
+<a class="sourceLine" id="cb134-2" data-line-number="2">nc_utm17N_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">st_transform</span>(nc_wgs84, <span class="kw">st_crs</span>(nc_utm17N))</a>
+<a class="sourceLine" id="cb134-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb134-4" data-line-number="4"><span class="co">#--- check if the transformation was successful ---#</span></a>
+<a class="sourceLine" id="cb134-5" data-line-number="5"><span class="kw">st_crs</span>(nc_utm17N_<span class="dv">2</span>)</a></code></pre></div>
+<pre><code>Coordinate Reference System:
+  User input: EPSG:26917 
+  wkt:
+PROJCS[&quot;NAD83 / UTM zone 17N&quot;,
+    GEOGCS[&quot;NAD83&quot;,
+        DATUM[&quot;North_American_Datum_1983&quot;,
+            SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,
+                AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],
+            TOWGS84[0,0,0,0,0,0,0],
+            AUTHORITY[&quot;EPSG&quot;,&quot;6269&quot;]],
+        PRIMEM[&quot;Greenwich&quot;,0,
+            AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],
+        UNIT[&quot;degree&quot;,0.0174532925199433,
+            AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],
+        AUTHORITY[&quot;EPSG&quot;,&quot;4269&quot;]],
+    PROJECTION[&quot;Transverse_Mercator&quot;],
+    PARAMETER[&quot;latitude_of_origin&quot;,0],
+    PARAMETER[&quot;central_meridian&quot;,-81],
+    PARAMETER[&quot;scale_factor&quot;,0.9996],
+    PARAMETER[&quot;false_easting&quot;,500000],
+    PARAMETER[&quot;false_northing&quot;,0],
+    UNIT[&quot;metre&quot;,1,
+        AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],
+    AXIS[&quot;Easting&quot;,EAST],
+    AXIS[&quot;Northing&quot;,NORTH],
+    AUTHORITY[&quot;EPSG&quot;,&quot;26917&quot;]]</code></pre>
+<!-- However, notice that the `epsg` component of CRS is $NA$. ESRI shapefile format uses WTK (Well-known Text) format to refer to the CRS in use, which is saved in .prj file. So, if there is no corresponding SRID number for the CRS in use, the `epsg` component number would get lost when you save an `sf` object when you save it as an ESRI shapefile. This is exactly what happened to 
+ -->
+</div>
+<div class="footnotes">
+<hr />
+<ol start="48">
+<li id="fn48"><p><code>sf</code> versions prior to 0.9 provides CRS information in the form of <code>proj4string</code>. The newer version of <code>sf</code> presents CRS in the form of <code>wtk</code> (see <a href="https://nowosad.github.io/whyr_webinar004/#25">this slide</a>). You can find the reason behind this change in the same slide, starting from <a href="https://nowosad.github.io/whyr_webinar004/#18">here</a>.<a href="projection-with-a-different-coordinate-reference-systems.html#fnref48" class="footnote-back">↩</a></p></li>
+<li id="fn49"><p>See <a href="https://spatialreference.org/ref/epsg/nad27/">here</a> for numerous other formats that represent the same CRS.<a href="projection-with-a-different-coordinate-reference-systems.html#fnref49" class="footnote-back">↩</a></p></li>
+<li id="fn50"><p>You can find the CRS-EPSG number correspondence <a href="http://spatialreference.org/ref/epsg/">here</a>.<a href="projection-with-a-different-coordinate-reference-systems.html#fnref50" class="footnote-back">↩</a></p></li>
+<li id="fn51"><p>Potential pool of CRS is infinite. Only the commonly-used CRS have been assigned EPSG SRID.<a href="projection-with-a-different-coordinate-reference-systems.html#fnref51" class="footnote-back">↩</a></p></li>
+<li id="fn52"><p>See <a href="http://spatialreference.org/ref/epsg/nad83-utm-zone-14n/">here</a>.<a href="projection-with-a-different-coordinate-reference-systems.html#fnref52" class="footnote-back">↩</a></p></li>
+<li id="fn53"><p>In this example, we are using the same data with two different CRS. But, you get the point.<a href="projection-with-a-different-coordinate-reference-systems.html#fnref53" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="session-information.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="before-you-start.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="reading-and-writing-vector-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="turning-a-data-frame-of-points-into-an-sf.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

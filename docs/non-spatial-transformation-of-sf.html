@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 R as GIS: Demonstrations | R as GIS for Economists</title>
+  <title>2.7 Non-spatial transformation of sf | R as GIS for Economists</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 R as GIS: Demonstrations | R as GIS for Economists" />
+  <meta property="og:title" content="2.7 Non-spatial transformation of sf | R as GIS for Economists" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 R as GIS: Demonstrations | R as GIS for Economists" />
+  <meta name="twitter:title" content="2.7 Non-spatial transformation of sf | R as GIS for Economists" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="session-information.html"/>
-<link rel="next" href="before-you-start.html"/>
+<link rel="prev" href="conv-sp.html"/>
+<link rel="next" href="non-interactive-geometrical-operations.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -255,16 +255,158 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
   gtag('config', 'UA-59758608-3');
 </script>
-<div id="demo" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> R as GIS: Demonstrations</h1>
+<div id="non-spatial-transformation-of-sf" class="section level2">
+<h2><span class="header-section-number">2.7</span> Non-spatial transformation of sf</h2>
+<p>An important feature of an <code>sf</code> object is that it is basically a <code>data.frame</code> with geometric information stored as a variable (column). This means that transforming an <code>sf</code> object works just like transforming a <code>data.frame</code>. Basically, everything you can do to a <code>data.frame</code>, you can do to an <code>sf</code> as well. The code below just provides an example of basic operations including <code>select()</code>, <code>filter()</code>, and <code>mutate()</code> in action with an <code>sf</code> object to just confirm that <code>dplyr</code> operations works with an <code>sf</code> object just like a <code>data.frame</code>.</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1"><span class="co">#--- here is what the data looks like ---#</span></a>
+<a class="sourceLine" id="cb148-2" data-line-number="2">dplyr<span class="op">::</span><span class="kw">select</span>(wells_sf, wellid, nrdname, acres, regdate, nrdname)</a></code></pre></div>
+<pre><code>Simple feature collection with 105822 features and 4 fields
+geometry type:  POINT
+dimension:      XY
+bbox:           xmin: -104.0531 ymin: 40.00161 xmax: -96.87681 ymax: 41.85942
+CRS:            unknown
+First 10 features:
+   wellid           nrdname acres  regdate                   geometry
+1       2    Central Platte   160 12/30/55 POINT (-99.58401 40.69825)
+2       3      South Platte    46  4/29/31 POINT (-102.6249 41.11699)
+3       4      South Platte    46  4/29/31 POINT (-102.6249 41.11699)
+4       5      South Platte    46  4/29/31 POINT (-102.6249 41.11699)
+5       6    Central Platte   160  8/29/32  POINT (-99.6258 40.73268)
+6       7    Central Platte   120  2/15/35 POINT (-99.64524 40.73164)
+7       8      South Platte   113   8/7/37 POINT (-103.5257 41.24492)
+8      10      South Platte   160   5/4/38 POINT (-103.0284 41.13243)
+9      11 Middle Republican   807   5/6/38  POINT (-101.1193 40.3527)
+10     12 Middle Republican   148 11/29/77 POINT (-101.1146 40.35631)</code></pre>
+<p>Notice that <code>geometry</code> column will be retained after <code>select()</code> even if you did not tell R to keep it above.</p>
+<p>Let’s apply <code>select()</code>, <code>filter()</code>, and <code>mutate()</code> to the dataset.</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1"><span class="co">#--- do some transformations ---#</span></a>
+<a class="sourceLine" id="cb150-2" data-line-number="2">wells_sf <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-3" data-line-number="3"><span class="st">  </span><span class="co">#--- select variables (geometry will always remain after select) ---#</span></a>
+<a class="sourceLine" id="cb150-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(wellid, nrdname, acres, regdate, nrdname) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-5" data-line-number="5"><span class="st">  </span><span class="co">#--- removes observations with acre &lt; 30  ---#</span></a>
+<a class="sourceLine" id="cb150-6" data-line-number="6"><span class="st">  </span><span class="kw">filter</span>(acres <span class="op">&gt;</span><span class="st"> </span><span class="dv">30</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-7" data-line-number="7"><span class="st">  </span><span class="co">#--- hectare instead of acre ---#</span></a>
+<a class="sourceLine" id="cb150-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hectare =</span> acres <span class="op">*</span><span class="st"> </span><span class="fl">0.404686</span>) </a></code></pre></div>
+<pre><code>Simple feature collection with 63271 features and 5 fields
+geometry type:  POINT
+dimension:      XY
+bbox:           xmin: -104.0529 ymin: 40.00161 xmax: -96.87681 ymax: 41.73599
+CRS:            unknown
+First 10 features:
+   wellid           nrdname acres  regdate                   geometry   hectare
+1       2    Central Platte   160 12/30/55 POINT (-99.58401 40.69825)  64.74976
+2       3      South Platte    46  4/29/31 POINT (-102.6249 41.11699)  18.61556
+3       4      South Platte    46  4/29/31 POINT (-102.6249 41.11699)  18.61556
+4       5      South Platte    46  4/29/31 POINT (-102.6249 41.11699)  18.61556
+5       6    Central Platte   160  8/29/32  POINT (-99.6258 40.73268)  64.74976
+6       7    Central Platte   120  2/15/35 POINT (-99.64524 40.73164)  48.56232
+7       8      South Platte   113   8/7/37 POINT (-103.5257 41.24492)  45.72952
+8      10      South Platte   160   5/4/38 POINT (-103.0284 41.13243)  64.74976
+9      11 Middle Republican   807   5/6/38  POINT (-101.1193 40.3527) 326.58160
+10     12 Middle Republican   148 11/29/77 POINT (-101.1146 40.35631)  59.89353</code></pre>
+<p>Now, let’s try to get a summary of a variable by group using the <code>group_by()</code> and <code>summarize()</code> functions.</p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="co">#--- summary by group ---#</span></a>
+<a class="sourceLine" id="cb152-2" data-line-number="2">wells_by_nrd &lt;-<span class="st"> </span>wells_sf <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb152-3" data-line-number="3"><span class="st">  </span><span class="co">#--- group by nrdname ---#</span></a>
+<a class="sourceLine" id="cb152-4" data-line-number="4"><span class="st">  </span><span class="kw">group_by</span>(nrdname) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb152-5" data-line-number="5"><span class="st">  </span><span class="co">#--- summarize ---#</span></a>
+<a class="sourceLine" id="cb152-6" data-line-number="6"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">tot_acres =</span> <span class="kw">sum</span>(acres, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb152-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb152-8" data-line-number="8"><span class="co">#--- take a look ---#</span></a>
+<a class="sourceLine" id="cb152-9" data-line-number="9">wells_by_nrd</a></code></pre></div>
+<pre><code>Simple feature collection with 9 features and 2 fields
+geometry type:  MULTIPOINT
+dimension:      XY
+bbox:           xmin: -104.0531 ymin: 40.00161 xmax: -96.87681 ymax: 41.85942
+CRS:            unknown
+# A tibble: 9 x 3
+  nrdname       tot_acres                                               geometry
+  &lt;chr&gt;             &lt;dbl&gt;                                       &lt;MULTIPOINT [°]&gt;
+1 Central Plat…  1890918. ((-100.2329 41.14385), (-100.2328 41.05678), (-100.23…
+2 Little Blue     995900. ((-98.72659 40.30463), (-98.72434 40.68021), (-98.724…
+3 Lower Republ…   543079. ((-100.1968 40.32314), (-100.196 40.33553), (-100.195…
+4 Middle Repub…   443472. ((-101.3691 40.1208), (-101.3448 40.64638), (-101.344…
+5 South Platte    216109. ((-104.0531 41.18248), (-104.053 41.19347), (-104.052…
+6 Tri-Basin       847058. ((-100.0927 40.42312), (-100.0904 40.43158), (-100.08…
+7 Twin Platte     452678. ((-102.0557 41.05204), (-102.0556 41.05488), (-102.05…
+8 Upper Big Bl…  1804782. ((-98.83619 40.85932), (-98.81149 40.78093), (-98.549…
+9 Upper Republ…   551906. ((-102.0516 40.24644), (-102.0515 40.6287), (-102.051…</code></pre>
+<p>So, we got total acres by NRD as we expected. One interesting change that happened is geometry variable. Each NRD now has <code>multipoint</code> sfg, which is the combination of all the wells (points) located inside the NRD as you can see below.</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1"><span class="kw">tm_shape</span>(wells_by_nrd) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb154-2" data-line-number="2"><span class="st">  </span><span class="kw">tm_symbols</span>(<span class="dt">col =</span> <span class="st">&quot;nrdname&quot;</span>, <span class="dt">size =</span> <span class="fl">0.2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb154-3" data-line-number="3"><span class="st">  </span><span class="kw">tm_layout</span>(</a>
+<a class="sourceLine" id="cb154-4" data-line-number="4">    <span class="dt">frame =</span> <span class="ot">NA</span>,</a>
+<a class="sourceLine" id="cb154-5" data-line-number="5">    <span class="dt">legend.outside =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb154-6" data-line-number="6">    <span class="dt">legend.outside.position =</span> <span class="st">&quot;bottom&quot;</span></a>
+<a class="sourceLine" id="cb154-7" data-line-number="7">  )</a></code></pre></div>
+<p><img src="VectorDataBasics_files/figure-html/map_combine-1.png" width="672" /></p>
+<p>This feature is unlikely to be of much use to us. If you would like to drop a geometry column, you can use the <code>st_drop_geometry()</code> function:</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" data-line-number="1"><span class="co">#--- remove geometry ---#</span></a>
+<a class="sourceLine" id="cb155-2" data-line-number="2">wells_no_longer_sf &lt;-<span class="st"> </span><span class="kw">st_drop_geometry</span>(wells_by_nrd)</a>
+<a class="sourceLine" id="cb155-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb155-4" data-line-number="4"><span class="co">#--- take a look ---#</span></a>
+<a class="sourceLine" id="cb155-5" data-line-number="5">wells_no_longer_sf</a></code></pre></div>
+<pre><code># A tibble: 9 x 2
+  nrdname           tot_acres
+* &lt;chr&gt;                 &lt;dbl&gt;
+1 Central Platte     1890918.
+2 Little Blue         995900.
+3 Lower Republican    543079.
+4 Middle Republican   443472.
+5 South Platte        216109.
+6 Tri-Basin           847058.
+7 Twin Platte         452678.
+8 Upper Big Blue     1804782.
+9 Upper Republican    551906.</code></pre>
+<p>Finally, <code>data.table</code> does not work as well with sf objects as <code>dplyr</code> does.</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1"><span class="co">#--- convert an sf to data.table ---#</span></a>
+<a class="sourceLine" id="cb157-2" data-line-number="2">(</a>
+<a class="sourceLine" id="cb157-3" data-line-number="3">wells_by_nrd_dt &lt;-<span class="st"> </span><span class="kw">data.table</span>(wells_by_nrd)</a>
+<a class="sourceLine" id="cb157-4" data-line-number="4">)</a></code></pre></div>
+<pre><code>             nrdname tot_acres                           geometry
+1:    Central Platte 1890918.2 MULTIPOINT ((-100.2329 41.1...,...
+2:       Little Blue  995900.3 MULTIPOINT ((-98.72659 40.3...,...
+3:  Lower Republican  543079.2 MULTIPOINT ((-100.1968 40.3...,...
+4: Middle Republican  443472.2 MULTIPOINT ((-101.3691 40.1...,...
+5:      South Platte  216109.0 MULTIPOINT ((-104.0531 41.1...,...
+6:         Tri-Basin  847058.4 MULTIPOINT ((-100.0927 40.4...,...
+7:       Twin Platte  452677.6 MULTIPOINT ((-102.0557 41.0...,...
+8:    Upper Big Blue 1804781.5 MULTIPOINT ((-98.83619 40.8...,...
+9:  Upper Republican  551906.2 MULTIPOINT ((-102.0516 40.2...,...</code></pre>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1"><span class="co">#--- check the class ---#</span></a>
+<a class="sourceLine" id="cb159-2" data-line-number="2"><span class="kw">class</span>(wells_by_nrd_dt)</a></code></pre></div>
+<pre><code>[1] &quot;data.table&quot; &quot;data.frame&quot;</code></pre>
+<p>You see that <code>wells_by_nrd_dt</code> is no longer an sf object even though geometry still remains in the data. If you try to run <code>sf</code> operations on it, it will of course give you an error. Like this:</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1"><span class="kw">st_buffer</span>(wells_by_nrd_dt, <span class="dt">dist =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>Error in UseMethod(&quot;st_buffer&quot;): no applicable method for &#39;st_buffer&#39; applied to an object of class &quot;c(&#39;data.table&#39;, &#39;data.frame&#39;)&quot;</code></pre>
+<p>But, it is easy to revert it back to an <code>sf</code> object again by using the <code>st_as_sf()</code> function<a href="#fn58" class="footnote-ref" id="fnref58"><sup>58</sup></a>.</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1">wells_by_nrd_sf_again &lt;-<span class="st"> </span><span class="kw">st_as_sf</span>(wells_by_nrd_dt)</a></code></pre></div>
+<p>So, this means that if you need fast data transformation, you can first turn an <code>sf</code> to a <code>data.table</code>, transform the data using the <code>data.table</code> functionality, and then revert back to <code>sf</code>. However, for most economists, the geometry variable itself is not of interest in the sense that it never enters econometric models. For most of us, the geographic information contained in the geometry variable is just a glue to tie two datasets together by geographic referencing. Once we get values of spatial variables of interest, there is no point in keeping your data as an sf object. Personally, whenever I no longer need to carry around the geometry variable, I immediately turn an sf object into a <code>data.table</code> for fast data transformation especially when the data is large.</p>
+<p>Those who know the <a href="https://github.com/tidyverse/dtplyr"><code>dtplyr</code> package</a> (it takes advantage of the speed of <code>data.table</code> while you can keep using <code>dplyr</code> syntax and functions) may wonder if it works well with <code>sf</code> objects. Nope:</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1"><span class="kw">library</span>(dtplyr)</a>
+<a class="sourceLine" id="cb164-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb164-3" data-line-number="3"><span class="co">#--- convert an &quot;lazy&quot; data.table ---#</span></a>
+<a class="sourceLine" id="cb164-4" data-line-number="4">wells_ldt &lt;-<span class="st"> </span><span class="kw">lazy_dt</span>(wells_sf)  </a>
+<a class="sourceLine" id="cb164-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb164-6" data-line-number="6"><span class="co">#--- try  ---#</span></a>
+<a class="sourceLine" id="cb164-7" data-line-number="7"><span class="kw">st_buffer</span>(wells_ldt, <span class="dt">dist =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>Error in UseMethod(&quot;st_buffer&quot;): no applicable method for &#39;st_buffer&#39; applied to an object of class &quot;c(&#39;dtplyr_step_first&#39;, &#39;dtplyr_step&#39;)&quot;</code></pre>
+<p>By the way, this package is awesome if you really love <code>dplyr</code>, but want the speed of <code>data.table</code>. <code>dtplyr</code> is of course slightly slower than <code>data.table</code> because an internal translation of <code>dplyr</code> language to <code>data.table</code> language has to happen first.<a href="#fn59" class="footnote-ref" id="fnref59"><sup>59</sup></a></p>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="58">
+<li id="fn58"><p>This was not the case before. Turning an <code>sf</code> object to a <code>data.table</code> object used to replace sfg with NA.<a href="non-spatial-transformation-of-sf.html#fnref58" class="footnote-back">↩</a></p></li>
+<li id="fn59"><p>I personally use <code>data.table</code> unless it is necessary to use <code>dplyr</code> like when dealing with <code>sf</code> objects. It is more concise than <code>dplyr</code>, which is somewhat verbose (yet expressive because of it). Ultimately, it is your personal preference which to use. You might be interested in reading <a href="https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly">this discussion</a> about the comparative advantages and disadvantages of the two packages.<a href="non-spatial-transformation-of-sf.html#fnref59" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="session-information.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="before-you-start.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="conv-sp.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="non-interactive-geometrical-operations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

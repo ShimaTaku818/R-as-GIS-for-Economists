@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 R as GIS: Demonstrations | R as GIS for Economists</title>
+  <title>2.6 Conversion to and from sp | R as GIS for Economists</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 R as GIS: Demonstrations | R as GIS for Economists" />
+  <meta property="og:title" content="2.6 Conversion to and from sp | R as GIS for Economists" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 R as GIS: Demonstrations | R as GIS for Economists" />
+  <meta name="twitter:title" content="2.6 Conversion to and from sp | R as GIS for Economists" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="session-information.html"/>
-<link rel="next" href="before-you-start.html"/>
+<link rel="prev" href="turning-a-data-frame-of-points-into-an-sf.html"/>
+<link rel="next" href="non-spatial-transformation-of-sf.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -255,16 +255,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
   gtag('config', 'UA-59758608-3');
 </script>
-<div id="demo" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> R as GIS: Demonstrations</h1>
+<div id="conv_sp" class="section level2">
+<h2><span class="header-section-number">2.6</span> Conversion to and from sp</h2>
+<p>Though unlikely, you may find instances where <code>sp</code> objects are necessary or desirable.<a href="#fn55" class="footnote-ref" id="fnref55"><sup>55</sup></a> In that case, it is good to know how to convert an <code>sf</code> object to an <code>sp</code> object, vice versa. You can convert an <code>sf</code> object to its <code>sp</code> counterpart using <code>as(sf_object, &quot;Spatial&quot;)</code>:</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1"><span class="co">#--- conversion ---#</span></a>
+<a class="sourceLine" id="cb144-2" data-line-number="2">wells_sp &lt;-<span class="st"> </span><span class="kw">as</span>(wells_sf, <span class="st">&quot;Spatial&quot;</span>)</a>
+<a class="sourceLine" id="cb144-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb144-4" data-line-number="4"><span class="co">#--- check the class ---#</span></a>
+<a class="sourceLine" id="cb144-5" data-line-number="5"><span class="kw">class</span>(wells_sp)</a></code></pre></div>
+<pre><code>[1] &quot;SpatialPointsDataFrame&quot;
+attr(,&quot;package&quot;)
+[1] &quot;sp&quot;</code></pre>
+<!-- ```{r }
+list(a_point, a_polygon) %>% st_sfc() %>% st_as_sf() %>% 
+  as("Spatial")
+```
+
+ -->
+<p>As you can see <code>wells_sp</code> is a class of <code>SpatialPointsDataFrame</code>, points with a <code>data.frame</code> supported by the <code>sp</code> package. The above syntax works for converting an <code>sf</code> of polygons into <code>SpatialPolygonsDataFrame</code> as well<a href="#fn56" class="footnote-ref" id="fnref56"><sup>56</sup></a>.</p>
+<p>You can revert <code>wells_sp</code> back to an <code>sf</code> object using the <code>st_as_sf()</code> function, as follows:</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" data-line-number="1"><span class="co">#--- revert back to sf ---#</span></a>
+<a class="sourceLine" id="cb146-2" data-line-number="2">wells_sf &lt;-<span class="st"> </span><span class="kw">st_as_sf</span>(wells_sp)</a>
+<a class="sourceLine" id="cb146-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb146-4" data-line-number="4"><span class="co">#--- check the class ---#</span></a>
+<a class="sourceLine" id="cb146-5" data-line-number="5"><span class="kw">class</span>(wells_sf)</a></code></pre></div>
+<pre><code>[1] &quot;sf&quot;         &quot;data.frame&quot;</code></pre>
+<p>We do not cover how to use the <code>sp</code> package as the benefit of learning it has become marginal compared to when <code>sf</code> was just introduced a few years back<a href="#fn57" class="footnote-ref" id="fnref57"><sup>57</sup></a>.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="55">
+<li id="fn55"><p>For example, those who run spatial econometric methods using <code>spdep</code>, creating neighbors from polygons is a bit faster using <code>sp</code> objects than using <code>sf</code> objects.<a href="conv-sp.html#fnref55" class="footnote-back">↩</a></p></li>
+<li id="fn56"><p>The function does not work for an <code>sf</code> object that consists of different geometry types (e.g., POINT and POLYGON). This is because <code>sp</code> objects do not allow different types of geometries in the single <code>sp</code> object. For example, <code>SpatialPointsDataFrame</code> consists only of points data.<a href="conv-sp.html#fnref56" class="footnote-back">↩</a></p></li>
+<li id="fn57"><p>For those interested in learning the <code>sp</code> package, <a href="https://rspatial.org/">this website</a> is a good resource.<a href="conv-sp.html#fnref57" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="session-information.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="before-you-start.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="turning-a-data-frame-of-points-into-an-sf.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="non-spatial-transformation-of-sf.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

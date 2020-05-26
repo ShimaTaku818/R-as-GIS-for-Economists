@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 R as GIS: Demonstrations | R as GIS for Economists</title>
+  <title>2.1 Spatial Data Structure | R as GIS for Economists</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 R as GIS: Demonstrations | R as GIS for Economists" />
+  <meta property="og:title" content="2.1 Spatial Data Structure | R as GIS for Economists" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 R as GIS: Demonstrations | R as GIS for Economists" />
+  <meta name="twitter:title" content="2.1 Spatial Data Structure | R as GIS for Economists" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="session-information.html"/>
-<link rel="next" href="before-you-start.html"/>
+<link rel="prev" href="before-you-start-1.html"/>
+<link rel="next" href="simple-feature-geometry-simple-feature-geometry-list-column-and-simple-feature.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -255,16 +255,117 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
   gtag('config', 'UA-59758608-3');
 </script>
-<div id="demo" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> R as GIS: Demonstrations</h1>
+<div id="spatial-data-structure" class="section level2">
+<h2><span class="header-section-number">2.1</span> Spatial Data Structure</h2>
+<p>Here we learn how the <code>sf</code> package stores spatial data along with the definition of three key <code>sf</code> object classes: simple feature geometry (<code>sfg</code>), simple feature geometry list-column (<code>sfc</code>), and simple feature (<code>sf</code>). The <code>sf</code> package provides a simply way of storing geographic information and the attributes of the geographic units in a single dataset. This special type of dataset is called simple feature (<code>sf</code>). It is best to take a look at an example to see how this is achieved. We use North Carolina county boundaries with county attributes (Figure <a href="spatial-data-structure.html#fig:nc-county">2.1</a>).</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1"><span class="co">#--- a dataset that comes with the sf package ---#</span></a>
+<a class="sourceLine" id="cb87-2" data-line-number="2">nc &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="kw">system.file</span>(<span class="st">&quot;shape/nc.shp&quot;</span>, <span class="dt">package=</span><span class="st">&quot;sf&quot;</span>)) </a></code></pre></div>
+<pre><code>Reading layer `nc&#39; from data source `/Library/Frameworks/R.framework/Versions/4.0/Resources/library/sf/shape/nc.shp&#39; using driver `ESRI Shapefile&#39;
+Simple feature collection with 100 features and 14 fields
+geometry type:  MULTIPOLYGON
+dimension:      XY
+bbox:           xmin: -84.32385 ymin: 33.88199 xmax: -75.45698 ymax: 36.58965
+CRS:            4267</code></pre>
+<div class="figure"><span id="fig:nc-county"></span>
+<img src="VectorDataBasics_files/figure-html/nc-county-1.png" alt="North Carolina county boundary" width="672" />
+<p class="caption">
+Figure 2.1: North Carolina county boundary
+</p>
+</div>
+<p>As you can see below, this dataset is of class <code>sf</code> (and <code>data.frame</code> at the same time).</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="kw">class</span>(nc)</a></code></pre></div>
+<pre><code>[1] &quot;sf&quot;         &quot;data.frame&quot;</code></pre>
+<p>Now, let’s take a look inside of <code>nc</code>.</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1"><span class="co">#--- take a look at the data ---#</span></a>
+<a class="sourceLine" id="cb91-2" data-line-number="2"><span class="kw">head</span>(nc)</a></code></pre></div>
+<pre><code>Simple feature collection with 6 features and 14 fields
+geometry type:  MULTIPOLYGON
+dimension:      XY
+bbox:           xmin: -81.74107 ymin: 36.07282 xmax: -75.77316 ymax: 36.58965
+CRS:            4267
+   AREA PERIMETER CNTY_ CNTY_ID        NAME  FIPS FIPSNO CRESS_ID BIR74 SID74
+1 0.114     1.442  1825    1825        Ashe 37009  37009        5  1091     1
+2 0.061     1.231  1827    1827   Alleghany 37005  37005        3   487     0
+3 0.143     1.630  1828    1828       Surry 37171  37171       86  3188     5
+4 0.070     2.968  1831    1831   Currituck 37053  37053       27   508     1
+5 0.153     2.206  1832    1832 Northampton 37131  37131       66  1421     9
+6 0.097     1.670  1833    1833    Hertford 37091  37091       46  1452     7
+  NWBIR74 BIR79 SID79 NWBIR79                       geometry
+1      10  1364     0      19 MULTIPOLYGON (((-81.47276 3...
+2      10   542     3      12 MULTIPOLYGON (((-81.23989 3...
+3     208  3616     6     260 MULTIPOLYGON (((-80.45634 3...
+4     123   830     2     145 MULTIPOLYGON (((-76.00897 3...
+5    1066  1606     3    1197 MULTIPOLYGON (((-77.21767 3...
+6     954  1838     5    1237 MULTIPOLYGON (((-76.74506 3...</code></pre>
+<p>Just like a regular <code>data.frame</code>, you see a number of variables (attributes) except that you have a variable called <code>geometry</code> at the end. Each row represents a single geographic unit (here, county). Ashe County (1st row) has area of <span class="math inline">\(0.114\)</span>, FIPS code of <span class="math inline">\(37009\)</span>, and so on. And the entry in <code>geometry</code> column at the first row represents the geographic information of Ashe County. An entry in the <code>geometry</code> column is a simple feature geometry (<code>sfg</code>), which is an <span class="math inline">\(R\)</span> object that represents the geographic information of a single geometric feature (county in this example). There are different types of <code>sfg</code>s (<code>POINT</code>, <code>LINESTRING</code>, <code>POLYGON</code>, <code>MULTIPOLYGON</code>, etc). Here, <code>sfg</code>s representing counties in NC are of type <code>MULTIPOLYGON</code>. Let’s take a look inside the <code>sfg</code> for Ashe County using <code>st_geometry()</code>.</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1"><span class="kw">st_geometry</span>(nc[<span class="dv">1</span>, ])[[<span class="dv">1</span>]][[<span class="dv">1</span>]]</a></code></pre></div>
+<pre><code>[[1]]
+           [,1]     [,2]
+ [1,] -81.47276 36.23436
+ [2,] -81.54084 36.27251
+ [3,] -81.56198 36.27359
+ [4,] -81.63306 36.34069
+ [5,] -81.74107 36.39178
+ [6,] -81.69828 36.47178
+ [7,] -81.70280 36.51934
+ [8,] -81.67000 36.58965
+ [9,] -81.34530 36.57286
+[10,] -81.34754 36.53791
+[11,] -81.32478 36.51368
+[12,] -81.31332 36.48070
+[13,] -81.26624 36.43721
+[14,] -81.26284 36.40504
+[15,] -81.24069 36.37942
+[16,] -81.23989 36.36536
+[17,] -81.26424 36.35241
+[18,] -81.32899 36.36350
+[19,] -81.36137 36.35316
+[20,] -81.36569 36.33905
+[21,] -81.35413 36.29972
+[22,] -81.36745 36.27870
+[23,] -81.40639 36.28505
+[24,] -81.41233 36.26729
+[25,] -81.43104 36.26072
+[26,] -81.45289 36.23959
+[27,] -81.47276 36.23436</code></pre>
+<p>As you can see, the <code>sfg</code> consists of a number of points (pairs of two numbers). Connecting the points in the order they are stored delineates the Ashe County boundary.</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">st_geometry</span>(nc[<span class="dv">1</span>, ])) </a></code></pre></div>
+<p><img src="VectorDataBasics_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>We will take a closer look at different types of <code>sfg</code> in the next section.</p>
+<p>Finally, the <code>geometry</code> variable is a list of individual <code>sfg</code>s, called simple feature geometry list-column (<code>sfc</code>).</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1">dplyr<span class="op">::</span><span class="kw">select</span>(nc, geometry)</a></code></pre></div>
+<pre><code>Simple feature collection with 100 features and 0 fields
+geometry type:  MULTIPOLYGON
+dimension:      XY
+bbox:           xmin: -84.32385 ymin: 33.88199 xmax: -75.45698 ymax: 36.58965
+CRS:            4267
+First 10 features:
+                         geometry
+1  MULTIPOLYGON (((-81.47276 3...
+2  MULTIPOLYGON (((-81.23989 3...
+3  MULTIPOLYGON (((-80.45634 3...
+4  MULTIPOLYGON (((-76.00897 3...
+5  MULTIPOLYGON (((-77.21767 3...
+6  MULTIPOLYGON (((-76.74506 3...
+7  MULTIPOLYGON (((-76.00897 3...
+8  MULTIPOLYGON (((-76.56251 3...
+9  MULTIPOLYGON (((-78.30876 3...
+10 MULTIPOLYGON (((-80.02567 3...</code></pre>
+<p>Elements of a geometry list-column are allowed to be different in nature from other elements<a href="#fn39" class="footnote-ref" id="fnref39"><sup>39</sup></a>. In the <code>nc</code> data, all the elements (<code>sfg</code>s) in <code>geometry</code> column are <code>MULTIPOLYGON</code>. However, you could also have <code>LINESTRING</code> or <code>POINT</code> objects mixed with <code>MULTIPOLYGONS</code> objects in a single <code>sf</code> object if you would like.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="39">
+<li id="fn39"><p>This is just like a regular <code>list</code> object that can contain mixed types of elements: numeric, character, etc<a href="spatial-data-structure.html#fnref39" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="session-information.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="before-you-start.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="before-you-start-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="simple-feature-geometry-simple-feature-geometry-list-column-and-simple-feature.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

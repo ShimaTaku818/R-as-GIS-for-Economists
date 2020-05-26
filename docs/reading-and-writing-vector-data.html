@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 R as GIS: Demonstrations | R as GIS for Economists</title>
+  <title>2.3 Reading and writing vector data | R as GIS for Economists</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 R as GIS: Demonstrations | R as GIS for Economists" />
+  <meta property="og:title" content="2.3 Reading and writing vector data | R as GIS for Economists" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 R as GIS: Demonstrations | R as GIS for Economists" />
+  <meta name="twitter:title" content="2.3 Reading and writing vector data | R as GIS for Economists" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="session-information.html"/>
-<link rel="next" href="before-you-start.html"/>
+<link rel="prev" href="simple-feature-geometry-simple-feature-geometry-list-column-and-simple-feature.html"/>
+<link rel="next" href="projection-with-a-different-coordinate-reference-systems.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -255,16 +255,60 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
   gtag('config', 'UA-59758608-3');
 </script>
-<div id="demo" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> R as GIS: Demonstrations</h1>
+<div id="reading-and-writing-vector-data" class="section level2">
+<h2><span class="header-section-number">2.3</span> Reading and writing vector data</h2>
+<p>The vast majority of people still use ArcGIS to handle spatial data, which has its own system of storing spatial data<a href="#fn43" class="footnote-ref" id="fnref43"><sup>43</sup></a> called shapefile. So, chances are that your collaborators use shapefiles. Moreover, there are many GIS data online that are available only as shapefiles. So, it is important to learn how to read and write shapefiles.</p>
+<div id="reading-a-shapefile" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Reading a shapefile</h3>
+<p>We can use <code>st_read()</code> to read a shapefile. It reads in a shapefile and then turn the data into an sf object. Let’s take a look at an example.</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1"><span class="co">#--- read a NE county boundary shapefile ---#</span></a>
+<a class="sourceLine" id="cb122-2" data-line-number="2">nc_loaded &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="dt">dsn =</span> <span class="st">&quot;./Data&quot;</span>, <span class="st">&quot;nc&quot;</span>) </a></code></pre></div>
+<p>Typically, you have two arguments to specify for <code>st_read()</code>. The first one is <code>dsn</code>, which is basically the path to folder in which the shapefile you want to import is stored. The second one is the name of the shapefile. Notice that you do not add <code>.shp</code> extension to the file name: <code>nc</code>, not <code>nc.shp</code>.<a href="#fn44" class="footnote-ref" id="fnref44"><sup>44</sup></a>.</p>
+</div>
+<div id="writing-to-a-shapefile" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Writing to a shapefile</h3>
+<p>Writing an <code>sf</code> object as a shapefile is just as easy. You use the <code>st_write()</code> function, with the first argument being the name of the <code>sf</code> object you are exporting, and the second being the name of the new shapefile. For example, the code below will export an <code>sf</code> object called <code>nc_loaded</code> as <code>nc2.shp</code> (along with other supporting files).</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1"><span class="kw">st_write</span>(nc_loaded, <span class="dt">dsn=</span><span class="st">&quot;./Data&quot;</span>, <span class="st">&quot;nc2&quot;</span>, <span class="dt">driver=</span><span class="st">&quot;ESRI Shapefile&quot;</span>, <span class="dt">append =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p><code>append = FALSE</code> forces writing the data when a file already exists with the same name. Without the option, this happens.</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1"><span class="kw">st_write</span>(nc_loaded, <span class="dt">dsn=</span><span class="st">&quot;./Data&quot;</span>, <span class="st">&quot;nc2&quot;</span>, <span class="dt">driver=</span><span class="st">&quot;ESRI Shapefile&quot;</span>)</a></code></pre></div>
+<pre><code>Writing layer `nc2&#39; to data source `./Data&#39; using driver `ESRI Shapefile&#39;
+Writing 100 features with 1 fields and geometry type Multi Polygon.</code></pre>
+</div>
+<div id="better-alternatives" class="section level3">
+<h3><span class="header-section-number">2.3.3</span> Better alternatives</h3>
+<p>Now, if your collaborator is using ArcGIS and demanding that he/she needs a shapefile for his/her work, sure you can use the above command to write a shapefile. But, there is really no need to work with the shapefile system. One of the alternative data formats that is considered superior to the shapefile system is GeoPackage<a href="#fn45" class="footnote-ref" id="fnref45"><sup>45</sup></a>, which overcomes various limitations associated with shapefile<a href="#fn46" class="footnote-ref" id="fnref46"><sup>46</sup></a>. Unlike the shapefile system, it produces only a single file with .gpkg extension.<a href="#fn47" class="footnote-ref" id="fnref47"><sup>47</sup></a> Note that GeoPackage files can also be easily read into ArcGIS. So, it might be worthwhile to convince your collaborators to stop using shapefiles and start using GeoPackage.</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1"><span class="co">#--- write as a gpkg file ---#</span></a>
+<a class="sourceLine" id="cb126-2" data-line-number="2"><span class="kw">st_write</span>(nc, <span class="dt">dsn =</span> <span class="st">&quot;./Data/nc.gpkg&quot;</span>)</a>
+<a class="sourceLine" id="cb126-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb126-4" data-line-number="4"><span class="co">#--- read a gpkg file ---#</span></a>
+<a class="sourceLine" id="cb126-5" data-line-number="5">nc &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;./Data/nc.gpkg&quot;</span>)</a></code></pre></div>
+<p>Or better yet, if your collaborator uses R (or if it is only you who is going to use the data), then just save it as an rds file using <code>saveRDS()</code>, which can be of course read using <code>readRDS()</code>.</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1"><span class="co">#--- save as an rds ---#</span></a>
+<a class="sourceLine" id="cb127-2" data-line-number="2"><span class="kw">saveRDS</span>(nc, <span class="st">&quot;/Users/tmieno2/Box/Teaching/AAEA R/GIS/nc_county.rds&quot;</span>)</a>
+<a class="sourceLine" id="cb127-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb127-4" data-line-number="4"><span class="co">#--- read an rds ---#</span></a>
+<a class="sourceLine" id="cb127-5" data-line-number="5">nc &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;/Users/tmieno2/Box/Teaching/AAEA R/GIS/nc_county.rds&quot;</span>)</a></code></pre></div>
+<p>The use of rds files can be particularly attractive when the dataset is large because rds files are typically more memory efficient than shapefiles, eating up less of your disk memory.</p>
+<p>As you can see here, it is a myth that spatial datasets have to be stored as shapefiles.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="43">
+<li id="fn43"><p>See <a href="">here</a> for how spatial datasets can be stores in various other formats.<a href="reading-and-writing-vector-data.html#fnref43" class="footnote-back">↩</a></p></li>
+<li id="fn44"><p>When storing a spatial dataset, ArcGIS divides the information into separate files. All of them have the same prefix, but have different extensions. We typically say we read a shapefile, but we really are importing all these files including the shapefile with the .shp extension. When you read those data, you just refer to the common prefix because you really are importing all the files, not just a .shp file.<a href="reading-and-writing-vector-data.html#fnref44" class="footnote-back">↩</a></p></li>
+<li id="fn45"><p><a href="https://www.geopackage.org/">here</a><a href="reading-and-writing-vector-data.html#fnref45" class="footnote-back">↩</a></p></li>
+<li id="fn46"><p>see the last paragraph of <a href="https://csgillespie.github.io/efficientR/data-carpentry.html#data-processing-with-data.table">chapter 7.5 of this book</a>, <a href="https://carto.com/blog/fgdb-gpkg/">this blogpost</a>, or <a href="http://switchfromshapefile.org/">this</a><a href="reading-and-writing-vector-data.html#fnref46" class="footnote-back">↩</a></p></li>
+<li id="fn47"><p>Am I the only one who gets very frustrated when your collaborator attaches 15 files for three geographic objects to an email? It could have been just three files using the GeoPackage format.<a href="reading-and-writing-vector-data.html#fnref47" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="session-information.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="before-you-start.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="simple-feature-geometry-simple-feature-geometry-list-column-and-simple-feature.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="projection-with-a-different-coordinate-reference-systems.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

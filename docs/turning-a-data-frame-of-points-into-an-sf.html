@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 R as GIS: Demonstrations | R as GIS for Economists</title>
+  <title>2.5 Turning a data.frame of points into an sf | R as GIS for Economists</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 R as GIS: Demonstrations | R as GIS for Economists" />
+  <meta property="og:title" content="2.5 Turning a data.frame of points into an sf | R as GIS for Economists" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 R as GIS: Demonstrations | R as GIS for Economists" />
+  <meta name="twitter:title" content="2.5 Turning a data.frame of points into an sf | R as GIS for Economists" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="session-information.html"/>
-<link rel="next" href="before-you-start.html"/>
+<link rel="prev" href="projection-with-a-different-coordinate-reference-systems.html"/>
+<link rel="next" href="conv-sp.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -255,16 +255,93 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
   gtag('config', 'UA-59758608-3');
 </script>
-<div id="demo" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> R as GIS: Demonstrations</h1>
+<div id="turning-a-data.frame-of-points-into-an-sf" class="section level2">
+<h2><span class="header-section-number">2.5</span> Turning a data.frame of points into an <code>sf</code></h2>
+<p>Often times, you have a dataset with geographic coordinates as variables in a csv or other formats, which would not be recognized as a spatial dataset by R immediately when it is read into R. In this case, you need to identify which variables represent the geographic coordinates from the data set, and create an <code>sf</code> yourself. Fortunately, it is easy to do so using the <code>st_as_sf()</code> function. Let’s first read a dataset (irrigation wells in Nebraska):</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1"><span class="co">#--- read irrigation well registration data ---#</span></a>
+<a class="sourceLine" id="cb136-2" data-line-number="2">(</a>
+<a class="sourceLine" id="cb136-3" data-line-number="3">wells &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;./Data/well_registration.rds&#39;</span>) </a>
+<a class="sourceLine" id="cb136-4" data-line-number="4">)</a></code></pre></div>
+<pre><code>        wellid ownerid        nrdname acres  regdate section     longdd
+     1:      2  106106 Central Platte   160 12/30/55       3  -99.58401
+     2:      3   14133   South Platte    46  4/29/31       8 -102.62495
+     3:      4   14133   South Platte    46  4/29/31       8 -102.62495
+     4:      5   14133   South Platte    46  4/29/31       8 -102.62495
+     5:      6   15837 Central Platte   160  8/29/32      20  -99.62580
+    ---                                                                
+105818: 244568  135045 Upper Big Blue    NA  8/26/16      30  -97.58872
+105819: 244569  105428    Little Blue    NA  8/26/16      24  -97.60752
+105820: 244570  135045 Upper Big Blue    NA  8/26/16      30  -97.58294
+105821: 244571  135045 Upper Big Blue    NA  8/26/16      25  -97.59775
+105822: 244572  105428    Little Blue    NA  8/26/16      15  -97.64086
+           latdd
+     1: 40.69825
+     2: 41.11699
+     3: 41.11699
+     4: 41.11699
+     5: 40.73268
+    ---         
+105818: 40.89017
+105819: 40.13257
+105820: 40.88722
+105821: 40.89639
+105822: 40.13380</code></pre>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" data-line-number="1"><span class="co">#--- check the class ---#</span></a>
+<a class="sourceLine" id="cb138-2" data-line-number="2"><span class="kw">class</span>(wells)</a></code></pre></div>
+<pre><code>[1] &quot;data.table&quot; &quot;data.frame&quot;</code></pre>
+<p>As you can see the data is not an <code>sf</code> object. In this dataset, <code>longdd</code> and <code>latdd</code> represent longitude and latitude, respectively. We now turn the dataset into an <code>sf</code> object:</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" data-line-number="1"><span class="co">#--- recognize it as an sf ---#</span></a>
+<a class="sourceLine" id="cb140-2" data-line-number="2">wells_sf &lt;-<span class="st"> </span><span class="kw">st_as_sf</span>(wells, <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;longdd&quot;</span>,<span class="st">&quot;latdd&quot;</span>))</a>
+<a class="sourceLine" id="cb140-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb140-4" data-line-number="4"><span class="co">#--- take a look at the data ---#</span></a>
+<a class="sourceLine" id="cb140-5" data-line-number="5"><span class="kw">head</span>(wells_sf[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</a></code></pre></div>
+<pre><code>Simple feature collection with 6 features and 5 fields
+geometry type:  POINT
+dimension:      XY
+bbox:           xmin: -102.6249 ymin: 40.69824 xmax: -99.58401 ymax: 41.11699
+CRS:            NA
+  wellid ownerid        nrdname acres  regdate                   geometry
+1      2  106106 Central Platte   160 12/30/55 POINT (-99.58401 40.69825)
+2      3   14133   South Platte    46  4/29/31 POINT (-102.6249 41.11699)
+3      4   14133   South Platte    46  4/29/31 POINT (-102.6249 41.11699)
+4      5   14133   South Platte    46  4/29/31 POINT (-102.6249 41.11699)
+5      6   15837 Central Platte   160  8/29/32  POINT (-99.6258 40.73268)
+6      7   90248 Central Platte   120  2/15/35 POINT (-99.64524 40.73164)</code></pre>
+<p>Note that the CRS of <code>wells_sf</code> is NA. Obviously, <span class="math inline">\(R\)</span> does not know the reference system without you telling it. We know<a href="#fn54" class="footnote-ref" id="fnref54"><sup>54</sup></a> that the geographic coordinates in the wells data is NAD 83 (<span class="math inline">\(epsg=4269\)</span>) for this dataset. So, we can assign the right CRS using either <code>st_set_crs()</code> or <code>st_crs()</code>.</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" data-line-number="1"><span class="co">#--- set CRS ---#</span></a>
+<a class="sourceLine" id="cb142-2" data-line-number="2">wells_sf &lt;-<span class="st"> </span><span class="kw">st_set_crs</span>(wells_sf, <span class="dv">4269</span>) </a>
+<a class="sourceLine" id="cb142-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb142-4" data-line-number="4"><span class="co">#--- or this ---#</span></a>
+<a class="sourceLine" id="cb142-5" data-line-number="5"><span class="kw">st_crs</span>(wells_sf) &lt;-<span class="st"> </span><span class="dv">4269</span></a>
+<a class="sourceLine" id="cb142-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb142-7" data-line-number="7"><span class="co">#--- see the change ---#</span></a>
+<a class="sourceLine" id="cb142-8" data-line-number="8"><span class="kw">head</span>(wells_sf[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</a></code></pre></div>
+<pre><code>Simple feature collection with 6 features and 5 fields
+geometry type:  POINT
+dimension:      XY
+bbox:           xmin: -102.6249 ymin: 40.69824 xmax: -99.58401 ymax: 41.11699
+CRS:            EPSG:4269
+  wellid long_utm lat_utm useid ownerid                   geometry
+1      2 450660.7 4505424     I  106106 POINT (-99.58401 40.69825)
+2      3 195648.1 4558080     I   14133 POINT (-102.6249 41.11699)
+3      4 195648.1 4558080     I   14133 POINT (-102.6249 41.11699)
+4      5 195648.1 4558080     I   14133 POINT (-102.6249 41.11699)
+5      6 447157.4 4509271     I   15837  POINT (-99.6258 40.73268)
+6      7 445515.0 4509168     I   90248 POINT (-99.64524 40.73164)</code></pre>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="54">
+<li id="fn54"><p>Yes, YOU need to know the CRS of your data.<a href="turning-a-data-frame-of-points-into-an-sf.html#fnref54" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="session-information.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="before-you-start.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="projection-with-a-different-coordinate-reference-systems.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="conv-sp.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

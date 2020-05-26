@@ -8,5 +8,5 @@ bookdown::gitbook:
   includes:
     before_body: header.html
     # after_body: after.html
-  # split_by: section
+  split_by: section
 
