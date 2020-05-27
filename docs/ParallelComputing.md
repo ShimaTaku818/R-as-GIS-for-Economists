@@ -10,9 +10,23 @@
 
 ## Before you start {-}
 
-Here we will learn how to program repetitive operations effectively and fast. We start from the basics of a loop for those who are not familiar with the concept. We then move on to parallel computation. Those who are familiar with `lapply()` can go straight to Chapter \@ref(parcomp). 
+Here we will learn how to program repetitive operations effectively and fast. We start from the basics of a loop for those who are not familiar with the concept. We then cover parallel computation using the `future.lapply` and `parallel` package. Those who are familiar with `lapply()` can go straight to Chapter \@ref(parcomp). 
 
-### Motivations {-}
+Here are the specific learning objectives of this chapter.
+
+1. Learn how to use **for loop** and `lapply()` to complete repetitive jobs 
+2. Learn how not to loop things that can be easily vectorized
+3. Learn how to parallelize repetitive jobs using the `future_lapply()` function from the `future.apply` package
+
+### Direction for replication {-}
+
+All the data in this Chapter is generated.  
+
+
+
+## Repetitive processes and looping
+
+### What is looping? {-}
 
 We sometimes need to run the same process over and over again often with slight changes in parameters. In such a case, it is very time-consuming and messy to write all of the steps one bye one. For example, suppose you are interested in knowing the square of 1 through 5 in with a step of 1 ($[1, 2, 3, 4, 5]$). The following code certainly works:
 
@@ -57,17 +71,9 @@ We sometimes need to run the same process over and over again often with slight 
 [1] 25
 ```
 
-However, imagine you have to do this for 1000 integers. Yes, you don't want to write each one of them one by one as that would occupy 1000 lines of your code, and it would be time-consuming. Things will be even worse if you need to repeat much more complicated processes like Monte Carlo simulations. So, let's learn how to write a program to do repetitive jobs effectively and fast. 
+However, imagine you have to do this for 1000 integers. Yes, you don't want to write each one of them one by one as that would occupy 1000 lines of your code, and it would be time-consuming. Things will be even worse if you need to repeat much more complicated processes like Monte Carlo simulations. So, let's learn how to write a program to do repetitive jobs effectively using loop. 
 
-Here are the specific learning objectives of this chapter.
-
-1. Learn how to use for loop and `lapply()` to complete repetitive jobs 
-2. Learn how not to loop things that can be easily vectorized
-3. Learn how to parallelize repetitive jobs using the `future_lapply()` function from the `future.apply` package
-
-## What is loop? 
-
-Looping is repeatedly evaluating the same (except parameters) process over and over again. Here, the **same** process is the action of squaring. This does not change among the processes you run. What changes is what you square. There is a very concise way of coding such processes. 
+Looping is repeatedly evaluating the same (except parameters) process over and over again. In the example above, the **same** process is the action of squaring. This does not change among the processes you run. What changes is what you square. Looping can help you write a concise code to implement these repetitive processes.
 
 ### For loop
 
@@ -125,9 +131,9 @@ for (bluh_bluh_bluh in 1:5){
 [1] 25
 ```
 
-### Looping using the `lapply()` function
+### For loop using the `lapply()` function
 
-You can do looping using the `lapply()` function as well.^[`lpply()` in only one of the family of `apply()` functions. We do not talk about other types of `apply()` functions here (e.g., `apply()`, `spply()`, `mapply()`,, `tapply()`). Personally, I found myself only rarely using them. But, if you are interested in learning those, take a look at [here](https://www.datacamp.com/community/tutorials/r-tutorial-apply-family#gs.b=aW_Io) or [here](https://www.r-bloggers.com/using-apply-sapply-lapply-in-r/).] Here is how it works:
+You can do for loop using the `lapply()` function as well.^[`lpply()` in only one of the family of `apply()` functions. We do not talk about other types of `apply()` functions here (e.g., `apply()`, `spply()`, `mapply()`,, `tapply()`). Personally, I found myself only rarely using them. But, if you are interested in learning those, take a look at [here](https://www.datacamp.com/community/tutorials/r-tutorial-apply-family#gs.b=aW_Io) or [here](https://www.r-bloggers.com/using-apply-sapply-lapply-in-r/).] Here is how it works:
 
 
 ```r
@@ -190,7 +196,8 @@ lapply(1:5, square_it)
 [[5]]
 [1] 25
 ```
-  
+
+Finally, it is a myth that you should always use `lapply()` instead of the explicit for loop syntax because `lapply()` (or other `apply()` families) is faster. They are basically the same.^[Check this [discussion](https://stackoverflow.com/questions/7142767/why-are-loops-slow-in-r) on StackOverflow. You might want to check out [this video](https://www.youtube.com/watch?v=GyNqlOjhPCQ) at 6:10 as well.]  
 
 ### Looping over multiple variables using lapply()  
 
@@ -616,14 +623,14 @@ Okay, so it takes 0.024 second for one iteration. Now, let's run this 1000 times
 ```r
 #--- non-parallel ---#
 tic()
-sq_ls <- lapply(1:1000, MC_sim)
+MC_results <- lapply(1:1000, MC_sim)
 toc()
 ```
 
 
 ```
 elapsed 
- 24.008 
+ 25.398 
 ```
 
 **Parallelized**
@@ -632,15 +639,35 @@ elapsed
 ```r
 #--- parallel ---#
 tic()
-sq_ls <- future_lapply(1:1000, MC_sim)
+MC_results <- future_lapply(1:1000, MC_sim)
 toc()
 ```
 
 
 ```
 elapsed 
-   2.62 
+   25.7 
 ```
 
-As you can see, parallelization makes it much quicker with a noticeable difference in elapsed time. We made the code 9.16 times faster. However, we did not make the process 15 times faster even though we used 15 cores for the parallelized process. This is because of the overhead associated with distributing tasks to the cores. The relative advantage of parallelization would be greater if each iteration took more time. For example, if you are running a process that takes about 2 minutes for 1000 times, it would take approximately 33 hours and 20 minutes. But, it may take only 4 hours if you parallelize it on 15 cores, or maybe even 2 hours if you run it on 30 cores. 
+As you can see, parallelization makes it much quicker with a noticeable difference in elapsed time. We made the code 0.99 times faster. However, we did not make the process 15 times faster even though we used 15 cores for the parallelized process. This is because of the overhead associated with distributing tasks to the cores. The relative advantage of parallelization would be greater if each iteration took more time. For example, if you are running a process that takes about 2 minutes for 1000 times, it would take approximately 33 hours and 20 minutes. But, it may take only 4 hours if you parallelize it on 15 cores, or maybe even 2 hours if you run it on 30 cores. 
+
+### Mac or Linux users
+
+For Mac users, `parallel::mclapply()` is just as compelling (or `pbmclapply::pbmclapply()` if you want to have a nice progress report, which is very helpful particularly when the process is long). It is just as easy to use as `future_lapply()` as its syntax is the same as `lapply()`. You can control the number by adding `mc.cores = x`. Here is an example code that does the same MC simulations we conducted above: 
+
+
+```r
+#--- mclapply ---#
+library(parallel
+MC_results <- mclapply(1:1000, MC_sim, mc.cores = get_num_procs() - 1)
+
+#--- or with progress bar ---#
+library(pbmclapply)
+MC_results <- pbmclapply(1:1000, MC_sim, mc.cores = get_num_procs() - 1)
+```
+
+### Some background on the parallelization packages {-}
+
+For Mac and Linux users the (coding) cost of parallelization was minimal since when `parallel::mclapply()` was available. Parallelization is really a piece of cake for those who know how to use `lapply()` because the syntax is identical. For Windows users, that had not been the case until the arrival of the `future.apply` package. Windows create new threads to run on multiple cores, which does not inherit any of the R objects you have created on the environment. This meant that if you need to use a dataset (or any other objects that you are not creating within the loop internally) inside the loop, you had to tell R explicitly what you want it to carry to to the threads so they can use those objects. This hassle was eliminated by the `future.apply` package.^[To be honest, I do not completely understand how it does what it does.] On Mac and Linux machines, it was not even an issue because parallelization is done by forking, which inherits all the available R objects on the environment. Since the `future.apply` package works for all the platforms, I focus on this package. However, I will present how `parallel::mclapply()` works at the end.   
+
 

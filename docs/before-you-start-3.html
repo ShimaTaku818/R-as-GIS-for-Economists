@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="par-comp.html"/>
-<link rel="next" href="what-is-loop.html"/>
+<link rel="next" href="repetitive-processes-and-looping.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -226,15 +226,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="par-comp.html"><a href="par-comp.html"><i class="fa fa-check"></i><b>A</b> Loop and Parallel Computing</a><ul>
 <li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html"><i class="fa fa-check"></i>Before you start</a><ul>
-<li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html#motivations"><i class="fa fa-check"></i>Motivations</a></li>
+<li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html#direction-for-replication-3"><i class="fa fa-check"></i>Direction for replication</a></li>
 </ul></li>
-<li class="chapter" data-level="A.1" data-path="what-is-loop.html"><a href="what-is-loop.html"><i class="fa fa-check"></i><b>A.1</b> What is loop?</a><ul>
-<li class="chapter" data-level="A.1.1" data-path="what-is-loop.html"><a href="what-is-loop.html#for-loop"><i class="fa fa-check"></i><b>A.1.1</b> For loop</a></li>
-<li class="chapter" data-level="A.1.2" data-path="what-is-loop.html"><a href="what-is-loop.html#looping-using-the-lapply-function"><i class="fa fa-check"></i><b>A.1.2</b> Looping using the <code>lapply()</code> function</a></li>
-<li class="chapter" data-level="A.1.3" data-path="what-is-loop.html"><a href="what-is-loop.html#looping-over-multiple-variables-using-lapply"><i class="fa fa-check"></i><b>A.1.3</b> Looping over multiple variables using lapply()</a></li>
-<li class="chapter" data-level="A.1.4" data-path="what-is-loop.html"><a href="what-is-loop.html#do-you-really-need-to-loop"><i class="fa fa-check"></i><b>A.1.4</b> Do you really need to loop?</a></li>
+<li class="chapter" data-level="A.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html"><i class="fa fa-check"></i><b>A.1</b> Repetitive processes and looping</a><ul>
+<li class="chapter" data-level="" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#what-is-looping"><i class="fa fa-check"></i>What is looping?</a></li>
+<li class="chapter" data-level="A.1.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#for-loop"><i class="fa fa-check"></i><b>A.1.1</b> For loop</a></li>
+<li class="chapter" data-level="A.1.2" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#for-loop-using-the-lapply-function"><i class="fa fa-check"></i><b>A.1.2</b> For loop using the <code>lapply()</code> function</a></li>
+<li class="chapter" data-level="A.1.3" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#looping-over-multiple-variables-using-lapply"><i class="fa fa-check"></i><b>A.1.3</b> Looping over multiple variables using lapply()</a></li>
+<li class="chapter" data-level="A.1.4" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#do-you-really-need-to-loop"><i class="fa fa-check"></i><b>A.1.4</b> Do you really need to loop?</a></li>
 </ul></li>
-<li class="chapter" data-level="A.2" data-path="parcomp.html"><a href="parcomp.html"><i class="fa fa-check"></i><b>A.2</b> Parallelization of embarrassingly parallel processes</a></li>
+<li class="chapter" data-level="A.2" data-path="parcomp.html"><a href="parcomp.html"><i class="fa fa-check"></i><b>A.2</b> Parallelization of embarrassingly parallel processes</a><ul>
+<li class="chapter" data-level="A.2.1" data-path="parcomp.html"><a href="parcomp.html#mac-or-linux-users"><i class="fa fa-check"></i><b>A.2.1</b> Mac or Linux users</a></li>
+<li class="chapter" data-level="" data-path="parcomp.html"><a href="parcomp.html#some-background-on-the-parallelization-packages"><i class="fa fa-check"></i>Some background on the parallelization packages</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -270,27 +274,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </script>
 <div id="before-you-start-3" class="section level2 unnumbered">
 <h2>Before you start</h2>
-<p>Here we will learn how to program repetitive operations effectively and fast. We start from the basics of a loop for those who are not familiar with the concept. We then move on to parallel computation. Those who are familiar with <code>lapply()</code> can go straight to Chapter <a href="parcomp.html#parcomp">A.2</a>.</p>
-<div id="motivations" class="section level3 unnumbered">
-<h3>Motivations</h3>
-<p>We sometimes need to run the same process over and over again often with slight changes in parameters. In such a case, it is very time-consuming and messy to write all of the steps one bye one. For example, suppose you are interested in knowing the square of 1 through 5 in with a step of 1 (<span class="math inline">\([1, 2, 3, 4, 5]\)</span>). The following code certainly works:</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb271-1" data-line-number="1"><span class="dv">1</span><span class="op">^</span><span class="dv">2</span> </a></code></pre></div>
-<pre><code>[1] 1</code></pre>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb273-1" data-line-number="1"><span class="dv">2</span><span class="op">^</span><span class="dv">2</span> </a></code></pre></div>
-<pre><code>[1] 4</code></pre>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb275-1" data-line-number="1"><span class="dv">3</span><span class="op">^</span><span class="dv">2</span> </a></code></pre></div>
-<pre><code>[1] 9</code></pre>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb277-1" data-line-number="1"><span class="dv">4</span><span class="op">^</span><span class="dv">2</span> </a></code></pre></div>
-<pre><code>[1] 16</code></pre>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb279-1" data-line-number="1"><span class="dv">5</span><span class="op">^</span><span class="dv">2</span> </a></code></pre></div>
-<pre><code>[1] 25</code></pre>
-<p>However, imagine you have to do this for 1000 integers. Yes, you don’t want to write each one of them one by one as that would occupy 1000 lines of your code, and it would be time-consuming. Things will be even worse if you need to repeat much more complicated processes like Monte Carlo simulations. So, let’s learn how to write a program to do repetitive jobs effectively and fast.</p>
+<p>Here we will learn how to program repetitive operations effectively and fast. We start from the basics of a loop for those who are not familiar with the concept. We then cover parallel computation using the <code>future.lapply</code> and <code>parallel</code> package. Those who are familiar with <code>lapply()</code> can go straight to Chapter <a href="parcomp.html#parcomp">A.2</a>.</p>
 <p>Here are the specific learning objectives of this chapter.</p>
 <ol style="list-style-type: decimal">
-<li>Learn how to use for loop and <code>lapply()</code> to complete repetitive jobs</li>
+<li>Learn how to use <strong>for loop</strong> and <code>lapply()</code> to complete repetitive jobs</li>
 <li>Learn how not to loop things that can be easily vectorized</li>
 <li>Learn how to parallelize repetitive jobs using the <code>future_lapply()</code> function from the <code>future.apply</code> package</li>
 </ol>
+<div id="direction-for-replication-3" class="section level3 unnumbered">
+<h3>Direction for replication</h3>
+<p>All the data in this Chapter is generated.</p>
 </div>
 </div>
             </section>
@@ -299,7 +292,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="par-comp.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="what-is-loop.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="repetitive-processes-and-looping.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
