@@ -1,7 +1,7 @@
 --- 
 title: "R as GIS for Economists"
 author: "Taro Mieno"
-date: "2020-05-26"
+date: "2020-05-27"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [RGIS.bib]
@@ -95,7 +95,7 @@ For those who are looking for more comprehensive treatments of spatial data hand
 
 ## What is going to be covered in this book? {-}
 
-The book starts with the very basics of spatial data handling (e.g., importing and exporting spatial datasets) and moves on to more practical spatial data operations (e.g., spatial data join) that are useful for research projects. This books is still under development. Right now, only Chapter 1 is available. I will work on the rest of the book over the summer. The "coming soon" chapters are close to be done. I just need to add finishing touches to those chapters. The "wait a bit" chapters need some more work, adding contents, etc.  
+The book starts with the very basics of spatial data handling (e.g., importing and exporting spatial datasets) and moves on to more practical spatial data operations (e.g., spatial data join) that are useful for research projects. This books is still under development. Right now, only Chapters 1 through 3 and Appendix A are available. I will work on the rest of the book over the summer. The "coming soon" chapters are close to be done. I just need to add finishing touches to those chapters. The "wait a bit" chapters need some more work, adding contents, etc.  
 
 + Chapter 1: Demonstrations of R as GIS (available)
 	* groundwater pumping and groundwater level
@@ -125,7 +125,7 @@ The book starts with the very basics of spatial data handling (e.g., importing a
 	* PRISM (`prism`)
 	* Daymet (`daymetr`)
 	* USGS (`dataRetrieval`)
-+ Chapter 8: Parallel computation (coming soon)
++ Appendix A: Loop and parallel computation (available)
 
 As you can see above, this book does not spend any time on the very basics of GIS concepts. Before you start reading the book, you should know the followings at least (it's not much): 
 
@@ -164,7 +164,7 @@ Outcomes:
 
 
 ```
-## [1] 0.03280503 0.82616444 0.97644139 0.97061556 0.86243032
+## [1] 0.8830428 0.7640859 0.4345458 0.2538585 0.7979785
 ```
 
 ### Parentheses around codes {-}
@@ -179,7 +179,7 @@ Sometimes you will see codes enclosed by parenthesis like this:
 ```
 
 ```
-## [1] 0.7374387 0.1581252 0.7309283 0.3279300 0.5682530
+## [1] 0.2820217 0.8061851 0.2804084 0.8095612 0.8812708
 ```
 
 The parentheses prints what's inside of a newly created object (here `a`) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created. 
