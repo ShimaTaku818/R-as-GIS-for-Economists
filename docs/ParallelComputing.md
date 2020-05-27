@@ -666,7 +666,7 @@ library(pbmclapply)
 MC_results <- pbmclapply(1:1000, MC_sim, mc.cores = get_num_procs() - 1)
 ```
 
-### Some background on the parallelization packages {-}
+### Some background on the parallelization packages 
 
 For Mac and Linux users the (coding) cost of parallelization was minimal since when `parallel::mclapply()` was available. Parallelization is really a piece of cake for those who know how to use `lapply()` because the syntax is identical. For Windows users, that had not been the case until the arrival of the `future.apply` package. Windows create new threads to run on multiple cores, which does not inherit any of the R objects you have created on the environment. This meant that if you need to use a dataset (or any other objects that you are not creating within the loop internally) inside the loop, you had to tell R explicitly what you want it to carry to to the threads so they can use those objects. This hassle was eliminated by the `future.apply` package.^[To be honest, I do not completely understand how it does what it does.] On Mac and Linux machines, it was not even an issue because parallelization is done by forking, which inherits all the available R objects on the environment. Since the `future.apply` package works for all the platforms, I focus on this package. However, I will present how `parallel::mclapply()` works at the end.   
 

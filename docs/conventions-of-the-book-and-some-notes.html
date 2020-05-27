@@ -237,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="A.2" data-path="parcomp.html"><a href="parcomp.html"><i class="fa fa-check"></i><b>A.2</b> Parallelization of embarrassingly parallel processes</a><ul>
 <li class="chapter" data-level="A.2.1" data-path="parcomp.html"><a href="parcomp.html#mac-or-linux-users"><i class="fa fa-check"></i><b>A.2.1</b> Mac or Linux users</a></li>
-<li class="chapter" data-level="" data-path="parcomp.html"><a href="parcomp.html#some-background-on-the-parallelization-packages"><i class="fa fa-check"></i>Some background on the parallelization packages</a></li>
+<li class="chapter" data-level="A.2.2" data-path="parcomp.html"><a href="parcomp.html#some-background-on-the-parallelization-packages"><i class="fa fa-check"></i><b>A.2.2</b> Some background on the parallelization packages</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -291,7 +291,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Codes:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">runif</span>(<span class="dv">5</span>)</a></code></pre></div>
 <p>Outcomes:</p>
-<pre><code>## [1] 0.54045815 0.79981549 0.31645219 0.11766146 0.07948605</code></pre>
+<pre><code>## [1] 0.4729785 0.7728295 0.3406025 0.1701455 0.6548728</code></pre>
 </div>
 <div id="parentheses-around-codes" class="section level3 unnumbered">
 <h3>Parentheses around codes</h3>
@@ -299,7 +299,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">(</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">  a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">)</a></code></pre></div>
-<pre><code>## [1] 0.5848519 0.7023788 0.7475355 0.7727204 0.0777540</code></pre>
+<pre><code>## [1] 0.6099752 0.5995058 0.1189795 0.6697347 0.7850278</code></pre>
 <p>The parentheses prints what’s inside of a newly created object (here <code>a</code>) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created.</p>
 <p>This one prints nothing.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">5</span>)</a></code></pre></div>

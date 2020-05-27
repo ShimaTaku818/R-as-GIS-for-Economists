@@ -237,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="A.2" data-path="parcomp.html"><a href="parcomp.html"><i class="fa fa-check"></i><b>A.2</b> Parallelization of embarrassingly parallel processes</a><ul>
 <li class="chapter" data-level="A.2.1" data-path="parcomp.html"><a href="parcomp.html#mac-or-linux-users"><i class="fa fa-check"></i><b>A.2.1</b> Mac or Linux users</a></li>
-<li class="chapter" data-level="" data-path="parcomp.html"><a href="parcomp.html#some-background-on-the-parallelization-packages"><i class="fa fa-check"></i>Some background on the parallelization packages</a></li>
+<li class="chapter" data-level="A.2.2" data-path="parcomp.html"><a href="parcomp.html#some-background-on-the-parallelization-packages"><i class="fa fa-check"></i><b>A.2.2</b> Some background on the parallelization packages</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -364,8 +364,8 @@ where <span class="math inline">\(\mu \sim N(0,1)\)</span>, <span class="math in
 <a class="sourceLine" id="cb328-6" data-line-number="6"><span class="kw">library</span>(pbmclapply)</a>
 <a class="sourceLine" id="cb328-7" data-line-number="7">MC_results &lt;-<span class="st"> </span><span class="kw">pbmclapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, MC_sim, <span class="dt">mc.cores =</span> <span class="kw">get_num_procs</span>() <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
 </div>
-<div id="some-background-on-the-parallelization-packages" class="section level3 unnumbered">
-<h3>Some background on the parallelization packages</h3>
+<div id="some-background-on-the-parallelization-packages" class="section level3">
+<h3><span class="header-section-number">A.2.2</span> Some background on the parallelization packages</h3>
 <p>For Mac and Linux users the (coding) cost of parallelization was minimal since when <code>parallel::mclapply()</code> was available. Parallelization is really a piece of cake for those who know how to use <code>lapply()</code> because the syntax is identical. For Windows users, that had not been the case until the arrival of the <code>future.apply</code> package. Windows create new threads to run on multiple cores, which does not inherit any of the R objects you have created on the environment. This meant that if you need to use a dataset (or any other objects that you are not creating within the loop internally) inside the loop, you had to tell R explicitly what you want it to carry to to the threads so they can use those objects. This hassle was eliminated by the <code>future.apply</code> package.<a href="#fn87" class="footnote-ref" id="fnref87"><sup>87</sup></a> On Mac and Linux machines, it was not even an issue because parallelization is done by forking, which inherits all the available R objects on the environment. Since the <code>future.apply</code> package works for all the platforms, I focus on this package. However, I will present how <code>parallel::mclapply()</code> works at the end.</p>
 
 </div>

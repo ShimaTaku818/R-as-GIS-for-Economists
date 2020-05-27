@@ -32,6 +32,8 @@ opts_chunk$set(
   fig.height=4
   # dev='pdf'
   )
+
+set.seed(903943)
 ```
 
 
