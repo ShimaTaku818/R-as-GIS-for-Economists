@@ -1057,7 +1057,7 @@ head(file_paths)
 [6] "./Data/PRISM/PRISM_ppt_stable_4kmD2_20140406_bil/PRISM_ppt_stable_4kmD2_20140406_bil.bil"
 ```
 
-We now prepare for parallelized extractions and then implement them using `future_apply()` (see Chapter \@ref(par-comp) to familiarize yourself with parallel computation using the `future.apply` package).
+We now prepare for parallelized extractions and then implement them using `future_apply()` (you can have a look at Chapter \@ref(par-comp) to familiarize yourself with parallel computation using the `future.apply` package).
 
 
 ```r

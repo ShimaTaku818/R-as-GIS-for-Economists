@@ -1,6 +1,6 @@
 # (APPENDIX) Appendix {-}
 
-# Loop and Parallel Computing {$par-comp}
+# Loop and Parallel Computing {#par-comp}
 
 
 

@@ -1,6 +1,6 @@
 # (APPENDIX) Appendix {-}
 
-# Loop and Parallel Computing {$par-comp}
+# Loop and Parallel Computing {#par-comp}
 
 
 ```{r library_02,echo=FALSE,warning=FALSE}
@@ -435,4 +435,6 @@ time_elapsed_par
 ```
 
 As you can see, parallelization makes it much quicker with a noticeable difference in elapsed time. We made the code `r round(time_elapsed_ser/time_elapsed_par, digit=2)` times faster. However, we did not make the process `r get_num_procs()-1` times faster even though we used `r get_num_procs()-1` cores for the parallelized process. This is because of the overhead associated with distributing tasks to the cores. The relative advantage of parallelization would be greater if each iteration took more time. For example, if you are running a process that takes about 2 minutes for 1000 times, it would take approximately 33 hours and 20 minutes. But, it may take only 4 hours if you parallelize it on `r get_num_procs()-1` cores, or maybe even 2 hours if you run it on 30 cores. 
+
+### Mac or Linux users
 
