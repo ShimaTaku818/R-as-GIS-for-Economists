@@ -1,6 +1,6 @@
 # (APPENDIX) Appendix {-}
 
-# Loop and Parallel Computing
+# Loop and Parallel Computing {$par-comp}
 
 
 ```{r library_02,echo=FALSE,warning=FALSE}

@@ -876,7 +876,7 @@ file_paths <- paste0("./Data/PRISM/", folder_name, "/", file_name)
 head(file_paths)
 ```
 
-We now prepare for parallelized extractions and then implement them using `future_apply()`.
+We now prepare for parallelized extractions and then implement them using `future_apply()` (see Chapter \@ref(par-comp) to familiarize yourself with parallel computation using the `future.apply` package).
 
 ```{r go_parallel_prep}
 #--- define the number of cores to use ---#
