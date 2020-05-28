@@ -55,7 +55,7 @@ All the data in this Chapter is generated.
 
 ## Repetitive processes and looping
 
-### What is looping? {-}
+### What is looping? 
 
 We sometimes need to run the same process over and over again often with slight changes in parameters. In such a case, it is very time-consuming and messy to write all of the steps one bye one. For example, suppose you are interested in knowing the square of 1 through 5 in with a step of 1 ($[1, 2, 3, 4, 5]$). The following code certainly works:
 
@@ -165,29 +165,29 @@ parameters_data
 We now define a function that takes a row number, refer to `parameters_data` to extract the parameters stored at the row number, and then calculate corn yield and revenue based on the extracted parameters. 
 
 ```{r define_rev_function}
-  gen_rev_corn <- function(i) {
+gen_rev_corn <- function(i) {
 
-    #--- define corn price ---#
-    corn_price <- parameters_data[i,'corn_price']
+  #--- define corn price ---#
+  corn_price <- parameters_data[i,'corn_price']
 
-    #--- define nitrogen  ---#
-    nitrogen <- parameters_data[i,'nitrogen']
+  #--- define nitrogen  ---#
+  nitrogen <- parameters_data[i,'nitrogen']
 
-    #--- calculate yield ---#
-    yield <- 240 * (1 - exp(0.4 - 0.02 * nitrogen))
+  #--- calculate yield ---#
+  yield <- 240 * (1 - exp(0.4 - 0.02 * nitrogen))
 
-    #--- calculate revenue ---#
-    revenue <- corn_price * yield 
+  #--- calculate revenue ---#
+  revenue <- corn_price * yield 
 
-    #--- combine all the information you would like to have  ---#
-    data_to_return <- data.frame(
-      corn_price = corn_price,
-      nitrogen = nitrogen,
-      revenue = revenue
-    )
+  #--- combine all the information you would like to have  ---#
+  data_to_return <- data.frame(
+    corn_price = corn_price,
+    nitrogen = nitrogen,
+    revenue = revenue
+  )
 
-    return(data_to_return)
-  }
+  return(data_to_return)
+}
 ``` 
 
 This function takes $i$ (act as a row number within the function), extract corn price and nitrogen from the $i$th row of `parameters_mat`, which are then used to calculate yield and revenue^[Yield is generated based on the Mitscherlich-Baule functional form. Yield increases at the decreasing rate as you apply more nitrogen, and yield eventually hits the plateau.]. Finally, it returns a `data.frame` of all the information you used (the parameters and the outcomes).
@@ -268,25 +268,25 @@ square_it(1:1000)
 You can also easily vectorize the revenue calculation demonstrated above. First, define the function differently so that revenue calculation can take corn price and nitrogen vectors and return a revenue vector.
 
 ```{r define_rev_simple}
-  gen_rev_corn_short <- function(corn_price, nitrogen) {
+gen_rev_corn_short <- function(corn_price, nitrogen) {
 
-    #--- calculate yield ---#
-    yield <- 240 * (1 - exp(0.4 - 0.02 * nitrogen))
+  #--- calculate yield ---#
+  yield <- 240 * (1 - exp(0.4 - 0.02 * nitrogen))
 
-    #--- calculate revenue ---#
-    revenue <- corn_price * yield 
+  #--- calculate revenue ---#
+  revenue <- corn_price * yield 
 
-    return(revenue)
-  }
+  return(revenue)
+}
 ```  
 
 Then use the function to calculate revenue and assign it to a new variable in the `parameters_data` data.
 
 ```{r no_need_to_loop}
- rev_data_2 <- mutate(
-    parameters_data,
-    revenue = gen_rev_corn_short(corn_price, nitrogen)
-  ) 
+rev_data_2 <- mutate(
+  parameters_data,
+  revenue = gen_rev_corn_short(corn_price, nitrogen)
+) 
 ```
 
 Let's compare the two:
@@ -360,6 +360,7 @@ One of the very good use cases of parallelization is MC simulation. The followin
 $$
  y = 1 + x + v
 $$
+
 where $\mu \sim N(0,1)$, $x \sim N(0,1) + \mu$, and $v \sim N(0,1) + \mu$. The $\mu$ term cause correlation between $x$ (the covariate) and $v$ (the error term). It then estimates the coefficient on $x$ vis OLS, and return the estimate. We would like to repeat this process 1,000 times to understand the property of the OLS estimators under the data generating process. This Monte Carlo simulation is embarrassingly parallel because each process is independent of any other. 
 
 ```{r def_MC}
@@ -447,7 +448,7 @@ As you can see, parallelization makes it much quicker with a noticeable differen
 
 ### Mac or Linux users
 
-For Mac users, `parallel::mclapply()` is just as compelling (or `pbmclapply::pbmclapply()` if you want to have a nice progress report, which is very helpful particularly when the process is long). It is just as easy to use as `future_lapply()` as its syntax is the same as `lapply()`. You can control the number by adding `mc.cores = x`. Here is an example code that does the same MC simulations we conducted above: 
+For Mac users, `parallel::mclapply()` is just as compelling (or `pbmclapply::pbmclapply()` if you want to have a nice progress report, which is very helpful particularly when the process is long). It is just as easy to use as `future_lapply()` because its syntax is the same as `lapply()`. You can control the number of cores to employ by adding `mc.cores` option. Here is an example code that does the same MC simulations we conducted above: 
 
 ```{r mclapply, eval = F}
 #--- mclapply ---#
@@ -461,6 +462,6 @@ MC_results <- pbmclapply(1:1000, MC_sim, mc.cores = get_num_procs() - 1)
 
 ### Some background on the parallelization packages 
 
-For Mac and Linux users the (coding) cost of parallelization was minimal since when `parallel::mclapply()` was available. Parallelization is really a piece of cake for those who know how to use `lapply()` because the syntax is identical. For Windows users, that had not been the case until the arrival of the `future.apply` package. Windows create new threads to run on multiple cores, which does not inherit any of the R objects you have created on the environment. This meant that if you need to use a dataset (or any other objects that you are not creating within the loop internally) inside the loop, you had to tell R explicitly what you want it to carry to to the threads so they can use those objects. This hassle was eliminated by the `future.apply` package.^[To be honest, I do not completely understand how it does what it does.] On Mac and Linux machines, it was not even an issue because parallelization is done by forking, which inherits all the available R objects on the environment. Since the `future.apply` package works for all the platforms, I focus on this package. However, I will present how `parallel::mclapply()` works at the end.   
+For Mac and Linux users the coding cost of parallelization was minimal since when `parallel::mclapply()` was available. Parallelization is really a piece of cake for those who know how to use `lapply()` because the syntax is identical. For Windows users, that had not been the case until the arrival of the `future.apply` package. Windows create new threads to run on multiple cores, which does not inherit any of the R objects you have created on the environment. This meant that if you need to use a dataset (or any other objects that you are not creating within the loop internally) inside the loop, you had to tell R explicitly what objects you want it to carry to the threads so they can use those objects. This hassle was eliminated by the `future.apply` package.^[To be honest, I do not completely understand how it does what it does.] On Mac and Linux machines, it was not even an issue because parallelization is done by forking (which Windows machines cannot do), which inherits all the available R objects on the environment. Since the `future.apply` package works for all the platforms, I focused on this package. 
 
 

@@ -229,11 +229,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html#direction-for-replication-3"><i class="fa fa-check"></i>Direction for replication</a></li>
 </ul></li>
 <li class="chapter" data-level="A.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html"><i class="fa fa-check"></i><b>A.1</b> Repetitive processes and looping</a><ul>
-<li class="chapter" data-level="" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#what-is-looping"><i class="fa fa-check"></i>What is looping?</a></li>
-<li class="chapter" data-level="A.1.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#for-loop"><i class="fa fa-check"></i><b>A.1.1</b> For loop</a></li>
-<li class="chapter" data-level="A.1.2" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#for-loop-using-the-lapply-function"><i class="fa fa-check"></i><b>A.1.2</b> For loop using the <code>lapply()</code> function</a></li>
-<li class="chapter" data-level="A.1.3" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#looping-over-multiple-variables-using-lapply"><i class="fa fa-check"></i><b>A.1.3</b> Looping over multiple variables using lapply()</a></li>
-<li class="chapter" data-level="A.1.4" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#do-you-really-need-to-loop"><i class="fa fa-check"></i><b>A.1.4</b> Do you really need to loop?</a></li>
+<li class="chapter" data-level="A.1.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#what-is-looping"><i class="fa fa-check"></i><b>A.1.1</b> What is looping?</a></li>
+<li class="chapter" data-level="A.1.2" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#for-loop"><i class="fa fa-check"></i><b>A.1.2</b> For loop</a></li>
+<li class="chapter" data-level="A.1.3" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#for-loop-using-the-lapply-function"><i class="fa fa-check"></i><b>A.1.3</b> For loop using the <code>lapply()</code> function</a></li>
+<li class="chapter" data-level="A.1.4" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#looping-over-multiple-variables-using-lapply"><i class="fa fa-check"></i><b>A.1.4</b> Looping over multiple variables using lapply()</a></li>
+<li class="chapter" data-level="A.1.5" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#do-you-really-need-to-loop"><i class="fa fa-check"></i><b>A.1.5</b> Do you really need to loop?</a></li>
 </ul></li>
 <li class="chapter" data-level="A.2" data-path="parcomp.html"><a href="parcomp.html"><i class="fa fa-check"></i><b>A.2</b> Parallelization of embarrassingly parallel processes</a><ul>
 <li class="chapter" data-level="A.2.1" data-path="parcomp.html"><a href="parcomp.html#mac-or-linux-users"><i class="fa fa-check"></i><b>A.2.1</b> Mac or Linux users</a></li>
@@ -274,8 +274,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </script>
 <div id="repetitive-processes-and-looping" class="section level2">
 <h2><span class="header-section-number">A.1</span> Repetitive processes and looping</h2>
-<div id="what-is-looping" class="section level3 unnumbered">
-<h3>What is looping?</h3>
+<div id="what-is-looping" class="section level3">
+<h3><span class="header-section-number">A.1.1</span> What is looping?</h3>
 <p>We sometimes need to run the same process over and over again often with slight changes in parameters. In such a case, it is very time-consuming and messy to write all of the steps one bye one. For example, suppose you are interested in knowing the square of 1 through 5 in with a step of 1 (<span class="math inline">\([1, 2, 3, 4, 5]\)</span>). The following code certainly works:</p>
 <div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb271-1" data-line-number="1"><span class="dv">1</span><span class="op">^</span><span class="dv">2</span> </a></code></pre></div>
 <pre><code>[1] 1</code></pre>
@@ -291,7 +291,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Looping is repeatedly evaluating the same (except parameters) process over and over again. In the example above, the <strong>same</strong> process is the action of squaring. This does not change among the processes you run. What changes is what you square. Looping can help you write a concise code to implement these repetitive processes.</p>
 </div>
 <div id="for-loop" class="section level3">
-<h3><span class="header-section-number">A.1.1</span> For loop</h3>
+<h3><span class="header-section-number">A.1.2</span> For loop</h3>
 <p>Here is how <strong>for loop</strong> works in general:</p>
 <div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb281-1" data-line-number="1"><span class="co">#--- NOT RUN ---#</span></a>
 <a class="sourceLine" id="cb281-2" data-line-number="2"><span class="cf">for</span> (x <span class="cf">in</span> a_list_of_values){</a>
@@ -322,7 +322,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 [1] 25</code></pre>
 </div>
 <div id="for-loop-using-the-lapply-function" class="section level3">
-<h3><span class="header-section-number">A.1.2</span> For loop using the <code>lapply()</code> function</h3>
+<h3><span class="header-section-number">A.1.3</span> For loop using the <code>lapply()</code> function</h3>
 <p>You can do for loop using the <code>lapply()</code> function as well.<a href="#fn74" class="footnote-ref" id="fnref74"><sup>74</sup></a> Here is how it works:</p>
 <div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb287-1" data-line-number="1"><span class="co">#--- NOT RUN ---#  </span></a>
 <a class="sourceLine" id="cb287-2" data-line-number="2"><span class="kw">lapply</span>(A,B)</a></code></pre></div>
@@ -368,7 +368,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Finally, it is a myth that you should always use <code>lapply()</code> instead of the explicit for loop syntax because <code>lapply()</code> (or other <code>apply()</code> families) is faster. They are basically the same.<a href="#fn75" class="footnote-ref" id="fnref75"><sup>75</sup></a></p>
 </div>
 <div id="looping-over-multiple-variables-using-lapply" class="section level3">
-<h3><span class="header-section-number">A.1.3</span> Looping over multiple variables using lapply()</h3>
+<h3><span class="header-section-number">A.1.4</span> Looping over multiple variables using lapply()</h3>
 <p><code>lapply()</code> allows you to loop over only one variable. However, it is often the case that you want to loop over multiple variables<a href="#fn76" class="footnote-ref" id="fnref76"><sup>76</sup></a>. However, it is easy to achieve this. The trick is to create a <code>data.frame</code> of the variables where the complete list of the combinations of the variables are stored, and then loop over row of the <code>data.frame</code>. As an example, suppose we are interested in understanding the sensitivity of corn revenue to corn price and applied nitrogen amount. We consider the range of $3.0/bu to $5.0/bu for corn price and 0 lb/acre to 300/acre for applied nitrogen applied.</p>
 <div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb292-1" data-line-number="1"><span class="co">#--- corn price vector ---#</span></a>
 <a class="sourceLine" id="cb292-2" data-line-number="2">corn_price_vec &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dt">by =</span> <span class="dv">1</span>)</a>
@@ -397,29 +397,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 11          4      300
 12          5      300</code></pre>
 <p>We now define a function that takes a row number, refer to <code>parameters_data</code> to extract the parameters stored at the row number, and then calculate corn yield and revenue based on the extracted parameters.</p>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb295-1" data-line-number="1">  gen_rev_corn &lt;-<span class="st"> </span><span class="cf">function</span>(i) {</a>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb295-1" data-line-number="1">gen_rev_corn &lt;-<span class="st"> </span><span class="cf">function</span>(i) {</a>
 <a class="sourceLine" id="cb295-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb295-3" data-line-number="3">    <span class="co">#--- define corn price ---#</span></a>
-<a class="sourceLine" id="cb295-4" data-line-number="4">    corn_price &lt;-<span class="st"> </span>parameters_data[i,<span class="st">&#39;corn_price&#39;</span>]</a>
+<a class="sourceLine" id="cb295-3" data-line-number="3">  <span class="co">#--- define corn price ---#</span></a>
+<a class="sourceLine" id="cb295-4" data-line-number="4">  corn_price &lt;-<span class="st"> </span>parameters_data[i,<span class="st">&#39;corn_price&#39;</span>]</a>
 <a class="sourceLine" id="cb295-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb295-6" data-line-number="6">    <span class="co">#--- define nitrogen  ---#</span></a>
-<a class="sourceLine" id="cb295-7" data-line-number="7">    nitrogen &lt;-<span class="st"> </span>parameters_data[i,<span class="st">&#39;nitrogen&#39;</span>]</a>
+<a class="sourceLine" id="cb295-6" data-line-number="6">  <span class="co">#--- define nitrogen  ---#</span></a>
+<a class="sourceLine" id="cb295-7" data-line-number="7">  nitrogen &lt;-<span class="st"> </span>parameters_data[i,<span class="st">&#39;nitrogen&#39;</span>]</a>
 <a class="sourceLine" id="cb295-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb295-9" data-line-number="9">    <span class="co">#--- calculate yield ---#</span></a>
-<a class="sourceLine" id="cb295-10" data-line-number="10">    yield &lt;-<span class="st"> </span><span class="dv">240</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(<span class="fl">0.4</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.02</span> <span class="op">*</span><span class="st"> </span>nitrogen))</a>
+<a class="sourceLine" id="cb295-9" data-line-number="9">  <span class="co">#--- calculate yield ---#</span></a>
+<a class="sourceLine" id="cb295-10" data-line-number="10">  yield &lt;-<span class="st"> </span><span class="dv">240</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(<span class="fl">0.4</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.02</span> <span class="op">*</span><span class="st"> </span>nitrogen))</a>
 <a class="sourceLine" id="cb295-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb295-12" data-line-number="12">    <span class="co">#--- calculate revenue ---#</span></a>
-<a class="sourceLine" id="cb295-13" data-line-number="13">    revenue &lt;-<span class="st"> </span>corn_price <span class="op">*</span><span class="st"> </span>yield </a>
+<a class="sourceLine" id="cb295-12" data-line-number="12">  <span class="co">#--- calculate revenue ---#</span></a>
+<a class="sourceLine" id="cb295-13" data-line-number="13">  revenue &lt;-<span class="st"> </span>corn_price <span class="op">*</span><span class="st"> </span>yield </a>
 <a class="sourceLine" id="cb295-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb295-15" data-line-number="15">    <span class="co">#--- combine all the information you would like to have  ---#</span></a>
-<a class="sourceLine" id="cb295-16" data-line-number="16">    data_to_return &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb295-17" data-line-number="17">      <span class="dt">corn_price =</span> corn_price,</a>
-<a class="sourceLine" id="cb295-18" data-line-number="18">      <span class="dt">nitrogen =</span> nitrogen,</a>
-<a class="sourceLine" id="cb295-19" data-line-number="19">      <span class="dt">revenue =</span> revenue</a>
-<a class="sourceLine" id="cb295-20" data-line-number="20">    )</a>
+<a class="sourceLine" id="cb295-15" data-line-number="15">  <span class="co">#--- combine all the information you would like to have  ---#</span></a>
+<a class="sourceLine" id="cb295-16" data-line-number="16">  data_to_return &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb295-17" data-line-number="17">    <span class="dt">corn_price =</span> corn_price,</a>
+<a class="sourceLine" id="cb295-18" data-line-number="18">    <span class="dt">nitrogen =</span> nitrogen,</a>
+<a class="sourceLine" id="cb295-19" data-line-number="19">    <span class="dt">revenue =</span> revenue</a>
+<a class="sourceLine" id="cb295-20" data-line-number="20">  )</a>
 <a class="sourceLine" id="cb295-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb295-22" data-line-number="22">    <span class="kw">return</span>(data_to_return)</a>
-<a class="sourceLine" id="cb295-23" data-line-number="23">  }</a></code></pre></div>
+<a class="sourceLine" id="cb295-22" data-line-number="22">  <span class="kw">return</span>(data_to_return)</a>
+<a class="sourceLine" id="cb295-23" data-line-number="23">}</a></code></pre></div>
 <p>This function takes <span class="math inline">\(i\)</span> (act as a row number within the function), extract corn price and nitrogen from the <span class="math inline">\(i\)</span>th row of <code>parameters_mat</code>, which are then used to calculate yield and revenue<a href="#fn78" class="footnote-ref" id="fnref78"><sup>78</sup></a>. Finally, it returns a <code>data.frame</code> of all the information you used (the parameters and the outcomes).</p>
 <div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb296-1" data-line-number="1"><span class="co">#--- loop over all the parameter combinations ---#</span></a>
 <a class="sourceLine" id="cb296-2" data-line-number="2">rev_data &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(parameters_data), gen_rev_corn)</a>
@@ -506,7 +506,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 12:          5      300 1195.5626</code></pre>
 </div>
 <div id="do-you-really-need-to-loop" class="section level3">
-<h3><span class="header-section-number">A.1.4</span> Do you really need to loop?</h3>
+<h3><span class="header-section-number">A.1.5</span> Do you really need to loop?</h3>
 <p>Actually, we should not have used for loop or <code>lapply()</code> in any of the examples above in practice<a href="#fn79" class="footnote-ref" id="fnref79"><sup>79</sup></a> This is because they can be easily vectorized. Vectorized operations are those that take vectors as inputs and work on each element of the vectors in parallel<a href="#fn80" class="footnote-ref" id="fnref80"><sup>80</sup></a>.</p>
 <p>A typical example of a vectorized operation would be this:</p>
 <div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb302-1" data-line-number="1"><span class="co">#--- define numeric vectors ---#</span></a>
@@ -543,21 +543,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>You can just do this:</p>
 <div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb308-1" data-line-number="1"><span class="kw">square_it</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>)</a></code></pre></div>
 <p>You can also easily vectorize the revenue calculation demonstrated above. First, define the function differently so that revenue calculation can take corn price and nitrogen vectors and return a revenue vector.</p>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb309-1" data-line-number="1">  gen_rev_corn_short &lt;-<span class="st"> </span><span class="cf">function</span>(corn_price, nitrogen) {</a>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb309-1" data-line-number="1">gen_rev_corn_short &lt;-<span class="st"> </span><span class="cf">function</span>(corn_price, nitrogen) {</a>
 <a class="sourceLine" id="cb309-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb309-3" data-line-number="3">    <span class="co">#--- calculate yield ---#</span></a>
-<a class="sourceLine" id="cb309-4" data-line-number="4">    yield &lt;-<span class="st"> </span><span class="dv">240</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(<span class="fl">0.4</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.02</span> <span class="op">*</span><span class="st"> </span>nitrogen))</a>
+<a class="sourceLine" id="cb309-3" data-line-number="3">  <span class="co">#--- calculate yield ---#</span></a>
+<a class="sourceLine" id="cb309-4" data-line-number="4">  yield &lt;-<span class="st"> </span><span class="dv">240</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(<span class="fl">0.4</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.02</span> <span class="op">*</span><span class="st"> </span>nitrogen))</a>
 <a class="sourceLine" id="cb309-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb309-6" data-line-number="6">    <span class="co">#--- calculate revenue ---#</span></a>
-<a class="sourceLine" id="cb309-7" data-line-number="7">    revenue &lt;-<span class="st"> </span>corn_price <span class="op">*</span><span class="st"> </span>yield </a>
+<a class="sourceLine" id="cb309-6" data-line-number="6">  <span class="co">#--- calculate revenue ---#</span></a>
+<a class="sourceLine" id="cb309-7" data-line-number="7">  revenue &lt;-<span class="st"> </span>corn_price <span class="op">*</span><span class="st"> </span>yield </a>
 <a class="sourceLine" id="cb309-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb309-9" data-line-number="9">    <span class="kw">return</span>(revenue)</a>
-<a class="sourceLine" id="cb309-10" data-line-number="10">  }</a></code></pre></div>
+<a class="sourceLine" id="cb309-9" data-line-number="9">  <span class="kw">return</span>(revenue)</a>
+<a class="sourceLine" id="cb309-10" data-line-number="10">}</a></code></pre></div>
 <p>Then use the function to calculate revenue and assign it to a new variable in the <code>parameters_data</code> data.</p>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb310-1" data-line-number="1"> rev_data_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb310-2" data-line-number="2">    parameters_data,</a>
-<a class="sourceLine" id="cb310-3" data-line-number="3">    <span class="dt">revenue =</span> <span class="kw">gen_rev_corn_short</span>(corn_price, nitrogen)</a>
-<a class="sourceLine" id="cb310-4" data-line-number="4">  ) </a></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb310-1" data-line-number="1">rev_data_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">mutate</span>(</a>
+<a class="sourceLine" id="cb310-2" data-line-number="2">  parameters_data,</a>
+<a class="sourceLine" id="cb310-3" data-line-number="3">  <span class="dt">revenue =</span> <span class="kw">gen_rev_corn_short</span>(corn_price, nitrogen)</a>
+<a class="sourceLine" id="cb310-4" data-line-number="4">) </a></code></pre></div>
 <p>Let’s compare the two:</p>
 <div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb311-1" data-line-number="1"><span class="kw">microbenchmark</span>(</a>
 <a class="sourceLine" id="cb311-2" data-line-number="2"></a>
