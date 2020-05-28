@@ -110,11 +110,14 @@ The book starts with the very basics of spatial data handling (e.g., importing a
 	* single-layer geometrical operations (e.g., create buffers, find centroids)
 	* other miscellaneous basic operations
 + Chapter 3: Spatial interactions of vector datasets (available)
+	* understand topological relations of multiple `sf` objects
 	* spatially subsetting one layer based on another layer
 	* extracting values from one layer to another layer^[`over` function in `sp` language]
 + Chapter 4: The basics of raster data handling using `raster` and `terra` packages (coming soon)
+	* understand object classes by the `terra` and `raster` packages
 	* import and export raster data
-	* stacking raster data
+	* stack raster data
+	* quick plotting
 + Chapter 5: Spatial interactions of vector and raster datasets (coming soon)
 	* extracting values from a raster layer to a vector layer
 + Chapter 6: Efficient spatial data processing (wait a bit)  
@@ -164,7 +167,7 @@ Outcomes:
 
 
 ```
-## [1] 0.43776982 0.03009766 0.45809613 0.95358675 0.49174477
+## [1] 0.4151224 0.2037912 0.1068541 0.7066595 0.3973361
 ```
 
 ### Parentheses around codes {-}
@@ -179,7 +182,7 @@ Sometimes you will see codes enclosed by parenthesis like this:
 ```
 
 ```
-## [1] 0.83958822 0.50654886 0.27831148 0.13420280 0.09382091
+## [1] 0.37310985 0.31726640 0.04616847 0.22767772 0.80682046
 ```
 
 The parentheses prints what's inside of a newly created object (here `a`) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created. 
