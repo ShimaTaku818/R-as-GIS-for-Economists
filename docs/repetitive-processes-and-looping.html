@@ -533,9 +533,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb305-9" data-line-number="9">  <span class="dt">unit =</span> <span class="st">&quot;ms&quot;</span></a>
 <a class="sourceLine" id="cb305-10" data-line-number="10">)</a></code></pre></div>
 <pre><code>Unit: milliseconds
-           expr      min       lq       mean   median        uq      max neval
-     vectorized 0.002595 0.002768 0.00298805 0.002865 0.0030710 0.006254   100
- not vectorized 0.513001 0.523349 0.55995636 0.531069 0.5394875 2.161590   100</code></pre>
+           expr      min        lq       mean    median       uq      max neval
+     vectorized 0.002434 0.0026495 0.00288204 0.0028125 0.003022 0.005622   100
+ not vectorized 0.479522 0.5108405 0.53967215 0.5213405 0.537388 2.170841   100</code></pre>
 <p>As you can see, the vectorized version is faster. The time difference comes from R having to conduct many more internal checks and hidden operations for the non-vectorized one<a href="#fn81" class="footnote-ref" id="fnref81"><sup>81</sup></a>. Yes, we are talking about a fraction of milliseconds here. But, as the objects to operate on get larger, the difference between vectorized and non-vectorized operations can become substantial<a href="#fn82" class="footnote-ref" id="fnref82"><sup>82</sup></a>.</p>
 <p>The <code>lapply()</code> examples can be easily vectorized.</p>
 <p>Instead of this:</p>
@@ -569,9 +569,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb311-8" data-line-number="8">  <span class="dt">unit =</span> <span class="st">&quot;ms&quot;</span></a>
 <a class="sourceLine" id="cb311-9" data-line-number="9">)</a></code></pre></div>
 <pre><code>Unit: milliseconds
-           expr      min       lq      mean   median        uq      max neval
-     vectorized 0.239123 0.268798 0.3593116 0.304482 0.3408785 4.349204   100
- not vectorized 1.925651 2.058642 2.4389833 2.129764 2.9515955 5.858686   100</code></pre>
+           expr      min       lq      mean   median       uq      max neval
+     vectorized 0.244492 0.263505 0.3390336 0.283367 0.314990 4.324208   100
+ not vectorized 1.897384 2.045786 2.3041810 2.111303 2.300479 6.644897   100</code></pre>
 <p>Yes, the vectorized version is faster. So, the lesson here is that if you can vectorize, then vectorize instead of using <code>lapply()</code>. But, of course, things cannot be vectorized in many cases.</p>
 </div>
 </div>

@@ -424,9 +424,9 @@ microbenchmark(
 
 ```
 Unit: milliseconds
-           expr      min       lq       mean   median        uq      max neval
-     vectorized 0.002595 0.002768 0.00298805 0.002865 0.0030710 0.006254   100
- not vectorized 0.513001 0.523349 0.55995636 0.531069 0.5394875 2.161590   100
+           expr      min        lq       mean    median       uq      max neval
+     vectorized 0.002434 0.0026495 0.00288204 0.0028125 0.003022 0.005622   100
+ not vectorized 0.479522 0.5108405 0.53967215 0.5213405 0.537388 2.170841   100
 ```
 
 As you can see, the vectorized version is faster. The time difference comes from R having to conduct many more internal checks and hidden operations for the non-vectorized one^[See [this](http://www.noamross.net/archives/2014-04-16-vectorization-in-r-why/) or [this](https://stackoverflow.com/questions/7142767/why-are-loops-slow-in-r) to have a better understanding of why non-vectorized operations can be slower than vectorized operations.]. Yes, we are talking about a fraction of milliseconds here. But, as the objects to operate on get larger, the difference between vectorized and non-vectorized operations can become substantial^[See [here](http://www.win-vector.com/blog/2019/01/what-does-it-mean-to-write-vectorized-code-in-r/) for a good example of such a case. R is often regarded very slow compared to other popular software. But, many of such claims come from not vectorizing operations that can be vectorized. Indeed, many of the base and old R functions are written in C. More recent functions relies on C++ via the `Rcpp` package.]. 
@@ -490,9 +490,9 @@ microbenchmark(
 
 ```
 Unit: milliseconds
-           expr      min       lq      mean   median        uq      max neval
-     vectorized 0.239123 0.268798 0.3593116 0.304482 0.3408785 4.349204   100
- not vectorized 1.925651 2.058642 2.4389833 2.129764 2.9515955 5.858686   100
+           expr      min       lq      mean   median       uq      max neval
+     vectorized 0.244492 0.263505 0.3390336 0.283367 0.314990 4.324208   100
+ not vectorized 1.897384 2.045786 2.3041810 2.111303 2.300479 6.644897   100
 ```
 
 Yes, the vectorized version is faster. So, the lesson here is that if you can vectorize, then vectorize instead of using `lapply()`. But, of course, things cannot be vectorized in many cases. 
@@ -556,12 +556,12 @@ microbenchmark(
 
 ```
 Unit: milliseconds
-             expr       min          lq        mean    median         uq
-     parallelized 95.969882 102.1037710 108.8382266 105.95826 110.095717
- not parallelized  0.388031   0.4301505   0.4579922   0.44467   0.465266
+             expr       min         lq        mean      median         uq
+     parallelized 95.402429 99.5338020 106.3683670 104.1453890 107.934685
+ not parallelized  0.393408  0.4256175   0.4588749   0.4398625   0.470778
         max neval
- 256.862315   100
-   1.527301   100
+ 257.110338   100
+   1.591763   100
 ```
 
 Hmmmm, okay, so parallelization made the code slower... How could this be? This is because communicating jobs to each core takes some time as well. So, if each of the iterative processes is super fast (like this example where you just square a number), the time spent on communicating with the cores outweighs the time saving due to parallel computation. Parallelization is more beneficial when each of the repetitive processes takes long. 
@@ -608,15 +608,15 @@ toc()
 
 ```
        x 
-1.499928 
+1.503353 
 ```
 
 ```
 elapsed 
-  0.024 
+  0.023 
 ```
 
-Okay, so it takes 0.024 second for one iteration. Now, let's run this 1000 times with or without parallelization.
+Okay, so it takes 0.023 second for one iteration. Now, let's run this 1000 times with or without parallelization.
 
 **Not parallelized**
 
@@ -631,7 +631,7 @@ toc()
 
 ```
 elapsed 
- 25.398 
+ 24.496 
 ```
 
 **Parallelized**
@@ -647,10 +647,10 @@ toc()
 
 ```
 elapsed 
-   25.7 
+  2.663 
 ```
 
-As you can see, parallelization makes it much quicker with a noticeable difference in elapsed time. We made the code 0.99 times faster. However, we did not make the process 15 times faster even though we used 15 cores for the parallelized process. This is because of the overhead associated with distributing tasks to the cores. The relative advantage of parallelization would be greater if each iteration took more time. For example, if you are running a process that takes about 2 minutes for 1000 times, it would take approximately 33 hours and 20 minutes. But, it may take only 4 hours if you parallelize it on 15 cores, or maybe even 2 hours if you run it on 30 cores. 
+As you can see, parallelization makes it much quicker with a noticeable difference in elapsed time. We made the code 9.2 times faster. However, we did not make the process 15 times faster even though we used 15 cores for the parallelized process. This is because of the overhead associated with distributing tasks to the cores. The relative advantage of parallelization would be greater if each iteration took more time. For example, if you are running a process that takes about 2 minutes for 1000 times, it would take approximately 33 hours and 20 minutes. But, it may take only 4 hours if you parallelize it on 15 cores, or maybe even 2 hours if you run it on 30 cores. 
 
 ### Mac or Linux users
 
@@ -659,7 +659,7 @@ For Mac users, `parallel::mclapply()` is just as compelling (or `pbmclapply::pbm
 
 ```r
 #--- mclapply ---#
-library(parallel
+library(parallel)
 MC_results <- mclapply(1:1000, MC_sim, mc.cores = get_num_procs() - 1)
 
 #--- or with progress bar ---#

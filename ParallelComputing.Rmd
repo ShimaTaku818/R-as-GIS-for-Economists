@@ -426,7 +426,7 @@ time_elapsed_ser
 
 **Parallelized**
 
-```{r benchmack_par, eval = FALSE}
+```{r benchmack_par, results = "hide"}
 #--- parallel ---#
 tic()
 MC_results <- future_lapply(1:1000, MC_sim)
@@ -452,7 +452,7 @@ For Mac users, `parallel::mclapply()` is just as compelling (or `pbmclapply::pbm
 
 ```{r mclapply, eval = F}
 #--- mclapply ---#
-library(parallel
+library(parallel)
 MC_results <- mclapply(1:1000, MC_sim, mc.cores = get_num_procs() - 1)
 
 #--- or with progress bar ---#

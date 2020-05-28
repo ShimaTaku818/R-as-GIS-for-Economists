@@ -299,12 +299,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb318-7" data-line-number="7">  <span class="dt">unit =</span> <span class="st">&quot;ms&quot;</span></a>
 <a class="sourceLine" id="cb318-8" data-line-number="8">)</a></code></pre></div>
 <pre><code>Unit: milliseconds
-             expr       min          lq        mean    median         uq
-     parallelized 95.969882 102.1037710 108.8382266 105.95826 110.095717
- not parallelized  0.388031   0.4301505   0.4579922   0.44467   0.465266
+             expr       min         lq        mean      median         uq
+     parallelized 95.402429 99.5338020 106.3683670 104.1453890 107.934685
+ not parallelized  0.393408  0.4256175   0.4588749   0.4398625   0.470778
         max neval
- 256.862315   100
-   1.527301   100</code></pre>
+ 257.110338   100
+   1.591763   100</code></pre>
 <p>Hmmmm, okay, so parallelization made the code slower… How could this be? This is because communicating jobs to each core takes some time as well. So, if each of the iterative processes is super fast (like this example where you just square a number), the time spent on communicating with the cores outweighs the time saving due to parallel computation. Parallelization is more beneficial when each of the repetitive processes takes long.</p>
 <p>One of the very good use cases of parallelization is MC simulation. The following MC simulation tests whether the correlation between an independent variable and error term would cause bias (yes, we know the answer). The <code>MC_sim</code> function first generates a dataset (50,000 observations) according to the following data generating process:</p>
 <p><span class="math display">\[
@@ -334,30 +334,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb321-2" data-line-number="2"><span class="kw">MC_sim</span>(<span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb321-3" data-line-number="3"><span class="kw">toc</span>()</a></code></pre></div>
 <pre><code>       x 
-1.499928 </code></pre>
+1.503353 </code></pre>
 <pre><code>elapsed 
-  0.024 </code></pre>
-<p>Okay, so it takes 0.024 second for one iteration. Now, let’s run this 1000 times with or without parallelization.</p>
+  0.023 </code></pre>
+<p>Okay, so it takes 0.023 second for one iteration. Now, let’s run this 1000 times with or without parallelization.</p>
 <p><strong>Not parallelized</strong></p>
 <div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb324-1" data-line-number="1"><span class="co">#--- non-parallel ---#</span></a>
 <a class="sourceLine" id="cb324-2" data-line-number="2"><span class="kw">tic</span>()</a>
 <a class="sourceLine" id="cb324-3" data-line-number="3">MC_results &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, MC_sim)</a>
 <a class="sourceLine" id="cb324-4" data-line-number="4"><span class="kw">toc</span>()</a></code></pre></div>
 <pre><code>elapsed 
- 25.398 </code></pre>
+ 24.496 </code></pre>
 <p><strong>Parallelized</strong></p>
 <div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb326-1" data-line-number="1"><span class="co">#--- parallel ---#</span></a>
 <a class="sourceLine" id="cb326-2" data-line-number="2"><span class="kw">tic</span>()</a>
 <a class="sourceLine" id="cb326-3" data-line-number="3">MC_results &lt;-<span class="st"> </span><span class="kw">future_lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, MC_sim)</a>
 <a class="sourceLine" id="cb326-4" data-line-number="4"><span class="kw">toc</span>()</a></code></pre></div>
 <pre><code>elapsed 
-   25.7 </code></pre>
-<p>As you can see, parallelization makes it much quicker with a noticeable difference in elapsed time. We made the code 0.99 times faster. However, we did not make the process 15 times faster even though we used 15 cores for the parallelized process. This is because of the overhead associated with distributing tasks to the cores. The relative advantage of parallelization would be greater if each iteration took more time. For example, if you are running a process that takes about 2 minutes for 1000 times, it would take approximately 33 hours and 20 minutes. But, it may take only 4 hours if you parallelize it on 15 cores, or maybe even 2 hours if you run it on 30 cores.</p>
+  2.663 </code></pre>
+<p>As you can see, parallelization makes it much quicker with a noticeable difference in elapsed time. We made the code 9.2 times faster. However, we did not make the process 15 times faster even though we used 15 cores for the parallelized process. This is because of the overhead associated with distributing tasks to the cores. The relative advantage of parallelization would be greater if each iteration took more time. For example, if you are running a process that takes about 2 minutes for 1000 times, it would take approximately 33 hours and 20 minutes. But, it may take only 4 hours if you parallelize it on 15 cores, or maybe even 2 hours if you run it on 30 cores.</p>
 <div id="mac-or-linux-users" class="section level3">
 <h3><span class="header-section-number">A.2.1</span> Mac or Linux users</h3>
 <p>For Mac users, <code>parallel::mclapply()</code> is just as compelling (or <code>pbmclapply::pbmclapply()</code> if you want to have a nice progress report, which is very helpful particularly when the process is long). It is just as easy to use as <code>future_lapply()</code> because its syntax is the same as <code>lapply()</code>. You can control the number of cores to employ by adding <code>mc.cores</code> option. Here is an example code that does the same MC simulations we conducted above:</p>
 <div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb328-1" data-line-number="1"><span class="co">#--- mclapply ---#</span></a>
-<a class="sourceLine" id="cb328-2" data-line-number="2"><span class="kw">library</span>(parallel</a>
+<a class="sourceLine" id="cb328-2" data-line-number="2"><span class="kw">library</span>(parallel)</a>
 <a class="sourceLine" id="cb328-3" data-line-number="3">MC_results &lt;-<span class="st"> </span><span class="kw">mclapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, MC_sim, <span class="dt">mc.cores =</span> <span class="kw">get_num_procs</span>() <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb328-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb328-5" data-line-number="5"><span class="co">#--- or with progress bar ---#</span></a>
