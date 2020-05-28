@@ -1,7 +1,7 @@
 --- 
 title: "R as GIS for Economists"
 author: "Taro Mieno"
-date: "2020-05-27"
+date: "2020-05-28"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [RGIS.bib]
@@ -111,9 +111,9 @@ The book starts with the very basics of spatial data handling (e.g., importing a
 	* other miscellaneous basic operations
 + Chapter 3: Spatial interactions of vector datasets (available)
 	* understand topological relations of multiple `sf` objects
-	* spatially subsetting one layer based on another layer
+	* spatially subsetting a layer based on another layer
 	* extracting values from one layer to another layer^[`over` function in `sp` language]
-+ Chapter 4: The basics of raster data handling using `raster` and `terra` packages (coming soon)
++ Chapter 4: The basics of raster data handling using `terra` and `raster` packages (coming soon)
 	* understand object classes by the `terra` and `raster` packages
 	* import and export raster data
 	* stack raster data
@@ -129,6 +129,7 @@ The book starts with the very basics of spatial data handling (e.g., importing a
 	* Daymet (`daymetr`)
 	* USGS (`dataRetrieval`)
 + Appendix A: Loop and parallel computation (available)
++ Appendix B: Cheatsheet (wait a bit)
 
 As you can see above, this book does not spend any time on the very basics of GIS concepts. Before you start reading the book, you should know the followings at least (it's not much): 
 
@@ -167,7 +168,7 @@ Outcomes:
 
 
 ```
-## [1] 0.4151224 0.2037912 0.1068541 0.7066595 0.3973361
+## [1] 0.26029940 0.98813302 0.26959029 0.02124828 0.85378602
 ```
 
 ### Parentheses around codes {-}
@@ -182,7 +183,7 @@ Sometimes you will see codes enclosed by parenthesis like this:
 ```
 
 ```
-## [1] 0.37310985 0.31726640 0.04616847 0.22767772 0.80682046
+## [1] 0.008294829 0.727256923 0.307254564 0.932588892 0.414474227
 ```
 
 The parentheses prints what's inside of a newly created object (here `a`) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created. 
