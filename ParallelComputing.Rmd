@@ -444,6 +444,7 @@ toc()
 
 ```{r benchmack_par_do, echo = FALSE}
 plan(multiprocess, workers = get_num_procs() - 1)
+set.seed(783523)
 
 #--- parallel ---#
 tic.clearlog()
