@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="par-comp.html"/>
-<link rel="next" href="repetitive-processes-and-looping.html"/>
+<link rel="prev" href="raster-basics.html"/>
+<link rel="next" href="raster-data-object-classes.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -223,10 +223,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.2" data-path="spatial-intersection-transformative-join.html"><a href="spatial-intersection-transformative-join.html#area-weighted-average"><i class="fa fa-check"></i><b>3.4.2</b> Area-weighted average</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="raster-basics.html"><a href="raster-basics.html"><i class="fa fa-check"></i><b>4</b> Raster Data Minimals</a><ul>
+<li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html"><i class="fa fa-check"></i>Before you start</a><ul>
+<li><a href="before-you-start-3.html#stars-package"><code>stars</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="4.1" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html"><i class="fa fa-check"></i><b>4.1</b> Raster data object classes</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#raster-package-rasterlayer-rasterstack-and-rasterbrick"><i class="fa fa-check"></i><b>4.1.1</b> <code>raster</code> package: <code>RasterLayer</code>, <code>RasterStack</code>, and <code>RasterBrick</code></a></li>
+<li class="chapter" data-level="4.1.2" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#terra-package-spatraster"><i class="fa fa-check"></i><b>4.1.2</b> <code>terra</code> package: <code>SpatRaster</code></a></li>
+<li class="chapter" data-level="4.1.3" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#converting-a-spatraster-object-to-a-raster-object."><i class="fa fa-check"></i><b>4.1.3</b> Converting a <code>SpatRaster</code> object to a <code>Raster</code><span class="math inline">\(^*\)</span> object.</a></li>
+<li class="chapter" data-level="4.1.4" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#vector-data-in-the-terra-package"><i class="fa fa-check"></i><b>4.1.4</b> Vector data in the <code>terra</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="read-and-write-a-raster-data-file.html"><a href="read-and-write-a-raster-data-file.html"><i class="fa fa-check"></i><b>4.2</b> Read and write a raster data file</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="read-and-write-a-raster-data-file.html"><a href="read-and-write-a-raster-data-file.html#read-raster-files"><i class="fa fa-check"></i><b>4.2.1</b> Read raster file(s)</a></li>
+<li class="chapter" data-level="4.2.2" data-path="read-and-write-a-raster-data-file.html"><a href="read-and-write-a-raster-data-file.html#write-raster-files"><i class="fa fa-check"></i><b>4.2.2</b> Write raster files</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="access-values.html"><a href="access-values.html"><i class="fa fa-check"></i><b>4.3</b> Access values</a></li>
+<li class="chapter" data-level="4.4" data-path="quick-plotting.html"><a href="quick-plotting.html"><i class="fa fa-check"></i><b>4.4</b> Quick Plotting</a></li>
+</ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="par-comp.html"><a href="par-comp.html"><i class="fa fa-check"></i><b>A</b> Loop and Parallel Computing</a><ul>
-<li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html"><i class="fa fa-check"></i>Before you start</a><ul>
-<li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html#direction-for-replication-3"><i class="fa fa-check"></i>Direction for replication</a></li>
+<li class="chapter" data-level="" data-path="before-you-start-4.html"><a href="before-you-start-4.html"><i class="fa fa-check"></i>Before you start</a><ul>
+<li class="chapter" data-level="" data-path="before-you-start-4.html"><a href="before-you-start-4.html#direction-for-replication-3"><i class="fa fa-check"></i>Direction for replication</a></li>
 </ul></li>
 <li class="chapter" data-level="A.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html"><i class="fa fa-check"></i><b>A.1</b> Repetitive processes and looping</a><ul>
 <li class="chapter" data-level="A.1.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#what-is-looping"><i class="fa fa-check"></i><b>A.1.1</b> What is looping?</a></li>
@@ -274,25 +291,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </script>
 <div id="before-you-start-3" class="section level2 unnumbered">
 <h2>Before you start</h2>
-<p>Here we will learn how to program repetitive operations effectively and fast. We start from the basics of a loop for those who are not familiar with the concept. We then cover parallel computation using the <code>future.lapply</code> and <code>parallel</code> package. Those who are familiar with <code>lapply()</code> can go straight to Chapter <a href="parcomp.html#parcomp">A.2</a>.</p>
-<p>Here are the specific learning objectives of this chapter.</p>
-<ol style="list-style-type: decimal">
-<li>Learn how to use <strong>for loop</strong> and <code>lapply()</code> to complete repetitive jobs</li>
-<li>Learn how not to loop things that can be easily vectorized</li>
-<li>Learn how to parallelize repetitive jobs using the <code>future_lapply()</code> function from the <code>future.apply</code> package</li>
-</ol>
-<div id="direction-for-replication-3" class="section level3 unnumbered">
-<h3>Direction for replication</h3>
-<p>All the data in this Chapter is generated.</p>
+<p>In this chapter, we will learn how to use the <code>terra</code> package to handle raster data. The <code>raster</code> package has been (and I must say still is) <strong>THE</strong> package for raster data handling. However, we are in the period of transitioning from the <code>raster</code> package to the <code>terra</code> package. The <code>terra</code> package has been under active development to replace the <code>raster</code> package, and its first beta version<a href="#fn74" class="footnote-ref" id="fnref74"><sup>74</sup></a> was just released on CRAN on March 20, 2020. <code>terra</code> is written in C++ and thus is faster than the <code>raster</code> package in many raster data operations. The <code>raster</code> and <code>terra</code> packages share the same function name for most of the raster operations. Therefore, learning the <code>terra</code> package is almost the same as learning the <code>raster</code> package. Key differences will be discussed and will become clear later.</p>
+<p>For economists, raster data extraction for vector data will be by far the most common use case of raster data and also the most time-consuming part of the whole raster data handling experience. Therefore, we will introduce only the essential knowledge of raster data operation required to effectively implement the task of extracting values, which will be covered extensively in Chapter <a href="#int-RV"><strong>??</strong></a>. For example, we do not cover raster arithmetic, focal operations, polygonization<a href="#fn75" class="footnote-ref" id="fnref75"><sup>75</sup></a>, or aggregation. Those who are interested in a fuller treatment of the <code>terra</code> or <code>raster</code> package are referred to <a href="https://rspatial.org/terra/spatial/index.html">Spatial Data Science with R and “terra”</a> or Chapters 3, 4, and 5 of <a href="https://geocompr.robinlovelace.net/">Geocomputation with R</a>, respectively.</p>
+<p>We still learn the raster object classes defined by the <code>raster</code> package and how to switch between the <code>raster</code> and <code>terra</code> object classes. This is because other useful packages for us economists were written to work with the <code>raster</code> object classes and have still not been adapted to support <code>terra</code> object classes at the moment. In particular, <code>exactextractr</code> is critical for economists who regularly use large spatially fine raster datasets with many temporal dimensions because of its speed advantage over the <code>terra</code> package. <code>terra::extract()</code> is much faster than <code>raster::extract()</code>, which is unbearably slow for large datasets. Unfortunately, <code>terra::extract()</code> is still much slower than the extraction function provided by <code>exactextractr</code> packages for large datasets<a href="#fn76" class="footnote-ref" id="fnref76"><sup>76</sup></a>. Since <code>exactextractr</code> works only with objects defined by the <code>raster</code> package, you need to convert a <code>terra</code> object to a <code>raster</code> object if you would like to take advantage of the function. This also means that we need to learn the difference in raster object classes between the two packages. This problem should be resolved in a matter of a year, and most of the spatial packages will add support for <code>terra</code>.</p>
+<div id="stars-package" class="section level3 unnumbered">
+<h3><code>stars</code> package</h3>
+<p>Finally, another package you might want to keep an eye on for raster (and vector data) handling is the <code>stars</code> package. It provides a more consistent way of handling spatiotemporal data than the <code>raster</code> and <code>terra</code> packages. We do not cover this package in this chapter because it is not clear (at least to me) how much benefit this package brings. However, this might change quickly. For those who are interested in exploring this package, <a href="https://r-spatial.github.io/stars/index.html">this</a> is the best resource. A few vignettes are available from the “Articles” tab.</p>
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="74">
+<li id="fn74"><p><a href="https://github.com/rspatial/terra">github page</a><a href="before-you-start-3.html#fnref74" class="footnote-back">↩</a></p></li>
+<li id="fn75"><p>turning a raster layer to a polygons layer<a href="before-you-start-3.html#fnref75" class="footnote-back">↩</a></p></li>
+<li id="fn76"><p>CDL data is a good example<a href="before-you-start-3.html#fnref76" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="par-comp.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="repetitive-processes-and-looping.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="raster-basics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="raster-data-object-classes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

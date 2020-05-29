@@ -223,10 +223,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.2" data-path="spatial-intersection-transformative-join.html"><a href="spatial-intersection-transformative-join.html#area-weighted-average"><i class="fa fa-check"></i><b>3.4.2</b> Area-weighted average</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="raster-basics.html"><a href="raster-basics.html"><i class="fa fa-check"></i><b>4</b> Raster Data Minimals</a><ul>
+<li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html"><i class="fa fa-check"></i>Before you start</a><ul>
+<li><a href="before-you-start-3.html#stars-package"><code>stars</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="4.1" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html"><i class="fa fa-check"></i><b>4.1</b> Raster data object classes</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#raster-package-rasterlayer-rasterstack-and-rasterbrick"><i class="fa fa-check"></i><b>4.1.1</b> <code>raster</code> package: <code>RasterLayer</code>, <code>RasterStack</code>, and <code>RasterBrick</code></a></li>
+<li class="chapter" data-level="4.1.2" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#terra-package-spatraster"><i class="fa fa-check"></i><b>4.1.2</b> <code>terra</code> package: <code>SpatRaster</code></a></li>
+<li class="chapter" data-level="4.1.3" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#converting-a-spatraster-object-to-a-raster-object."><i class="fa fa-check"></i><b>4.1.3</b> Converting a <code>SpatRaster</code> object to a <code>Raster</code><span class="math inline">\(^*\)</span> object.</a></li>
+<li class="chapter" data-level="4.1.4" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#vector-data-in-the-terra-package"><i class="fa fa-check"></i><b>4.1.4</b> Vector data in the <code>terra</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="read-and-write-a-raster-data-file.html"><a href="read-and-write-a-raster-data-file.html"><i class="fa fa-check"></i><b>4.2</b> Read and write a raster data file</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="read-and-write-a-raster-data-file.html"><a href="read-and-write-a-raster-data-file.html#read-raster-files"><i class="fa fa-check"></i><b>4.2.1</b> Read raster file(s)</a></li>
+<li class="chapter" data-level="4.2.2" data-path="read-and-write-a-raster-data-file.html"><a href="read-and-write-a-raster-data-file.html#write-raster-files"><i class="fa fa-check"></i><b>4.2.2</b> Write raster files</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="access-values.html"><a href="access-values.html"><i class="fa fa-check"></i><b>4.3</b> Access values</a></li>
+<li class="chapter" data-level="4.4" data-path="quick-plotting.html"><a href="quick-plotting.html"><i class="fa fa-check"></i><b>4.4</b> Quick Plotting</a></li>
+</ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="par-comp.html"><a href="par-comp.html"><i class="fa fa-check"></i><b>A</b> Loop and Parallel Computing</a><ul>
-<li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html"><i class="fa fa-check"></i>Before you start</a><ul>
-<li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html#direction-for-replication-3"><i class="fa fa-check"></i>Direction for replication</a></li>
+<li class="chapter" data-level="" data-path="before-you-start-4.html"><a href="before-you-start-4.html"><i class="fa fa-check"></i>Before you start</a><ul>
+<li class="chapter" data-level="" data-path="before-you-start-4.html"><a href="before-you-start-4.html#direction-for-replication-3"><i class="fa fa-check"></i>Direction for replication</a></li>
 </ul></li>
 <li class="chapter" data-level="A.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html"><i class="fa fa-check"></i><b>A.1</b> Repetitive processes and looping</a><ul>
 <li class="chapter" data-level="A.1.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#what-is-looping"><i class="fa fa-check"></i><b>A.1.1</b> What is looping?</a></li>
@@ -274,30 +291,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </script>
 <div id="parcomp" class="section level2">
 <h2><span class="header-section-number">A.2</span> Parallelization of embarrassingly parallel processes</h2>
-<p>Parallelization of computation involves distributing the task at hand to multiple cores so that multiple processes are done in parallel. Here, we learn how to parallelize computation in R. Our focus is on the so called <strong>embarrassingly</strong> parallel processes. Embarrassingly parallel processes refer to a collection of processes where each process is completely independent of any another. That is, one process does not use the outputs of any of the other processes. The example of integer squaring is embarrassingly parallel. In order to calculate <span class="math inline">\(1^2\)</span>, you do not need to use the result of <span class="math inline">\(2^2\)</span> or any other squares. Embarrassingly parallel processes are very easy to parallelize because you do not have to worry about which process to complete first to make other processes happen. Fortunately, most of the processes you are interested in parallelizing fall under this category<a href="#fn83" class="footnote-ref" id="fnref83"><sup>83</sup></a>.</p>
-<p>We will use the <code>future.apply</code> package for parallelization<a href="#fn84" class="footnote-ref" id="fnref84"><sup>84</sup></a>. Using the package, parallelizing is really a piece of cake as it is basically the same syntactically as <code>lapply()</code>.</p>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb313-1" data-line-number="1"><span class="co">#--- load packages ---#</span></a>
-<a class="sourceLine" id="cb313-2" data-line-number="2"><span class="kw">library</span>(future.apply) </a></code></pre></div>
+<p>Parallelization of computation involves distributing the task at hand to multiple cores so that multiple processes are done in parallel. Here, we learn how to parallelize computation in R. Our focus is on the so called <strong>embarrassingly</strong> parallel processes. Embarrassingly parallel processes refer to a collection of processes where each process is completely independent of any another. That is, one process does not use the outputs of any of the other processes. The example of integer squaring is embarrassingly parallel. In order to calculate <span class="math inline">\(1^2\)</span>, you do not need to use the result of <span class="math inline">\(2^2\)</span> or any other squares. Embarrassingly parallel processes are very easy to parallelize because you do not have to worry about which process to complete first to make other processes happen. Fortunately, most of the processes you are interested in parallelizing fall under this category<a href="#fn92" class="footnote-ref" id="fnref92"><sup>92</sup></a>.</p>
+<p>We will use the <code>future.apply</code> package for parallelization<a href="#fn93" class="footnote-ref" id="fnref93"><sup>93</sup></a>. Using the package, parallelizing is really a piece of cake as it is basically the same syntactically as <code>lapply()</code>.</p>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb345-1" data-line-number="1"><span class="co">#--- load packages ---#</span></a>
+<a class="sourceLine" id="cb345-2" data-line-number="2"><span class="kw">library</span>(future.apply) </a></code></pre></div>
 <p>You can find out how many cores you have available for parallel computation on your computer using the <code>get_num_procs()</code> function from the <code>RhpcBLASctl</code> package.</p>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb314-1" data-line-number="1"><span class="kw">library</span>(RhpcBLASctl)</a>
-<a class="sourceLine" id="cb314-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb314-3" data-line-number="3"><span class="co">#--- number of all cores ---#</span></a>
-<a class="sourceLine" id="cb314-4" data-line-number="4"><span class="kw">get_num_procs</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb346-1" data-line-number="1"><span class="kw">library</span>(RhpcBLASctl)</a>
+<a class="sourceLine" id="cb346-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb346-3" data-line-number="3"><span class="co">#--- number of all cores ---#</span></a>
+<a class="sourceLine" id="cb346-4" data-line-number="4"><span class="kw">get_num_procs</span>()</a></code></pre></div>
 <pre><code>[1] 16</code></pre>
-<p>Before we implement parallelized <code>lapply()</code>, we need to declare what backend process we will be using by <code>plan()</code>. Here, we use <code>plan(multiprocess)</code><a href="#fn85" class="footnote-ref" id="fnref85"><sup>85</sup></a>. In the <code>plan()</code> function, we can specify the number of workers. Here I will use the total number of cores less 1<a href="#fn86" class="footnote-ref" id="fnref86"><sup>86</sup></a>.</p>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb316-1" data-line-number="1"><span class="kw">plan</span>(multiprocess, <span class="dt">workers =</span> <span class="kw">get_num_procs</span>() <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
+<p>Before we implement parallelized <code>lapply()</code>, we need to declare what backend process we will be using by <code>plan()</code>. Here, we use <code>plan(multiprocess)</code><a href="#fn94" class="footnote-ref" id="fnref94"><sup>94</sup></a>. In the <code>plan()</code> function, we can specify the number of workers. Here I will use the total number of cores less 1<a href="#fn95" class="footnote-ref" id="fnref95"><sup>95</sup></a>.</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb348-1" data-line-number="1"><span class="kw">plan</span>(multiprocess, <span class="dt">workers =</span> <span class="kw">get_num_procs</span>() <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
 <p><code>future_lapply()</code> works exactly like <code>lapply()</code>.</p>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb317-1" data-line-number="1">sq_ls &lt;-<span class="st"> </span><span class="kw">future_lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="cf">function</span>(x) x<span class="op">^</span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb349-1" data-line-number="1">sq_ls &lt;-<span class="st"> </span><span class="kw">future_lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="cf">function</span>(x) x<span class="op">^</span><span class="dv">2</span>)</a></code></pre></div>
 <p>This is it. The only difference you see from the serialized processing using <code>lapply()</code> is that you changed the function name to <code>future_lapply()</code>.</p>
 <p>Okay, now we know how we parallelize computation. Let’s check how much improvement in implementation time we got by parallelization.</p>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb318-1" data-line-number="1"><span class="kw">microbenchmark</span>(</a>
-<a class="sourceLine" id="cb318-2" data-line-number="2">  <span class="co">#--- parallelized ---#</span></a>
-<a class="sourceLine" id="cb318-3" data-line-number="3">  <span class="st">&quot;parallelized&quot;</span> =<span class="st"> </span>{ sq_ls &lt;-<span class="st"> </span><span class="kw">future_lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="cf">function</span>(x) x<span class="op">^</span><span class="dv">2</span>) }, </a>
-<a class="sourceLine" id="cb318-4" data-line-number="4">  <span class="co">#--- non-parallelized ---#</span></a>
-<a class="sourceLine" id="cb318-5" data-line-number="5">  <span class="st">&quot;not parallelized&quot;</span> =<span class="st"> </span>{ sq_ls &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="cf">function</span>(x) x<span class="op">^</span><span class="dv">2</span>) },</a>
-<a class="sourceLine" id="cb318-6" data-line-number="6">  <span class="dt">times =</span> <span class="dv">100</span>, </a>
-<a class="sourceLine" id="cb318-7" data-line-number="7">  <span class="dt">unit =</span> <span class="st">&quot;ms&quot;</span></a>
-<a class="sourceLine" id="cb318-8" data-line-number="8">)</a></code></pre></div>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb350-1" data-line-number="1"><span class="kw">microbenchmark</span>(</a>
+<a class="sourceLine" id="cb350-2" data-line-number="2">  <span class="co">#--- parallelized ---#</span></a>
+<a class="sourceLine" id="cb350-3" data-line-number="3">  <span class="st">&quot;parallelized&quot;</span> =<span class="st"> </span>{ sq_ls &lt;-<span class="st"> </span><span class="kw">future_lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="cf">function</span>(x) x<span class="op">^</span><span class="dv">2</span>) }, </a>
+<a class="sourceLine" id="cb350-4" data-line-number="4">  <span class="co">#--- non-parallelized ---#</span></a>
+<a class="sourceLine" id="cb350-5" data-line-number="5">  <span class="st">&quot;not parallelized&quot;</span> =<span class="st"> </span>{ sq_ls &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="cf">function</span>(x) x<span class="op">^</span><span class="dv">2</span>) },</a>
+<a class="sourceLine" id="cb350-6" data-line-number="6">  <span class="dt">times =</span> <span class="dv">100</span>, </a>
+<a class="sourceLine" id="cb350-7" data-line-number="7">  <span class="dt">unit =</span> <span class="st">&quot;ms&quot;</span></a>
+<a class="sourceLine" id="cb350-8" data-line-number="8">)</a></code></pre></div>
 <pre><code>Unit: milliseconds
              expr       min         lq        mean      median         uq
      parallelized 95.402429 99.5338020 106.3683670 104.1453890 107.934685
@@ -311,74 +328,74 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  y = 1 + x + v
 \]</span></p>
 <p>where <span class="math inline">\(\mu \sim N(0,1)\)</span>, <span class="math inline">\(x \sim N(0,1) + \mu\)</span>, and <span class="math inline">\(v \sim N(0,1) + \mu\)</span>. The <span class="math inline">\(\mu\)</span> term cause correlation between <span class="math inline">\(x\)</span> (the covariate) and <span class="math inline">\(v\)</span> (the error term). It then estimates the coefficient on <span class="math inline">\(x\)</span> vis OLS, and return the estimate. We would like to repeat this process 1,000 times to understand the property of the OLS estimators under the data generating process. This Monte Carlo simulation is embarrassingly parallel because each process is independent of any other.</p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb320-1" data-line-number="1"><span class="co">#--- repeat steps 1-3 B times ---#</span></a>
-<a class="sourceLine" id="cb320-2" data-line-number="2">MC_sim &lt;-<span class="st"> </span><span class="cf">function</span>(i){</a>
-<a class="sourceLine" id="cb320-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb320-4" data-line-number="4">  N &lt;-<span class="st"> </span><span class="dv">50000</span> <span class="co"># sample size</span></a>
-<a class="sourceLine" id="cb320-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb320-6" data-line-number="6">  <span class="co">#--- steps 1 and 2:  ---#</span></a>
-<a class="sourceLine" id="cb320-7" data-line-number="7">  mu &lt;-<span class="st"> </span><span class="kw">rnorm</span>(N) <span class="co"># the common term shared by both x and u</span></a>
-<a class="sourceLine" id="cb320-8" data-line-number="8">  x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(N) <span class="op">+</span><span class="st"> </span>mu <span class="co"># independent variable</span></a>
-<a class="sourceLine" id="cb320-9" data-line-number="9">  v &lt;-<span class="st"> </span><span class="kw">rnorm</span>(N) <span class="op">+</span><span class="st"> </span>mu <span class="co"># error</span></a>
-<a class="sourceLine" id="cb320-10" data-line-number="10">  y &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>v <span class="co"># dependent variable</span></a>
-<a class="sourceLine" id="cb320-11" data-line-number="11">  data &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">y =</span> y, <span class="dt">x =</span> x)</a>
-<a class="sourceLine" id="cb320-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb320-13" data-line-number="13">  <span class="co">#--- OLS ---# </span></a>
-<a class="sourceLine" id="cb320-14" data-line-number="14">  reg &lt;-<span class="st"> </span><span class="kw">lm</span>(y<span class="op">~</span>x, <span class="dt">data =</span> data) <span class="co"># OLS</span></a>
-<a class="sourceLine" id="cb320-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb320-16" data-line-number="16">  <span class="co">#--- return the coef ---#</span></a>
-<a class="sourceLine" id="cb320-17" data-line-number="17">  <span class="kw">return</span>(reg<span class="op">$</span>coef[<span class="st">&#39;x&#39;</span>])</a>
-<a class="sourceLine" id="cb320-18" data-line-number="18">}</a></code></pre></div>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb352-1" data-line-number="1"><span class="co">#--- repeat steps 1-3 B times ---#</span></a>
+<a class="sourceLine" id="cb352-2" data-line-number="2">MC_sim &lt;-<span class="st"> </span><span class="cf">function</span>(i){</a>
+<a class="sourceLine" id="cb352-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb352-4" data-line-number="4">  N &lt;-<span class="st"> </span><span class="dv">50000</span> <span class="co"># sample size</span></a>
+<a class="sourceLine" id="cb352-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb352-6" data-line-number="6">  <span class="co">#--- steps 1 and 2:  ---#</span></a>
+<a class="sourceLine" id="cb352-7" data-line-number="7">  mu &lt;-<span class="st"> </span><span class="kw">rnorm</span>(N) <span class="co"># the common term shared by both x and u</span></a>
+<a class="sourceLine" id="cb352-8" data-line-number="8">  x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(N) <span class="op">+</span><span class="st"> </span>mu <span class="co"># independent variable</span></a>
+<a class="sourceLine" id="cb352-9" data-line-number="9">  v &lt;-<span class="st"> </span><span class="kw">rnorm</span>(N) <span class="op">+</span><span class="st"> </span>mu <span class="co"># error</span></a>
+<a class="sourceLine" id="cb352-10" data-line-number="10">  y &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>v <span class="co"># dependent variable</span></a>
+<a class="sourceLine" id="cb352-11" data-line-number="11">  data &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">y =</span> y, <span class="dt">x =</span> x)</a>
+<a class="sourceLine" id="cb352-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb352-13" data-line-number="13">  <span class="co">#--- OLS ---# </span></a>
+<a class="sourceLine" id="cb352-14" data-line-number="14">  reg &lt;-<span class="st"> </span><span class="kw">lm</span>(y<span class="op">~</span>x, <span class="dt">data =</span> data) <span class="co"># OLS</span></a>
+<a class="sourceLine" id="cb352-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb352-16" data-line-number="16">  <span class="co">#--- return the coef ---#</span></a>
+<a class="sourceLine" id="cb352-17" data-line-number="17">  <span class="kw">return</span>(reg<span class="op">$</span>coef[<span class="st">&#39;x&#39;</span>])</a>
+<a class="sourceLine" id="cb352-18" data-line-number="18">}</a></code></pre></div>
 <p>Let’s run one iteration,</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb321-1" data-line-number="1"><span class="kw">tic</span>()</a>
-<a class="sourceLine" id="cb321-2" data-line-number="2"><span class="kw">MC_sim</span>(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb321-3" data-line-number="3"><span class="kw">toc</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb353-1" data-line-number="1"><span class="kw">tic</span>()</a>
+<a class="sourceLine" id="cb353-2" data-line-number="2"><span class="kw">MC_sim</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb353-3" data-line-number="3"><span class="kw">toc</span>()</a></code></pre></div>
 <pre><code>       x 
 1.503353 </code></pre>
 <pre><code>elapsed 
   0.023 </code></pre>
 <p>Okay, so it takes 0.023 second for one iteration. Now, let’s run this 1000 times with or without parallelization.</p>
 <p><strong>Not parallelized</strong></p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb324-1" data-line-number="1"><span class="co">#--- non-parallel ---#</span></a>
-<a class="sourceLine" id="cb324-2" data-line-number="2"><span class="kw">tic</span>()</a>
-<a class="sourceLine" id="cb324-3" data-line-number="3">MC_results &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, MC_sim)</a>
-<a class="sourceLine" id="cb324-4" data-line-number="4"><span class="kw">toc</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb356-1" data-line-number="1"><span class="co">#--- non-parallel ---#</span></a>
+<a class="sourceLine" id="cb356-2" data-line-number="2"><span class="kw">tic</span>()</a>
+<a class="sourceLine" id="cb356-3" data-line-number="3">MC_results &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, MC_sim)</a>
+<a class="sourceLine" id="cb356-4" data-line-number="4"><span class="kw">toc</span>()</a></code></pre></div>
 <pre><code>elapsed 
  24.531 </code></pre>
 <p><strong>Parallelized</strong></p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb326-1" data-line-number="1"><span class="co">#--- parallel ---#</span></a>
-<a class="sourceLine" id="cb326-2" data-line-number="2"><span class="kw">tic</span>()</a>
-<a class="sourceLine" id="cb326-3" data-line-number="3">MC_results &lt;-<span class="st"> </span><span class="kw">future_lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, MC_sim)</a>
-<a class="sourceLine" id="cb326-4" data-line-number="4"><span class="kw">toc</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb358-1" data-line-number="1"><span class="co">#--- parallel ---#</span></a>
+<a class="sourceLine" id="cb358-2" data-line-number="2"><span class="kw">tic</span>()</a>
+<a class="sourceLine" id="cb358-3" data-line-number="3">MC_results &lt;-<span class="st"> </span><span class="kw">future_lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, MC_sim)</a>
+<a class="sourceLine" id="cb358-4" data-line-number="4"><span class="kw">toc</span>()</a></code></pre></div>
 <pre><code>elapsed 
  24.704 </code></pre>
 <p>As you can see, parallelization makes it much quicker with a noticeable difference in elapsed time. We made the code 0.99 times faster. However, we did not make the process 15 times faster even though we used 15 cores for the parallelized process. This is because of the overhead associated with distributing tasks to the cores. The relative advantage of parallelization would be greater if each iteration took more time. For example, if you are running a process that takes about 2 minutes for 1000 times, it would take approximately 33 hours and 20 minutes. But, it may take only 4 hours if you parallelize it on 15 cores, or maybe even 2 hours if you run it on 30 cores.</p>
 <div id="mac-or-linux-users" class="section level3">
 <h3><span class="header-section-number">A.2.1</span> Mac or Linux users</h3>
 <p>For Mac users, <code>parallel::mclapply()</code> is just as compelling (or <code>pbmclapply::pbmclapply()</code> if you want to have a nice progress report, which is very helpful particularly when the process is long). It is just as easy to use as <code>future_lapply()</code> because its syntax is the same as <code>lapply()</code>. You can control the number of cores to employ by adding <code>mc.cores</code> option. Here is an example code that does the same MC simulations we conducted above:</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb328-1" data-line-number="1"><span class="co">#--- mclapply ---#</span></a>
-<a class="sourceLine" id="cb328-2" data-line-number="2"><span class="kw">library</span>(parallel)</a>
-<a class="sourceLine" id="cb328-3" data-line-number="3">MC_results &lt;-<span class="st"> </span><span class="kw">mclapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, MC_sim, <span class="dt">mc.cores =</span> <span class="kw">get_num_procs</span>() <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb328-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb328-5" data-line-number="5"><span class="co">#--- or with progress bar ---#</span></a>
-<a class="sourceLine" id="cb328-6" data-line-number="6"><span class="kw">library</span>(pbmclapply)</a>
-<a class="sourceLine" id="cb328-7" data-line-number="7">MC_results &lt;-<span class="st"> </span><span class="kw">pbmclapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, MC_sim, <span class="dt">mc.cores =</span> <span class="kw">get_num_procs</span>() <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb360-1" data-line-number="1"><span class="co">#--- mclapply ---#</span></a>
+<a class="sourceLine" id="cb360-2" data-line-number="2"><span class="kw">library</span>(parallel)</a>
+<a class="sourceLine" id="cb360-3" data-line-number="3">MC_results &lt;-<span class="st"> </span><span class="kw">mclapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, MC_sim, <span class="dt">mc.cores =</span> <span class="kw">get_num_procs</span>() <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb360-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb360-5" data-line-number="5"><span class="co">#--- or with progress bar ---#</span></a>
+<a class="sourceLine" id="cb360-6" data-line-number="6"><span class="kw">library</span>(pbmclapply)</a>
+<a class="sourceLine" id="cb360-7" data-line-number="7">MC_results &lt;-<span class="st"> </span><span class="kw">pbmclapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, MC_sim, <span class="dt">mc.cores =</span> <span class="kw">get_num_procs</span>() <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
 </div>
 <div id="some-background-on-the-parallelization-packages" class="section level3">
 <h3><span class="header-section-number">A.2.2</span> Some background on the parallelization packages</h3>
-<p>For Mac and Linux users the coding cost of parallelization was minimal since when <code>parallel::mclapply()</code> was available. Parallelization is really a piece of cake for those who know how to use <code>lapply()</code> because the syntax is identical. For Windows users, that had not been the case until the arrival of the <code>future.apply</code> package. Windows machines create new threads to run on multiple cores, which do not inherit any of the R objects you have created on the environment. This means that if you need to use a dataset (or any other objects that you are not creating within the loop internally) inside the loop, you have to tell R explicitly what objects you want it to carry to the new threads so they can use those objects themselves. This hassle was eliminated by the <code>future.apply</code> package.<a href="#fn87" class="footnote-ref" id="fnref87"><sup>87</sup></a> On Mac and Linux machines, it was not even an issue because parallelization is done by forking (which Windows machines cannot do), which inherits all the available R objects on the environment. Since the <code>future.apply</code> package works for all the platforms, I focused on this package.</p>
+<p>For Mac and Linux users the coding cost of parallelization was minimal since when <code>parallel::mclapply()</code> was available. Parallelization is really a piece of cake for those who know how to use <code>lapply()</code> because the syntax is identical. For Windows users, that had not been the case until the arrival of the <code>future.apply</code> package. Windows machines create new threads to run on multiple cores, which do not inherit any of the R objects you have created on the environment. This means that if you need to use a dataset (or any other objects that you are not creating within the loop internally) inside the loop, you have to tell R explicitly what objects you want it to carry to the new threads so they can use those objects themselves. This hassle was eliminated by the <code>future.apply</code> package.<a href="#fn96" class="footnote-ref" id="fnref96"><sup>96</sup></a> On Mac and Linux machines, it was not even an issue because parallelization is done by forking (which Windows machines cannot do), which inherits all the available R objects on the environment. Since the <code>future.apply</code> package works for all the platforms, I focused on this package.</p>
 
 </div>
 </div>
 <!-- </div> -->
 <div class="footnotes">
 <hr />
-<ol start="83">
-<li id="fn83"><p>A good example of non-embarrassingly parallel process is dynamic optimization via backward induction. You need to know the optimal solution at <span class="math inline">\(t = T\)</span>, before you find the optimal solution at <span class="math inline">\(t = T-1\)</span>.<a href="parcomp.html#fnref83" class="footnote-back">↩</a></p></li>
-<li id="fn84"><p>There are many other options including the <code>parallel</code>, <code>foreach</code> packages.<a href="parcomp.html#fnref84" class="footnote-back">↩</a></p></li>
-<li id="fn85"><p>If you are a Mac or Linux user, then the <code>multicore</code> process will be used, while the <code>multisession</code> process will be used if you are using a Windows machine. The <code>multicore</code> process is superior to the <code>multisession</code> process. See <a href="https://raw.githack.com/uo-ec607/lectures/master/12-parallel/12-parallel.html">this lecture note</a> on parallel programming using R by Dr. Grant McDermott’s at the University of Oregon for the distinctions between the two and many other useful concepts for parallelization. At the time of this writing, if you run R through RStudio, <code>multiprocess</code> option is always redirected to <code>multisession</code> option because of the instability in doing <code>multiprocess</code>. If you use Linux or Mac and want to take the full advantage of <code>future_apply</code>, you should not run your R programs through RStudio at least for now.<a href="parcomp.html#fnref85" class="footnote-back">↩</a></p></li>
-<li id="fn86"><p>This way, you can have one more core available to do other tasks comfortably. However, if you don’t mind having your computer completely devoted to the processing task at hand, then there is no reason not to use all the cores.<a href="parcomp.html#fnref86" class="footnote-back">↩</a></p></li>
-<li id="fn87"><p>To be honest, I do not completely understand how it does what it does.<a href="parcomp.html#fnref87" class="footnote-back">↩</a></p></li>
+<ol start="92">
+<li id="fn92"><p>A good example of non-embarrassingly parallel process is dynamic optimization via backward induction. You need to know the optimal solution at <span class="math inline">\(t = T\)</span>, before you find the optimal solution at <span class="math inline">\(t = T-1\)</span>.<a href="parcomp.html#fnref92" class="footnote-back">↩</a></p></li>
+<li id="fn93"><p>There are many other options including the <code>parallel</code>, <code>foreach</code> packages.<a href="parcomp.html#fnref93" class="footnote-back">↩</a></p></li>
+<li id="fn94"><p>If you are a Mac or Linux user, then the <code>multicore</code> process will be used, while the <code>multisession</code> process will be used if you are using a Windows machine. The <code>multicore</code> process is superior to the <code>multisession</code> process. See <a href="https://raw.githack.com/uo-ec607/lectures/master/12-parallel/12-parallel.html">this lecture note</a> on parallel programming using R by Dr. Grant McDermott’s at the University of Oregon for the distinctions between the two and many other useful concepts for parallelization. At the time of this writing, if you run R through RStudio, <code>multiprocess</code> option is always redirected to <code>multisession</code> option because of the instability in doing <code>multiprocess</code>. If you use Linux or Mac and want to take the full advantage of <code>future_apply</code>, you should not run your R programs through RStudio at least for now.<a href="parcomp.html#fnref94" class="footnote-back">↩</a></p></li>
+<li id="fn95"><p>This way, you can have one more core available to do other tasks comfortably. However, if you don’t mind having your computer completely devoted to the processing task at hand, then there is no reason not to use all the cores.<a href="parcomp.html#fnref95" class="footnote-back">↩</a></p></li>
+<li id="fn96"><p>To be honest, I do not completely understand how it does what it does.<a href="parcomp.html#fnref96" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
             </section>
