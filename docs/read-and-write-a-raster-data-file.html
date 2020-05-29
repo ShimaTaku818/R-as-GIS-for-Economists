@@ -24,7 +24,7 @@
 <meta name="author" content="Taro Mieno" />
 
 
-<meta name="date" content="2020-05-28" />
+<meta name="date" content="2020-05-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -177,6 +177,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="before-you-start-1.html"><a href="before-you-start-1.html"><i class="fa fa-check"></i>Before you start</a><ul>
 <li><a href="before-you-start-1.html#sf-or-sp"><code>sf</code> or <code>sp</code>?</a></li>
 <li class="chapter" data-level="" data-path="before-you-start-1.html"><a href="before-you-start-1.html#direction-for-replication-1"><i class="fa fa-check"></i>Direction for replication</a></li>
+<li class="chapter" data-level="2.0.1" data-path="before-you-start-1.html"><a href="before-you-start-1.html#packages-to-install-and-load"><i class="fa fa-check"></i><b>2.0.1</b> Packages to install and load</a></li>
 </ul></li>
 <li class="chapter" data-level="2.1" data-path="spatial-data-structure.html"><a href="spatial-data-structure.html"><i class="fa fa-check"></i><b>2.1</b> Spatial Data Structure</a></li>
 <li class="chapter" data-level="2.2" data-path="simple-feature-geometry-simple-feature-geometry-list-column-and-simple-feature.html"><a href="simple-feature-geometry-simple-feature-geometry-list-column-and-simple-feature.html"><i class="fa fa-check"></i><b>2.2</b> Simple feature geometry, simple feature geometry list-column, and simple feature</a><ul>
@@ -202,6 +203,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html"><i class="fa fa-check"></i><b>3</b> Spatial Interactions of Vector Data: Subsetting and Joining</a><ul>
 <li class="chapter" data-level="" data-path="before-you-start-2.html"><a href="before-you-start-2.html"><i class="fa fa-check"></i>Before you start</a><ul>
 <li class="chapter" data-level="" data-path="before-you-start-2.html"><a href="before-you-start-2.html#direction-for-replication-2"><i class="fa fa-check"></i>Direction for replication</a></li>
+<li class="chapter" data-level="3.0.1" data-path="before-you-start-2.html"><a href="before-you-start-2.html#packages-to-install-and-load-1"><i class="fa fa-check"></i><b>3.0.1</b> Packages to install and load</a></li>
 </ul></li>
 <li class="chapter" data-level="3.1" data-path="topological-relations.html"><a href="topological-relations.html"><i class="fa fa-check"></i><b>3.1</b> Topological relations</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="topological-relations.html"><a href="topological-relations.html#st_intersects"><i class="fa fa-check"></i><b>3.1.1</b> st_intersects()</a></li>
@@ -244,6 +246,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="A" data-path="par-comp.html"><a href="par-comp.html"><i class="fa fa-check"></i><b>A</b> Loop and Parallel Computing</a><ul>
 <li class="chapter" data-level="" data-path="before-you-start-4.html"><a href="before-you-start-4.html"><i class="fa fa-check"></i>Before you start</a><ul>
 <li class="chapter" data-level="" data-path="before-you-start-4.html"><a href="before-you-start-4.html#direction-for-replication-3"><i class="fa fa-check"></i>Direction for replication</a></li>
+<li class="chapter" data-level="A.0.1" data-path="before-you-start-4.html"><a href="before-you-start-4.html#packages-to-install-and-load-2"><i class="fa fa-check"></i><b>A.0.1</b> Packages to install and load</a></li>
 </ul></li>
 <li class="chapter" data-level="A.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html"><i class="fa fa-check"></i><b>A.1</b> Repetitive processes and looping</a><ul>
 <li class="chapter" data-level="A.1.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#what-is-looping"><i class="fa fa-check"></i><b>A.1.1</b> What is looping?</a></li>
@@ -295,9 +298,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="read-raster-files" class="section level3">
 <h3><span class="header-section-number">4.2.1</span> Read raster file(s)</h3>
 <p>You use <code>terra::rast()</code> to read raster data of many common formats, and it should be almost always the case that the raster data you got can be read using this function. Here, we read a GeoTiff file (a file with .tif extension):</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb294-1" data-line-number="1">(</a>
-<a class="sourceLine" id="cb294-2" data-line-number="2">IA_cdl_<span class="dv">2015</span>_sr &lt;-<span class="st"> </span><span class="kw">rast</span>(<span class="st">&quot;./Data/IA_cdl_2015.tif&quot;</span>) </a>
-<a class="sourceLine" id="cb294-3" data-line-number="3">)</a></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb296-1" data-line-number="1">(</a>
+<a class="sourceLine" id="cb296-2" data-line-number="2">IA_cdl_<span class="dv">2015</span>_sr &lt;-<span class="st"> </span><span class="kw">rast</span>(<span class="st">&quot;./Data/IA_cdl_2015.tif&quot;</span>) </a>
+<a class="sourceLine" id="cb296-3" data-line-number="3">)</a></code></pre></div>
 <pre><code>class       : SpatRaster 
 dimensions  : 11671, 17795, 1  (nrow, ncol, nlyr)
 resolution  : 30, 30  (x, y)
@@ -308,13 +311,13 @@ names       : IA_cdl_2015 </code></pre>
 <p>One important thing to note here is that the cell values of the raster data are actually not in memory when you “read” raster data from a file.
 You basically just established a connection to the file. This helps to reduce the memory footprint of raster data handling. You can check this by <code>raster::inMemory()</code> function for <code>Raster</code><span class="math inline">\(^*\)</span> objects, but the same function has not been implemented for <code>terra</code> yet.</p>
 <p>You can read multiple single-layer raster datasets of the same spatial extent and resolution at the same time to have a multi-layer <code>SpatRaster</code> object. Here, we import two single-layer raster datasets (IA_cdl_2015.tif and IA_cdl_2016.tif) to create a two-layer <code>SpatRaster</code> object.</p>
-<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb296-1" data-line-number="1"><span class="co">#--- the list of path to the files ---#</span></a>
-<a class="sourceLine" id="cb296-2" data-line-number="2">files_list &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;./Data/IA_cdl_2015.tif&quot;</span>, <span class="st">&quot;./Data/IA_cdl_2016.tif&quot;</span>)</a>
-<a class="sourceLine" id="cb296-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb296-4" data-line-number="4"><span class="co">#--- read the two at the same time ---#</span></a>
-<a class="sourceLine" id="cb296-5" data-line-number="5">(</a>
-<a class="sourceLine" id="cb296-6" data-line-number="6">multi_layer_sr &lt;-<span class="st"> </span><span class="kw">rast</span>(files_list) </a>
-<a class="sourceLine" id="cb296-7" data-line-number="7">)</a></code></pre></div>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb298-1" data-line-number="1"><span class="co">#--- the list of path to the files ---#</span></a>
+<a class="sourceLine" id="cb298-2" data-line-number="2">files_list &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;./Data/IA_cdl_2015.tif&quot;</span>, <span class="st">&quot;./Data/IA_cdl_2016.tif&quot;</span>)</a>
+<a class="sourceLine" id="cb298-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb298-4" data-line-number="4"><span class="co">#--- read the two at the same time ---#</span></a>
+<a class="sourceLine" id="cb298-5" data-line-number="5">(</a>
+<a class="sourceLine" id="cb298-6" data-line-number="6">multi_layer_sr &lt;-<span class="st"> </span><span class="kw">rast</span>(files_list) </a>
+<a class="sourceLine" id="cb298-7" data-line-number="7">)</a></code></pre></div>
 <pre><code>class       : SpatRaster 
 dimensions  : 11671, 17795, 2  (nrow, ncol, nlyr)
 resolution  : 30, 30  (x, y)
@@ -330,10 +333,10 @@ max values  :          ? ,     241 </code></pre>
 <div id="write-raster-files" class="section level3">
 <h3><span class="header-section-number">4.2.2</span> Write raster files</h3>
 <p>You can write a <code>SpatRaster</code> object using <code>terra::writeRaster()</code>.</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb298-1" data-line-number="1">terra<span class="op">::</span><span class="kw">writeRaster</span>(IA_cdl_<span class="dv">2015</span>_sr, <span class="st">&quot;./Data/IA_cdl_stack.tif&quot;</span>, <span class="dt">format =</span> <span class="st">&quot;GTiff&quot;</span>, <span class="dt">overwrite =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb300-1" data-line-number="1">terra<span class="op">::</span><span class="kw">writeRaster</span>(IA_cdl_<span class="dv">2015</span>_sr, <span class="st">&quot;./Data/IA_cdl_stack.tif&quot;</span>, <span class="dt">format =</span> <span class="st">&quot;GTiff&quot;</span>, <span class="dt">overwrite =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>The above code saves <code>IA_cdl_2015_sr</code> (a <code>SpatRaster</code> object) as a GeoTiff file.<a href="#fn82" class="footnote-ref" id="fnref82"><sup>82</sup></a> The format option can be dropped as <code>writeRaster()</code> infers the format from the extension of the file name. The <code>overwrite = TRUE</code> option is necessary if a file with the same name already exists and you are overwriting it. This is one of the many areas <code>terra</code> is better than <code>raster</code>. <code>raster::writeRaster()</code> can be frustratingly slow for a large <code>Raster</code><span class="math inline">\(^*\)</span> object. <code>terra::writeRaster()</code> is much faster.</p>
 <p>You can also save a multi-layer <code>SpatRster</code> object just like you save a single-layer <code>SpatRster</code> object.</p>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb299-1" data-line-number="1">terra<span class="op">::</span><span class="kw">writeRaster</span>(IA_cdl_stack_sr, <span class="st">&quot;./Data/IA_cdl_stack.tif&quot;</span>, <span class="dt">format =</span> <span class="st">&quot;GTiff&quot;</span>, <span class="dt">overwrite =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb301-1" data-line-number="1">terra<span class="op">::</span><span class="kw">writeRaster</span>(IA_cdl_stack_sr, <span class="st">&quot;./Data/IA_cdl_stack.tif&quot;</span>, <span class="dt">format =</span> <span class="st">&quot;GTiff&quot;</span>, <span class="dt">overwrite =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>The saved file is a multi-band raster datasets. So, if you have many raster files of the same spatial extent and resolution, you can “stack” them on R and then export it to a single multi-band raster datasets, which cleans up your data folder.</p>
 </div>
 </div>

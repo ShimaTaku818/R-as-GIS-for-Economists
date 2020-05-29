@@ -51,7 +51,16 @@ Here are the specific learning objectives of this chapter.
 
 All the data in this Chapter is generated.  
 
+### Packages to install and load
 
+Here is the list of packages to install (if you have not) and load to run the codes in this chapter.
+
+```{r packages_install, eval = F}
+library(dplyr) # for data wrangling
+library(data.table) # for data wrangling
+```
+
+There are other packages that will be loaded during the demonstration.
 
 ## Repetitive processes and looping
 
@@ -434,6 +443,8 @@ toc()
 ```
 
 ```{r benchmack_par_do, echo = FALSE}
+plan(multiprocess, workers = get_num_procs() - 1)
+
 #--- parallel ---#
 tic.clearlog()
 tic()

@@ -22,7 +22,17 @@ Here are the specific learning objectives of this chapter.
 
 All the data in this Chapter is generated.  
 
+### Packages to install and load
 
+Here is the list of packages to install (if you have not) and load to run the codes in this chapter.
+
+
+```r
+library(dplyr) # for data wrangling
+library(data.table) # for data wrangling
+```
+
+There are other packages that will be loaded during the demonstration.
 
 ## Repetitive processes and looping
 
@@ -631,7 +641,7 @@ toc()
 
 ```
 elapsed 
- 24.531 
+  24.39 
 ```
 
 **Parallelized**
@@ -647,10 +657,10 @@ toc()
 
 ```
 elapsed 
- 24.704 
+  2.739 
 ```
 
-As you can see, parallelization makes it much quicker with a noticeable difference in elapsed time. We made the code 0.99 times faster. However, we did not make the process 15 times faster even though we used 15 cores for the parallelized process. This is because of the overhead associated with distributing tasks to the cores. The relative advantage of parallelization would be greater if each iteration took more time. For example, if you are running a process that takes about 2 minutes for 1000 times, it would take approximately 33 hours and 20 minutes. But, it may take only 4 hours if you parallelize it on 15 cores, or maybe even 2 hours if you run it on 30 cores. 
+As you can see, parallelization makes it much quicker with a noticeable difference in elapsed time. We made the code 8.9 times faster. However, we did not make the process 15 times faster even though we used 15 cores for the parallelized process. This is because of the overhead associated with distributing tasks to the cores. The relative advantage of parallelization would be greater if each iteration took more time. For example, if you are running a process that takes about 2 minutes for 1000 times, it would take approximately 33 hours and 20 minutes. But, it may take only 4 hours if you parallelize it on 15 cores, or maybe even 2 hours if you run it on 30 cores. 
 
 ### Mac or Linux users
 

@@ -24,7 +24,7 @@
 <meta name="author" content="Taro Mieno" />
 
 
-<meta name="date" content="2020-05-28" />
+<meta name="date" content="2020-05-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="spatial-join.html"/>
-<link rel="next" href="raster-basics.html"/>
+<link rel="next" href="par-comp.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -177,6 +177,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="before-you-start-1.html"><a href="before-you-start-1.html"><i class="fa fa-check"></i>Before you start</a><ul>
 <li><a href="before-you-start-1.html#sf-or-sp"><code>sf</code> or <code>sp</code>?</a></li>
 <li class="chapter" data-level="" data-path="before-you-start-1.html"><a href="before-you-start-1.html#direction-for-replication-1"><i class="fa fa-check"></i>Direction for replication</a></li>
+<li class="chapter" data-level="2.0.1" data-path="before-you-start-1.html"><a href="before-you-start-1.html#packages-to-install-and-load"><i class="fa fa-check"></i><b>2.0.1</b> Packages to install and load</a></li>
 </ul></li>
 <li class="chapter" data-level="2.1" data-path="spatial-data-structure.html"><a href="spatial-data-structure.html"><i class="fa fa-check"></i><b>2.1</b> Spatial Data Structure</a></li>
 <li class="chapter" data-level="2.2" data-path="simple-feature-geometry-simple-feature-geometry-list-column-and-simple-feature.html"><a href="simple-feature-geometry-simple-feature-geometry-list-column-and-simple-feature.html"><i class="fa fa-check"></i><b>2.2</b> Simple feature geometry, simple feature geometry list-column, and simple feature</a><ul>
@@ -202,6 +203,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html"><i class="fa fa-check"></i><b>3</b> Spatial Interactions of Vector Data: Subsetting and Joining</a><ul>
 <li class="chapter" data-level="" data-path="before-you-start-2.html"><a href="before-you-start-2.html"><i class="fa fa-check"></i>Before you start</a><ul>
 <li class="chapter" data-level="" data-path="before-you-start-2.html"><a href="before-you-start-2.html#direction-for-replication-2"><i class="fa fa-check"></i>Direction for replication</a></li>
+<li class="chapter" data-level="3.0.1" data-path="before-you-start-2.html"><a href="before-you-start-2.html#packages-to-install-and-load-1"><i class="fa fa-check"></i><b>3.0.1</b> Packages to install and load</a></li>
 </ul></li>
 <li class="chapter" data-level="3.1" data-path="topological-relations.html"><a href="topological-relations.html"><i class="fa fa-check"></i><b>3.1</b> Topological relations</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="topological-relations.html"><a href="topological-relations.html#st_intersects"><i class="fa fa-check"></i><b>3.1.1</b> st_intersects()</a></li>
@@ -223,27 +225,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.2" data-path="spatial-intersection-transformative-join.html"><a href="spatial-intersection-transformative-join.html#area-weighted-average"><i class="fa fa-check"></i><b>3.4.2</b> Area-weighted average</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="raster-basics.html"><a href="raster-basics.html"><i class="fa fa-check"></i><b>4</b> Raster Data Minimals</a><ul>
-<li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html"><i class="fa fa-check"></i>Before you start</a><ul>
-<li><a href="before-you-start-3.html#stars-package"><code>stars</code> package</a></li>
-</ul></li>
-<li class="chapter" data-level="4.1" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html"><i class="fa fa-check"></i><b>4.1</b> Raster data object classes</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#raster-package-rasterlayer-rasterstack-and-rasterbrick"><i class="fa fa-check"></i><b>4.1.1</b> <code>raster</code> package: <code>RasterLayer</code>, <code>RasterStack</code>, and <code>RasterBrick</code></a></li>
-<li class="chapter" data-level="4.1.2" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#terra-package-spatraster"><i class="fa fa-check"></i><b>4.1.2</b> <code>terra</code> package: <code>SpatRaster</code></a></li>
-<li class="chapter" data-level="4.1.3" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#converting-a-spatraster-object-to-a-raster-object."><i class="fa fa-check"></i><b>4.1.3</b> Converting a <code>SpatRaster</code> object to a <code>Raster</code><span class="math inline">\(^*\)</span> object.</a></li>
-<li class="chapter" data-level="4.1.4" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#vector-data-in-the-terra-package"><i class="fa fa-check"></i><b>4.1.4</b> Vector data in the <code>terra</code> package</a></li>
-</ul></li>
-<li class="chapter" data-level="4.2" data-path="read-and-write-a-raster-data-file.html"><a href="read-and-write-a-raster-data-file.html"><i class="fa fa-check"></i><b>4.2</b> Read and write a raster data file</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="read-and-write-a-raster-data-file.html"><a href="read-and-write-a-raster-data-file.html#read-raster-files"><i class="fa fa-check"></i><b>4.2.1</b> Read raster file(s)</a></li>
-<li class="chapter" data-level="4.2.2" data-path="read-and-write-a-raster-data-file.html"><a href="read-and-write-a-raster-data-file.html#write-raster-files"><i class="fa fa-check"></i><b>4.2.2</b> Write raster files</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="access-values.html"><a href="access-values.html"><i class="fa fa-check"></i><b>4.3</b> Access values</a></li>
-<li class="chapter" data-level="4.4" data-path="quick-plotting.html"><a href="quick-plotting.html"><i class="fa fa-check"></i><b>4.4</b> Quick Plotting</a></li>
-</ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="par-comp.html"><a href="par-comp.html"><i class="fa fa-check"></i><b>A</b> Loop and Parallel Computing</a><ul>
-<li class="chapter" data-level="" data-path="before-you-start-4.html"><a href="before-you-start-4.html"><i class="fa fa-check"></i>Before you start</a><ul>
-<li class="chapter" data-level="" data-path="before-you-start-4.html"><a href="before-you-start-4.html#direction-for-replication-3"><i class="fa fa-check"></i>Direction for replication</a></li>
+<li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html"><i class="fa fa-check"></i>Before you start</a><ul>
+<li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html#direction-for-replication-3"><i class="fa fa-check"></i>Direction for replication</a></li>
+<li class="chapter" data-level="A.0.1" data-path="before-you-start-3.html"><a href="before-you-start-3.html#packages-to-install-and-load-2"><i class="fa fa-check"></i><b>A.0.1</b> Packages to install and load</a></li>
 </ul></li>
 <li class="chapter" data-level="A.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html"><i class="fa fa-check"></i><b>A.1</b> Repetitive processes and looping</a><ul>
 <li class="chapter" data-level="A.1.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#what-is-looping"><i class="fa fa-check"></i><b>A.1.1</b> What is looping?</a></li>
@@ -295,11 +281,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="st_intersection" class="section level3">
 <h3><span class="header-section-number">3.4.1</span> st_intersection()</h3>
 <p>Instead of getting just indices of intersecting objects like <code>st_intersect()</code>,<code>st_intersection()</code> returns intersecting spatial objects with the non-intersecting parts of the <code>sf</code> objects cut out. Moreover, attributed values of the source <code>sf</code> will be merged to its intersecting <code>sfg</code> in the target <code>sf</code>. We will see how it works for lines-polygons and polygons-polygons cases using the toy examples we used to explain how <code>st_intersects()</code> work. Here is the figure of the lines and polygons (Figure <a href="spatial-intersection-transformative-join.html#fig:plot-lines-polygons">3.17</a>):</p>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb259-1" data-line-number="1"><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb259-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> polygons, <span class="kw">aes</span>(<span class="dt">fill =</span> name), <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb259-3" data-line-number="3"><span class="st">  </span><span class="kw">scale_fill_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Polygons&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb259-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> lines, <span class="kw">aes</span>(<span class="dt">color =</span> name)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb259-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_color_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Lines&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb261-1" data-line-number="1"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb261-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> polygons, <span class="kw">aes</span>(<span class="dt">fill =</span> name), <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb261-3" data-line-number="3"><span class="st">  </span><span class="kw">scale_fill_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Polygons&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb261-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> lines, <span class="kw">aes</span>(<span class="dt">color =</span> name)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb261-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_color_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Lines&quot;</span>) </a></code></pre></div>
 <div class="figure"><span id="fig:plot-lines-polygons"></span>
 <img src="SpatialInteractionVectorVector_files/figure-html/plot-lines-polygons-1.png" alt="Visualization of the points, lines, and polygons" width="672" />
 <p class="caption">
@@ -309,10 +295,10 @@ Figure 3.17: Visualization of the points, lines, and polygons
 <hr />
 <p><strong>lines and polygons</strong></p>
 <p>The following code gets the intersection of the lines and the polygons.</p>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb260-1" data-line-number="1">(</a>
-<a class="sourceLine" id="cb260-2" data-line-number="2">intersections_lp &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(lines, polygons) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb260-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">int_name =</span> <span class="kw">paste0</span>(line_name, <span class="st">&quot;-&quot;</span>, polygon_name))</a>
-<a class="sourceLine" id="cb260-4" data-line-number="4">)</a></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb262-1" data-line-number="1">(</a>
+<a class="sourceLine" id="cb262-2" data-line-number="2">intersections_lp &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(lines, polygons) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb262-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">int_name =</span> <span class="kw">paste0</span>(line_name, <span class="st">&quot;-&quot;</span>, polygon_name))</a>
+<a class="sourceLine" id="cb262-4" data-line-number="4">)</a></code></pre></div>
 <pre><code>Simple feature collection with 3 features and 3 fields
 geometry type:  LINESTRING
 dimension:      XY
@@ -323,11 +309,11 @@ CRS:            NA
 2    line 2    polygon 1   LINESTRING (1.5 0.5, 2 1.25) line 2-polygon 1
 3    line 2    polygon 2 LINESTRING (2.166667 1.5, 2... line 2-polygon 2</code></pre>
 <p>As you can see in the output, each instance of the intersections of the lines and polygons become an observation (line 1-polygon 1, line 2-polygon 1, and line 2-polygon 2). The part of the lines that did not intersect with any of the polygons is cut out and does not remain in the returned <code>sf</code>. To see this, see Figure <a href="spatial-intersection-transformative-join.html#fig:lines-polygons-int">3.18</a> below:</p>
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb262-1" data-line-number="1"><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb262-2" data-line-number="2"><span class="st">  </span><span class="co">#--- here are all the original polygons  ---#</span></a>
-<a class="sourceLine" id="cb262-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> polygons, <span class="kw">aes</span>(<span class="dt">fill =</span> polygon_name), <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb262-4" data-line-number="4"><span class="st">  </span><span class="co">#--- here is what is returned after st_intersection ---#</span></a>
-<a class="sourceLine" id="cb262-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> intersections_lp, <span class="kw">aes</span>(<span class="dt">color =</span> int_name), <span class="dt">size =</span> <span class="fl">1.5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb264-1" data-line-number="1"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb264-2" data-line-number="2"><span class="st">  </span><span class="co">#--- here are all the original polygons  ---#</span></a>
+<a class="sourceLine" id="cb264-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> polygons, <span class="kw">aes</span>(<span class="dt">fill =</span> polygon_name), <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb264-4" data-line-number="4"><span class="st">  </span><span class="co">#--- here is what is returned after st_intersection ---#</span></a>
+<a class="sourceLine" id="cb264-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> intersections_lp, <span class="kw">aes</span>(<span class="dt">color =</span> int_name), <span class="dt">size =</span> <span class="fl">1.5</span>)</a></code></pre></div>
 <div class="figure"><span id="fig:lines-polygons-int"></span>
 <img src="SpatialInteractionVectorVector_files/figure-html/lines-polygons-int-1.png" alt="The outcome of the intersections of the lines and polygons" width="672" />
 <p class="caption">
@@ -338,10 +324,10 @@ Figure 3.18: The outcome of the intersections of the lines and polygons
 <hr />
 <p><strong>polygons and polygons</strong></p>
 <p>The following code gets the intersection of polygon 1 and polygon 3 with polygon 2.</p>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb263-1" data-line-number="1">(</a>
-<a class="sourceLine" id="cb263-2" data-line-number="2">intersections_pp &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(polygons[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), ], polygons[<span class="dv">2</span>, ]) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb263-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">int_name =</span> <span class="kw">paste0</span>(polygon_name, <span class="st">&quot;-&quot;</span>, polygon_name<span class="fl">.1</span>))</a>
-<a class="sourceLine" id="cb263-4" data-line-number="4">)</a></code></pre></div>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb265-1" data-line-number="1">(</a>
+<a class="sourceLine" id="cb265-2" data-line-number="2">intersections_pp &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(polygons[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), ], polygons[<span class="dv">2</span>, ]) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb265-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">int_name =</span> <span class="kw">paste0</span>(polygon_name, <span class="st">&quot;-&quot;</span>, polygon_name<span class="fl">.1</span>))</a>
+<a class="sourceLine" id="cb265-4" data-line-number="4">)</a></code></pre></div>
 <pre><code>Simple feature collection with 2 features and 3 fields
 geometry type:  POLYGON
 dimension:      XY
@@ -354,11 +340,11 @@ CRS:            NA
 1 polygon 1-polygon 2
 2 polygon 3-polygon 2</code></pre>
 <p>As you can see in Figure <a href="spatial-intersection-transformative-join.html#fig:polygons-polygons-int">3.19</a>, each instance of the intersections of polygons 1 and 3 against polygon 2 becomes an observation (polygon 1-polygon 2 and polygon 3-polygon 2). Just like the lines-polygons case, the non-intersecting part of polygons 1 and 3 are cut out and do not remain in the returned <code>sf</code>. We will see later that <code>st_intersection()</code> can be used to find area-weighted values from the intersecting polygons with help from <code>st_area()</code>.</p>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb265-1" data-line-number="1"><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb265-2" data-line-number="2"><span class="st">  </span><span class="co">#--- here are all the original polygons  ---#</span></a>
-<a class="sourceLine" id="cb265-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> polygons, <span class="kw">aes</span>(<span class="dt">fill =</span> polygon_name), <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb265-4" data-line-number="4"><span class="st">  </span><span class="co">#--- here is what is returned after st_intersection ---#</span></a>
-<a class="sourceLine" id="cb265-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> intersections_pp, <span class="kw">aes</span>(<span class="dt">fill =</span> int_name))</a></code></pre></div>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb267-1" data-line-number="1"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb267-2" data-line-number="2"><span class="st">  </span><span class="co">#--- here are all the original polygons  ---#</span></a>
+<a class="sourceLine" id="cb267-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> polygons, <span class="kw">aes</span>(<span class="dt">fill =</span> polygon_name), <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb267-4" data-line-number="4"><span class="st">  </span><span class="co">#--- here is what is returned after st_intersection ---#</span></a>
+<a class="sourceLine" id="cb267-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> intersections_pp, <span class="kw">aes</span>(<span class="dt">fill =</span> int_name))</a></code></pre></div>
 <div class="figure"><span id="fig:polygons-polygons-int"></span>
 <img src="SpatialInteractionVectorVector_files/figure-html/polygons-polygons-int-1.png" alt="The outcome of the intersections of polygon 2 and polygons 1 and 3" width="672" />
 <p class="caption">
@@ -370,10 +356,10 @@ Figure 3.19: The outcome of the intersections of polygon 2 and polygons 1 and 3
 <h3><span class="header-section-number">3.4.2</span> Area-weighted average</h3>
 <p>Let’s now get back to the example of HUC units and county-level corn acres data. We would like to find area-weighted average of corn acres instead of the simple average of corn acres.</p>
 <p>Using <code>st_intersection()</code>, for each of the HUC polygons, we find the intersecting counties, and then divide it into parts based on the boundary of the intersecting polygons.</p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb266-1" data-line-number="1">(</a>
-<a class="sourceLine" id="cb266-2" data-line-number="2">HUC_intersections &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(HUC_IA, IA_corn) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb266-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">huc_county =</span> <span class="kw">paste0</span>(HUC_CODE, <span class="st">&quot;-&quot;</span>, county_code))</a>
-<a class="sourceLine" id="cb266-4" data-line-number="4">)</a></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb268-1" data-line-number="1">(</a>
+<a class="sourceLine" id="cb268-2" data-line-number="2">HUC_intersections &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(HUC_IA, IA_corn) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb268-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">huc_county =</span> <span class="kw">paste0</span>(HUC_CODE, <span class="st">&quot;-&quot;</span>, county_code))</a>
+<a class="sourceLine" id="cb268-4" data-line-number="4">)</a></code></pre></div>
 <pre><code>Simple feature collection with 349 features and 5 fields
 geometry type:  GEOMETRY
 dimension:      XY
@@ -392,9 +378,9 @@ First 10 features:
 9  07080207         081 2018 184500 POLYGON ((429601.9 4779600,... 07080207-081
 10 07100005         081 2018 184500 POLYGON ((420999.1 4772191,... 07100005-081</code></pre>
 <p>The key difference from the <code>st_join()</code> example is that each observation of the returned data is a unique HUC-county intersection. Figure <a href="spatial-intersection-transformative-join.html#fig:inter-ex">3.20</a> below is a map of all the intersections of the HUC unit with <code>HUC_CODE ==10170203</code> and the four intersecting counties.</p>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb268-1" data-line-number="1"><span class="kw">tm_shape</span>(<span class="kw">filter</span>(HUC_intersections, HUC_CODE <span class="op">==</span><span class="st"> &quot;10170203&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb268-2" data-line-number="2"><span class="st">  </span><span class="kw">tm_polygons</span>(<span class="dt">col =</span> <span class="st">&quot;huc_county&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb268-3" data-line-number="3"><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">frame =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb270-1" data-line-number="1"><span class="kw">tm_shape</span>(<span class="kw">filter</span>(HUC_intersections, HUC_CODE <span class="op">==</span><span class="st"> &quot;10170203&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb270-2" data-line-number="2"><span class="st">  </span><span class="kw">tm_polygons</span>(<span class="dt">col =</span> <span class="st">&quot;huc_county&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb270-3" data-line-number="3"><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">frame =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <div class="figure"><span id="fig:inter-ex"></span>
 <img src="SpatialInteractionVectorVector_files/figure-html/inter-ex-1.png" alt="Intersections of a HUC unit and Iowa counties" width="672" />
 <p class="caption">
@@ -403,16 +389,16 @@ Figure 3.20: Intersections of a HUC unit and Iowa counties
 </div>
 <p>Note also that the attributes of county data are joined as you can see <code>acres</code> in the output above. As I said earlier, <code>st_intersection()</code> is a spatial kind of spatial join where the resulting observations are the intersections of the target and source <code>sf</code> objects.</p>
 <p>In order to find the area-weighted average of corn acres, you can use <code>st_area()</code> first to calculate the area of the intersections, and then find the area-weighted average as follows:</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb269-1" data-line-number="1">(</a>
-<a class="sourceLine" id="cb269-2" data-line-number="2">HUC_aw_acres &lt;-<span class="st"> </span>HUC_intersections <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb269-3" data-line-number="3"><span class="st">  </span><span class="co">#--- get area ---#</span></a>
-<a class="sourceLine" id="cb269-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">area =</span> <span class="kw">as.numeric</span>(<span class="kw">st_area</span>(.))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb269-5" data-line-number="5"><span class="st">  </span><span class="co">#--- get area-weight by HUC unit ---#</span></a>
-<a class="sourceLine" id="cb269-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(HUC_CODE) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb269-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">weight =</span> area <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(area)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb269-8" data-line-number="8"><span class="st">  </span><span class="co">#--- calculate area-weighted corn acreage by HUC unit ---#</span></a>
-<a class="sourceLine" id="cb269-9" data-line-number="9"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">aw_acres =</span> <span class="kw">sum</span>(weight <span class="op">*</span><span class="st"> </span>acres))</a>
-<a class="sourceLine" id="cb269-10" data-line-number="10">)</a></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb271-1" data-line-number="1">(</a>
+<a class="sourceLine" id="cb271-2" data-line-number="2">HUC_aw_acres &lt;-<span class="st"> </span>HUC_intersections <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb271-3" data-line-number="3"><span class="st">  </span><span class="co">#--- get area ---#</span></a>
+<a class="sourceLine" id="cb271-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">area =</span> <span class="kw">as.numeric</span>(<span class="kw">st_area</span>(.))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb271-5" data-line-number="5"><span class="st">  </span><span class="co">#--- get area-weight by HUC unit ---#</span></a>
+<a class="sourceLine" id="cb271-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(HUC_CODE) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb271-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">weight =</span> area <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(area)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb271-8" data-line-number="8"><span class="st">  </span><span class="co">#--- calculate area-weighted corn acreage by HUC unit ---#</span></a>
+<a class="sourceLine" id="cb271-9" data-line-number="9"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">aw_acres =</span> <span class="kw">sum</span>(weight <span class="op">*</span><span class="st"> </span>acres))</a>
+<a class="sourceLine" id="cb271-10" data-line-number="10">)</a></code></pre></div>
 <pre><code>Simple feature collection with 55 features and 2 fields
 geometry type:  GEOMETRY
 dimension:      XY
@@ -436,13 +422,16 @@ CRS:            EPSG:26915
 </div>
 </div>
 <!-- </div> -->
+
+
+
             </section>
 
           </div>
         </div>
       </div>
 <a href="spatial-join.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="raster-basics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="par-comp.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

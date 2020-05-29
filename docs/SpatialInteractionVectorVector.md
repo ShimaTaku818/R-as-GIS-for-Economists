@@ -21,6 +21,17 @@ All the datasets that you need to import are available [here](https://www.dropbo
 + create a folder called "Data" inside the folder designated as the working directory (if you have created a "Data" folder previously, skip this step)
 + download the pertinent datasets from [here](https://www.dropbox.com/sh/fk149061msu06cj/AACMzyavFJrtOobST3KuxDsQa?dl=0) and put them in the "Data" folder
 
+### Packages to install and load
+
+Here is the list of packages to install (if you have not) and load to run the codes in this chapter.
+
+
+```r
+library(sf)
+library(tmap) # for creating maps
+library(dplyr) # for data wrangling
+library(data.table) # for data wrangling
+```
 
 ## Topological relations
 

@@ -24,7 +24,7 @@
 <meta name="author" content="Taro Mieno" />
 
 
-<meta name="date" content="2020-05-28" />
+<meta name="date" content="2020-05-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -177,6 +177,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="before-you-start-1.html"><a href="before-you-start-1.html"><i class="fa fa-check"></i>Before you start</a><ul>
 <li><a href="before-you-start-1.html#sf-or-sp"><code>sf</code> or <code>sp</code>?</a></li>
 <li class="chapter" data-level="" data-path="before-you-start-1.html"><a href="before-you-start-1.html#direction-for-replication-1"><i class="fa fa-check"></i>Direction for replication</a></li>
+<li class="chapter" data-level="2.0.1" data-path="before-you-start-1.html"><a href="before-you-start-1.html#packages-to-install-and-load"><i class="fa fa-check"></i><b>2.0.1</b> Packages to install and load</a></li>
 </ul></li>
 <li class="chapter" data-level="2.1" data-path="spatial-data-structure.html"><a href="spatial-data-structure.html"><i class="fa fa-check"></i><b>2.1</b> Spatial Data Structure</a></li>
 <li class="chapter" data-level="2.2" data-path="simple-feature-geometry-simple-feature-geometry-list-column-and-simple-feature.html"><a href="simple-feature-geometry-simple-feature-geometry-list-column-and-simple-feature.html"><i class="fa fa-check"></i><b>2.2</b> Simple feature geometry, simple feature geometry list-column, and simple feature</a><ul>
@@ -202,6 +203,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3" data-path="spatial-interactions-of-vector-data-subsetting-and-joining.html"><a href="spatial-interactions-of-vector-data-subsetting-and-joining.html"><i class="fa fa-check"></i><b>3</b> Spatial Interactions of Vector Data: Subsetting and Joining</a><ul>
 <li class="chapter" data-level="" data-path="before-you-start-2.html"><a href="before-you-start-2.html"><i class="fa fa-check"></i>Before you start</a><ul>
 <li class="chapter" data-level="" data-path="before-you-start-2.html"><a href="before-you-start-2.html#direction-for-replication-2"><i class="fa fa-check"></i>Direction for replication</a></li>
+<li class="chapter" data-level="3.0.1" data-path="before-you-start-2.html"><a href="before-you-start-2.html#packages-to-install-and-load-1"><i class="fa fa-check"></i><b>3.0.1</b> Packages to install and load</a></li>
 </ul></li>
 <li class="chapter" data-level="3.1" data-path="topological-relations.html"><a href="topological-relations.html"><i class="fa fa-check"></i><b>3.1</b> Topological relations</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="topological-relations.html"><a href="topological-relations.html#st_intersects"><i class="fa fa-check"></i><b>3.1.1</b> st_intersects()</a></li>
@@ -244,6 +246,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="A" data-path="par-comp.html"><a href="par-comp.html"><i class="fa fa-check"></i><b>A</b> Loop and Parallel Computing</a><ul>
 <li class="chapter" data-level="" data-path="before-you-start-4.html"><a href="before-you-start-4.html"><i class="fa fa-check"></i>Before you start</a><ul>
 <li class="chapter" data-level="" data-path="before-you-start-4.html"><a href="before-you-start-4.html#direction-for-replication-3"><i class="fa fa-check"></i>Direction for replication</a></li>
+<li class="chapter" data-level="A.0.1" data-path="before-you-start-4.html"><a href="before-you-start-4.html#packages-to-install-and-load-2"><i class="fa fa-check"></i><b>A.0.1</b> Packages to install and load</a></li>
 </ul></li>
 <li class="chapter" data-level="A.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html"><i class="fa fa-check"></i><b>A.1</b> Repetitive processes and looping</a><ul>
 <li class="chapter" data-level="A.1.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#what-is-looping"><i class="fa fa-check"></i><b>A.1.1</b> What is looping?</a></li>
@@ -292,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quick-plotting" class="section level2">
 <h2><span class="header-section-number">4.4</span> Quick Plotting</h2>
 <p>To have a quick visualization of the data values of <code>SpatRaster</code> objects, you can simply use <code>plot()</code>:</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb302-1" data-line-number="1"><span class="kw">plot</span>(IA_cdl_stack_sr)</a></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb304-1" data-line-number="1"><span class="kw">plot</span>(IA_cdl_stack_sr)</a></code></pre></div>
 <p><img src="RasterDataBasics_files/figure-html/plot_stack-1.png" width="672" /></p>
 <!-- Instead of getting all the values, you could get a portion of them by using `getValuesBlock()` by specifying the region for which you would like to get values. It is used extensively in `exact_extract()` function, which we show as one of the fastest ways to extract values. However, if you are finding yourself using `getValuesBlock()`, it is very much likely that you are wasting your time by not using a faster alternative. See Chapter X for further discussion of fast value extraction.   -->
 <!-- [RasterOption](https://www.gis-blog.com/increasing-the-speed-of-raster-processing-with-r-part-13/) -->
