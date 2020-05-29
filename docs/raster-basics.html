@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Conventions of the book and some notes | R as GIS for Economists</title>
+  <title>Chapter 4 Raster Data Minimals | R as GIS for Economists</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Conventions of the book and some notes | R as GIS for Economists" />
+  <meta property="og:title" content="Chapter 4 Raster Data Minimals | R as GIS for Economists" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Conventions of the book and some notes | R as GIS for Economists" />
+  <meta name="twitter:title" content="Chapter 4 Raster Data Minimals | R as GIS for Economists" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="what-is-going-to-be-covered-in-this-book.html"/>
-<link rel="next" href="session-information.html"/>
+<link rel="prev" href="spatial-intersection-transformative-join.html"/>
+<link rel="next" href="before-you-start-3.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -223,10 +223,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.2" data-path="spatial-intersection-transformative-join.html"><a href="spatial-intersection-transformative-join.html#area-weighted-average"><i class="fa fa-check"></i><b>3.4.2</b> Area-weighted average</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="raster-basics.html"><a href="raster-basics.html"><i class="fa fa-check"></i><b>4</b> Raster Data Minimals</a><ul>
+<li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html"><i class="fa fa-check"></i>Before you start</a><ul>
+<li><a href="before-you-start-3.html#stars-package"><code>stars</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="4.1" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html"><i class="fa fa-check"></i><b>4.1</b> Raster data object classes</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#raster-package-rasterlayer-rasterstack-and-rasterbrick"><i class="fa fa-check"></i><b>4.1.1</b> <code>raster</code> package: <code>RasterLayer</code>, <code>RasterStack</code>, and <code>RasterBrick</code></a></li>
+<li class="chapter" data-level="4.1.2" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#terra-package-spatraster"><i class="fa fa-check"></i><b>4.1.2</b> <code>terra</code> package: <code>SpatRaster</code></a></li>
+<li class="chapter" data-level="4.1.3" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#converting-a-spatraster-object-to-a-raster-object."><i class="fa fa-check"></i><b>4.1.3</b> Converting a <code>SpatRaster</code> object to a <code>Raster</code><span class="math inline">\(^*\)</span> object.</a></li>
+<li class="chapter" data-level="4.1.4" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#vector-data-in-the-terra-package"><i class="fa fa-check"></i><b>4.1.4</b> Vector data in the <code>terra</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="read-and-write-a-raster-data-file.html"><a href="read-and-write-a-raster-data-file.html"><i class="fa fa-check"></i><b>4.2</b> Read and write a raster data file</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="read-and-write-a-raster-data-file.html"><a href="read-and-write-a-raster-data-file.html#read-raster-files"><i class="fa fa-check"></i><b>4.2.1</b> Read raster file(s)</a></li>
+<li class="chapter" data-level="4.2.2" data-path="read-and-write-a-raster-data-file.html"><a href="read-and-write-a-raster-data-file.html#write-raster-files"><i class="fa fa-check"></i><b>4.2.2</b> Write raster files</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="access-values.html"><a href="access-values.html"><i class="fa fa-check"></i><b>4.3</b> Access values</a></li>
+<li class="chapter" data-level="4.4" data-path="quick-plotting.html"><a href="quick-plotting.html"><i class="fa fa-check"></i><b>4.4</b> Quick Plotting</a></li>
+</ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="par-comp.html"><a href="par-comp.html"><i class="fa fa-check"></i><b>A</b> Loop and Parallel Computing</a><ul>
-<li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html"><i class="fa fa-check"></i>Before you start</a><ul>
-<li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html#direction-for-replication-3"><i class="fa fa-check"></i>Direction for replication</a></li>
+<li class="chapter" data-level="" data-path="before-you-start-4.html"><a href="before-you-start-4.html"><i class="fa fa-check"></i>Before you start</a><ul>
+<li class="chapter" data-level="" data-path="before-you-start-4.html"><a href="before-you-start-4.html#direction-for-replication-3"><i class="fa fa-check"></i>Direction for replication</a></li>
 </ul></li>
 <li class="chapter" data-level="A.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html"><i class="fa fa-check"></i><b>A.1</b> Repetitive processes and looping</a><ul>
 <li class="chapter" data-level="A.1.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#what-is-looping"><i class="fa fa-check"></i><b>A.1.1</b> What is looping?</a></li>
@@ -272,56 +289,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
   gtag('config', 'UA-59758608-3');
 </script>
-<div id="conventions-of-the-book-and-some-notes" class="section level2 unnumbered">
-<h2>Conventions of the book and some notes</h2>
-<p>Here are some notes of the conventions of this book and notes for R beginners and those who are not used to reading <code>rmarkdown</code>-generated html documents.</p>
-<div id="texts-in-gray-boxes" class="section level3 unnumbered">
-<h3>Texts in gray boxes</h3>
-<p>They are one of the following:</p>
-<ul>
-<li>objects defined on R during demonstrations</li>
-<li>R functions</li>
-<li>R packages</li>
-</ul>
-<p>When it is a function, I always put parentheses at the end like this: <code>st_read()</code>.<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> Sometimes, I combine a package and function in one like this: <code>sf::st_read()</code>. This means it is a function called <code>st_read()</code> from the <code>sf</code> package.</p>
-</div>
-<div id="colored-boxes" class="section level3 unnumbered">
-<h3>Colored Boxes</h3>
-<p>Codes are in blue boxes, and outcomes are in red boxes.</p>
-<p>Codes:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">runif</span>(<span class="dv">5</span>)</a></code></pre></div>
-<p>Outcomes:</p>
-<pre><code>## [1] 0.2823770 0.9710530 0.8013289 0.5293366 0.1373800</code></pre>
-</div>
-<div id="parentheses-around-codes" class="section level3 unnumbered">
-<h3>Parentheses around codes</h3>
-<p>Sometimes you will see codes enclosed by parenthesis like this:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">(</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">  a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">)</a></code></pre></div>
-<pre><code>## [1] 0.6049204 0.4672004 0.3666267 0.5582272 0.2880947</code></pre>
-<p>The parentheses prints what’s inside of a newly created object (here <code>a</code>) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created.</p>
-<p>This one prints nothing.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">5</span>)</a></code></pre></div>
-</div>
-<div id="footnotes" class="section level3 unnumbered">
-<h3>Footnotes</h3>
-<p>Footnotes appear at the bottom of the page. You can easily get to a footnote by clicking on the footnote number. You can also go back to the main narrative where the footnote number is by clicking on the curved arrow at the end of the footnote. So, don’t worry about having to scroll all the way up to where you were after reading footnotes.</p>
-</div>
-</div>
-<div class="footnotes">
-<hr />
-<ol start="8">
-<li id="fn8"><p>This is a function that draws values randomly from the uniform distribution.<a href="conventions-of-the-book-and-some-notes.html#fnref8" class="footnote-back">↩</a></p></li>
-</ol>
+<div id="raster-basics" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Raster Data Minimals</h1>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="what-is-going-to-be-covered-in-this-book.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="session-information.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="spatial-intersection-transformative-join.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="before-you-start-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

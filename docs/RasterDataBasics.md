@@ -1,36 +1,10 @@
 # Raster Data Minimals {#raster-basics}
 
-```{r setup, echo = FALSE, results = "hide"}
-library(knitr)
-knitr::opts_chunk$set(
-  echo = TRUE,
-  cache = TRUE,
-  comment = NA,
-  message = FALSE,
-  warning = FALSE,
-  tidy = FALSE,
-  cache.lazy = FALSE
-)
 
-suppressMessages(library(here))
-opts_knit$set(root.dir = here())
-```
 
-```{r setwd, eval = FALSE, echo = FALSE}
-setwd(here())
-```
 
-```{r, echo=FALSE, warning=FALSE, cache = FALSE}
-#--- load packages ---#
-suppressMessages(library(data.table))
-suppressMessages(library(stringr))
-suppressMessages(library(raster))
-suppressMessages(library(terra))
-suppressMessages(library(cdlTools))
-suppressMessages(library(sf))
-suppressMessages(library(tictoc))
-# setwd("/Users/tmieno2/Box/Teaching/AAEA R/GIS")
-```
+
+
 
 ## Before you start {-}
 
@@ -50,7 +24,8 @@ Finally, another package you might want to keep an eye on for raster (and vector
 
 Let's start with taking a look at raster data. We will download CDL data for Iowa in 2015. 
 
-```{r read_the_IA_cdl_data}
+
+```r
 library(cdlTools)
 
 #--- download the CDL data for Iowa in 2015 ---#
@@ -60,10 +35,26 @@ IA_cdl_2015 <- getCDL("Iowa", 2015)$IA2015
 IA_cdl_2015
 ```
 
+```
+class      : RasterLayer 
+dimensions : 11671, 17795, 207685445  (nrow, ncol, ncell)
+resolution : 30, 30  (x, y)
+extent     : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+crs        : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+source     : /private/var/folders/t4/5gnqprbn38nftyxkyk5hdwmd8hnypy/T/Rtmp5g1PCO/CDL_2015_19.tif 
+names      : CDL_2015_19 
+values     : 0, 255  (min, max)
+```
+
 Evaluating the imported raster object provides you with information about the raster data, such as dimensions (number of cells, number of columns, number of cells), spatial resolution (30 meter by 30 meter for this raster data), extent, CRS and the minimum and maximum values recorded in this raster layer. The class of the downloaded data is `RasterLayer`, which is a raster data class defined by the `raster` package.^[This is what I meant by the `raster` being THE package for raster data handling. The default object class for many raster-related packages is a `raster` object class, instead of a `terra` object class.] A `RasterLayer` consists of only one layer, meaning that only a single variable is associated with the cells (here it is land use category code in integer). Among these spatial characteristics, you often need to extract the CRS of a raster object before you interact it with vector data^[e.g., extracting values from a raster layer to vector data, or cropping a raster layer to the spatial extent of vector data.], which can be done using `projection()`: 
 
-```{r chars}
+
+```r
 projection(IA_cdl_2015)
+```
+
+```
+[1] "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
 ```
 
 ---
@@ -72,7 +63,8 @@ You can stack multiple raster layers of the **same spatial resolution and extent
 
 To create a `RasterStack` and `RasterBrick`, let's download the CDL data for IA in 2016 and stack it with the 2015 data.
 
-```{r make_stack}
+
+```r
 #--- download the CDL data for Iowa in 2016 ---#
 IA_cdl_2016 <- getCDL("Iowa", 2016)$IA2016 
 
@@ -81,11 +73,23 @@ IA_cdl_stack <- stack(IA_cdl_2015, IA_cdl_2016)
 
 #--- take a look ---#
 IA_cdl_stack
-```  
+```
+
+```
+class      : RasterStack 
+dimensions : 11671, 17795, 207685445, 2  (nrow, ncol, ncell, nlayers)
+resolution : 30, 30  (x, y)
+extent     : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+crs        : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+names      : CDL_2015_19, CDL_2016_19 
+min values :           0,           0 
+max values :         255,         255 
+```
 
 `IA_cdl_stack` is of class `RasterStack`, and it has two layers of variables: CDL for 2015 and 2016. You can make it a `RasterBrick` using `raster::brick()`:
 
-```{r make_brick}
+
+```r
 #--- stack the two ---#
 IA_cdl_brick <- brick(IA_cdl_stack)
 
@@ -94,7 +98,19 @@ IA_cdl_brick <- brick(IA_cdl_stack)
 
 #--- take a look ---#
 IA_cdl_brick
-```  
+```
+
+```
+class      : RasterBrick 
+dimensions : 11671, 17795, 207685445, 2  (nrow, ncol, ncell, nlayers)
+resolution : 30, 30  (x, y)
+extent     : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+crs        : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+source     : /private/var/folders/t4/5gnqprbn38nftyxkyk5hdwmd8hnypy/T/Rtmp5g1PCO/raster/r_tmp_2020-05-27_205015_64951_93006.grd 
+names      : CDL_2015_19, CDL_2016_19 
+min values :           0,           0 
+max values :         229,         241 
+```
 
 You probably noticed that it took some time to create the `RasterBrick` object^[Read [here](https://geocompr.robinlovelace.net/spatial-class.html#raster-classes) for the subtle difference between `RasterStack` and `RasterBrick`]. While spatial operations on `RasterBrick` are supposedly faster than `RasterStack`, the time to create a `RasterBrick` object itself is often long enough to kill the speed advantage entirely^[We will see this in Chapter , where we compare the speed of data extraction from `RasterStack` and `RasterBrick` objects.]. Often, the three raster object types are collectively referred to as `Raster`$^*$ objects for shorthand in the documentation of the `raster` and other related packages.
 
@@ -102,7 +118,8 @@ You probably noticed that it took some time to create the `RasterBrick` object^[
 
 `terra` package has only one object class for raster data, `SpatRaster` and no distinctions between one-layer and multi-layer rasters are necessary. Let's first convert a `RasterLayer` to a `SpatRaster` using `terra::rast()` function.
 
-```{r spat_raster, dependson = "read_the_IA_cdl_data"}
+
+```r
 #--- convert to a SpatRaster ---#
 IA_cdl_2015_sr <- rast(IA_cdl_2015)
 
@@ -110,9 +127,20 @@ IA_cdl_2015_sr <- rast(IA_cdl_2015)
 IA_cdl_2015_sr
 ```
 
+```
+class       : SpatRaster 
+dimensions  : 11671, 17795, 1  (nrow, ncol, nlyr)
+resolution  : 30, 30  (x, y)
+extent      : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+coord. ref. : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs  
+data source : /private/var/folders/t4/5gnqprbn38nftyxkyk5hdwmd8hnypy/T/Rtmp5g1PCO/CDL_2015_19.tif 
+names       : Layer_1 
+```
+
 You can see that the number of layers (`nlyr`) is $1$ because the original object is a `RasterLayer`, which by definition has only one layer. Now, let's convert a `RasterStack` to a `SpatRaster` using `terra::rast()`.  
 
-```{r spat_raster_nl}
+
+```r
 #--- convert to a SpatRaster ---#
 IA_cdl_stack_sr <- rast(IA_cdl_stack)
 
@@ -120,27 +148,82 @@ IA_cdl_stack_sr <- rast(IA_cdl_stack)
 IA_cdl_stack_sr
 ```
 
+```
+class       : SpatRaster 
+dimensions  : 11671, 17795, 2  (nrow, ncol, nlyr)
+resolution  : 30, 30  (x, y)
+extent      : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+coord. ref. : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs  
+data sources: /private/var/folders/t4/5gnqprbn38nftyxkyk5hdwmd8hnypy/T/Rtmp5g1PCO/CDL_2015_19.tif  
+              /private/var/folders/t4/5gnqprbn38nftyxkyk5hdwmd8hnypy/T/Rtmp5g1PCO/CDL_2016_19.tif  
+names       : Layer_1, Layer_1 
+```
+
 Again, it is a `SpatRaster`, and you now see that the number of layers is 2. We just confirmed that `terra` has only one class for raster data whether it is single-layer or multiple-layer ones.
 
 Instead of `projection()`, you use `crs()` to extract the CRS.
 
-```{r get_crs_terra}
+
+```r
 crs(IA_cdl_2015_sr)
+```
+
+```
+[1] "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs "
 ```
 
 ### Converting a `SpatRaster` object to a `Raster`$^*$ object.
 
 You can convert a `SpatRaster` object to a `Raster`$^*$ object using `raster()`, `stack()`, and `brick()`. Keep in mind that if you use `rater()` even though `SpatRaster` has multiple layers, the resulting `RasterLayer` object has only the first of the multiple layers. 
 
-```{r convert_back}
+
+```r
 #--- RasterLayer (only 1st layer) ---#
 IA_cdl_stack_sr %>% raster()
+```
 
+```
+class      : RasterLayer 
+dimensions : 11671, 17795, 207685445  (nrow, ncol, ncell)
+resolution : 30, 30  (x, y)
+extent     : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+crs        : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+source     : /private/var/folders/t4/5gnqprbn38nftyxkyk5hdwmd8hnypy/T/Rtmp5g1PCO/CDL_2015_19.tif 
+names      : Layer_1 
+values     : 0, 255  (min, max)
+```
+
+```r
 #--- RasterLayer ---#
 IA_cdl_stack_sr %>% stack()
+```
 
+```
+class      : RasterStack 
+dimensions : 11671, 17795, 207685445, 2  (nrow, ncol, ncell, nlayers)
+resolution : 30, 30  (x, y)
+extent     : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+crs        : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+names      : CDL_2015_19, CDL_2016_19 
+min values :           0,           0 
+max values :         255,         255 
+```
+
+```r
 #--- RasterLayer (this takes some time) ---#
 IA_cdl_stack_sr %>% brick()
+```
+
+```
+class      : RasterBrick 
+dimensions : 11671, 17795, 207685445, 2  (nrow, ncol, ncell, nlayers)
+resolution : 30, 30  (x, y)
+extent     : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+crs        : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+source     : /private/var/folders/t4/5gnqprbn38nftyxkyk5hdwmd8hnypy/T/Rtmp5g1PCO/raster/r_tmp_2020-05-27_205102_64951_75945.grd 
+names      : CDL_2015_19, CDL_2016_19 
+min values :           0,           0 
+max values :         229,         241 
 ```
 
 ### Vector data in the `terra` package
@@ -149,7 +232,8 @@ IA_cdl_stack_sr %>% brick()
 
 As an example, let's use Illinois county border data. 
 
-```{r il_county}
+
+```r
 library(maps)
 #--- Illinois county boundary ---#
 (
@@ -157,9 +241,30 @@ IL_county <- st_as_sf(map("county", "illinois", plot = FALSE, fill = TRUE))
 )
 ```
 
+```
+Simple feature collection with 102 features and 1 field
+geometry type:  MULTIPOLYGON
+dimension:      XY
+bbox:           xmin: -91.50136 ymin: 37.00161 xmax: -87.49638 ymax: 42.50774
+CRS:            EPSG:4326
+First 10 features:
+                   ID                           geom
+1      illinois,adams MULTIPOLYGON (((-91.49563 4...
+2  illinois,alexander MULTIPOLYGON (((-89.21526 3...
+3       illinois,bond MULTIPOLYGON (((-89.27828 3...
+4      illinois,boone MULTIPOLYGON (((-88.94024 4...
+5      illinois,brown MULTIPOLYGON (((-90.91121 3...
+6     illinois,bureau MULTIPOLYGON (((-89.63351 4...
+7    illinois,calhoun MULTIPOLYGON (((-90.93414 3...
+8    illinois,carroll MULTIPOLYGON (((-89.91999 4...
+9       illinois,cass MULTIPOLYGON (((-90.51014 3...
+10 illinois,champaign MULTIPOLYGON (((-88.46468 4...
+```
+
 You cannot convert an `sf` object directly to `SpatVector`. You first need to turn an `sf` into a spatial object class supported by the `sp` package, and then turn that into a `SpatVector` object using `terra::vect()`.
 
-```{r to_sv}
+
+```r
 IL_county_sv <-	as(IL_county, "Spatial") %>% # to SpatialPolygonsDataFrame  
 	#--- to SpatVectgor ---#
 	vect(.)
@@ -178,10 +283,21 @@ Sometimes we can download raster data as we saw in Section 3.1. But, most of the
 
 You use `terra::rast()` to read raster data of many common formats, and it should be almost always the case that the raster data you got can be read using this function. Here, we read a GeoTiff file (a file with .tif extension):
 
-```{r read_no_eval_terra}
+
+```r
 (
 IA_cdl_2015_sr <- rast("./Data/IA_cdl_2015.tif") 
 )
+```
+
+```
+class       : SpatRaster 
+dimensions  : 11671, 17795, 1  (nrow, ncol, nlyr)
+resolution  : 30, 30  (x, y)
+extent      : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+coord. ref. : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs  
+data source : ./Data/IA_cdl_2015.tif 
+names       : IA_cdl_2015 
 ```
 
 One important thing to note here is that the cell values of the raster data are actually not in memory when you "read" raster data from a file. 
@@ -189,7 +305,8 @@ You basically just established a connection to the file. This helps to reduce th
 
 You can read multiple single-layer raster datasets of the same spatial extent and resolution at the same time to have a multi-layer `SpatRaster` object. Here, we import two single-layer raster datasets (IA_cdl_2015.tif and IA_cdl_2016.tif) to create a two-layer `SpatRaster` object.
 
-```{r multiple_files}
+
+```r
 #--- the list of path to the files ---#
 files_list <- c("./Data/IA_cdl_2015.tif", "./Data/IA_cdl_2016.tif")
 
@@ -199,13 +316,27 @@ multi_layer_sr <- rast(files_list)
 )
 ```
 
+```
+class       : SpatRaster 
+dimensions  : 11671, 17795, 2  (nrow, ncol, nlyr)
+resolution  : 30, 30  (x, y)
+extent      : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+coord. ref. : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs  
+data sources: ./Data/IA_cdl_2015.tif  
+              ./Data/IA_cdl_2016.tif  
+names       : IA_cdl_2015, Layer_1 
+min values  :          ? ,       0 
+max values  :          ? ,     241 
+```
+
 Of course, this only works because the two datasets have the identical spatial extent and resolution. There are, however, no restrictions on what variable each of the raster layers represent. For example, you can combine PRISM temperature and precipitation raster layers.
 
 ### Write raster files
 
 You can write a `SpatRaster` object using `terra::writeRaster()`.
 
-```{r write_terra, eval = F}
+
+```r
 terra::writeRaster(IA_cdl_2015_sr, "./Data/IA_cdl_stack.tif", format = "GTiff", overwrite = TRUE)
 ```
 
@@ -213,7 +344,8 @@ The above code saves `IA_cdl_2015_sr` (a `SpatRaster` object) as a GeoTiff file.
 
 You can also save a multi-layer `SpatRster` object just like you save a single-layer `SpatRster` object. 
 
-```{r write_terra_2, eval = F}
+
+```r
 terra::writeRaster(IA_cdl_stack_sr, "./Data/IA_cdl_stack.tif", format = "GTiff", overwrite = TRUE)
 ```
 
@@ -223,13 +355,24 @@ The saved file is a multi-band raster datasets. So, if you have many raster file
 
 You can access the values stored in a `SpatRaster` object using `values()` function:
 
-```{r values}
+
+```r
 #--- terra::values ---#
 values_from_rs <- values(IA_cdl_stack_sr) 
 
 #--- take a look ---#
 head(values_from_rs)
-``` 
+```
+
+```
+     Layer_1 Layer_1
+[1,]       0       0
+[2,]       0       0
+[3,]       0       0
+[4,]       0       0
+[5,]       0       0
+[6,]       0       0
+```
 
 The returned values come in a matrix form of two columns because we are getting values from a two-layer `SpatRaster` object (one column for each layer). 
 
@@ -238,9 +381,12 @@ The returned values come in a matrix form of two columns because we are getting 
 
 To have a quick visualization of the data values of `SpatRaster` objects, you can simply use `plot()`:
 
-```{r plot_stack}
+
+```r
 plot(IA_cdl_stack_sr)
 ```
+
+<img src="RasterDataBasics_files/figure-html/plot_stack-1.png" width="672" />
 
 <!-- Instead of getting all the values, you could get a portion of them by using `getValuesBlock()` by specifying the region for which you would like to get values. It is used extensively in `exact_extract()` function, which we show as one of the fastest ways to extract values. However, if you are finding yourself using `getValuesBlock()`, it is very much likely that you are wasting your time by not using a faster alternative. See Chapter X for further discussion of fast value extraction.   -->
 
@@ -251,7 +397,8 @@ plot(IA_cdl_stack_sr)
 
 Here, we compare the speed of writing raster data using  
 
-```{r write_comp, eval = F}
+
+```r
 #--- terra::writeRaster (faster) ---#
 tic()
 terra::writeRaster(IA_cdl_2015_sr, "./Data/IA_cdl_stack.tif", format = "GTiff", overwrite = TRUE)
@@ -265,9 +412,11 @@ toc()
 
 You can save a `Raster`$^*$ object using `terra::writeaRaster()`, but you do not get any speed advantage.
 
-```{r terra_write_no_speed, eval = F}
+
+```r
 #--- terra::writeRaster with RasterStack (no speed advantage) ---#
 tic()
 terra::writeRaster(IA_cdl_stack, "./Data/IA_cdl_stack.tif", format = "GTiff", overwrite = TRUE)
 toc() 
 ``` -->
+```

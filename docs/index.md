@@ -12,7 +12,7 @@ description: "This is a minimal example of using the bookdown package to write a
 
 # Welcome {-}
 
-This book is being developed as part of my effort to put together course materials for my data science course targeted at upper-level undergraduate and graduate students at the University of Nebraska Lincoln. This books aims particularly at **spatial data processing for an econometric project**, where spatial variables become part of an econometric analysis. Over the years, I have seen so many students and researchers who spend so much time just processing spatial data (often involving clicking the ArcGIS (or QGIS) user interface to death), which is a waste of time from the perspective of academic productivity. My hope is that this book will help researchers become more proficient in spatial data processing and enhance the overall productivity of the fields of economics for which spatial data are essential.  
+This book is being developed as part of my effort to put together course materials for my data science course targeted at upper-level undergraduate and graduate students at the University of Nebraska Lincoln. This book aims particularly at **spatial data processing for an econometric project**, where spatial variables become part of an econometric analysis. Over the years, I have seen so many students and researchers who spend so much time just processing spatial data (often involving clicking the ArcGIS (or QGIS) user interface to death), which is a waste of time from the perspective of academic productivity. My hope is that this book will help researchers become more proficient in spatial data processing and enhance the overall productivity of the fields of economics for which spatial data are essential.  
 
 **About me**
 
@@ -168,7 +168,7 @@ Outcomes:
 
 
 ```
-## [1] 0.26029940 0.98813302 0.26959029 0.02124828 0.85378602
+## [1] 0.2823770 0.9710530 0.8013289 0.5293366 0.1373800
 ```
 
 ### Parentheses around codes {-}
@@ -183,7 +183,7 @@ Sometimes you will see codes enclosed by parenthesis like this:
 ```
 
 ```
-## [1] 0.008294829 0.727256923 0.307254564 0.932588892 0.414474227
+## [1] 0.6049204 0.4672004 0.3666267 0.5582272 0.2880947
 ```
 
 The parentheses prints what's inside of a newly created object (here `a`) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created. 

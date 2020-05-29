@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Conventions of the book and some notes | R as GIS for Economists</title>
+  <title>4.1 Raster data object classes | R as GIS for Economists</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Conventions of the book and some notes | R as GIS for Economists" />
+  <meta property="og:title" content="4.1 Raster data object classes | R as GIS for Economists" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Conventions of the book and some notes | R as GIS for Economists" />
+  <meta name="twitter:title" content="4.1 Raster data object classes | R as GIS for Economists" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="what-is-going-to-be-covered-in-this-book.html"/>
-<link rel="next" href="session-information.html"/>
+<link rel="prev" href="before-you-start-3.html"/>
+<link rel="next" href="read-and-write-a-raster-data-file.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -223,10 +223,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.2" data-path="spatial-intersection-transformative-join.html"><a href="spatial-intersection-transformative-join.html#area-weighted-average"><i class="fa fa-check"></i><b>3.4.2</b> Area-weighted average</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="raster-basics.html"><a href="raster-basics.html"><i class="fa fa-check"></i><b>4</b> Raster Data Minimals</a><ul>
+<li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html"><i class="fa fa-check"></i>Before you start</a><ul>
+<li><a href="before-you-start-3.html#stars-package"><code>stars</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="4.1" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html"><i class="fa fa-check"></i><b>4.1</b> Raster data object classes</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#raster-package-rasterlayer-rasterstack-and-rasterbrick"><i class="fa fa-check"></i><b>4.1.1</b> <code>raster</code> package: <code>RasterLayer</code>, <code>RasterStack</code>, and <code>RasterBrick</code></a></li>
+<li class="chapter" data-level="4.1.2" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#terra-package-spatraster"><i class="fa fa-check"></i><b>4.1.2</b> <code>terra</code> package: <code>SpatRaster</code></a></li>
+<li class="chapter" data-level="4.1.3" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#converting-a-spatraster-object-to-a-raster-object."><i class="fa fa-check"></i><b>4.1.3</b> Converting a <code>SpatRaster</code> object to a <code>Raster</code><span class="math inline">\(^*\)</span> object.</a></li>
+<li class="chapter" data-level="4.1.4" data-path="raster-data-object-classes.html"><a href="raster-data-object-classes.html#vector-data-in-the-terra-package"><i class="fa fa-check"></i><b>4.1.4</b> Vector data in the <code>terra</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="read-and-write-a-raster-data-file.html"><a href="read-and-write-a-raster-data-file.html"><i class="fa fa-check"></i><b>4.2</b> Read and write a raster data file</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="read-and-write-a-raster-data-file.html"><a href="read-and-write-a-raster-data-file.html#read-raster-files"><i class="fa fa-check"></i><b>4.2.1</b> Read raster file(s)</a></li>
+<li class="chapter" data-level="4.2.2" data-path="read-and-write-a-raster-data-file.html"><a href="read-and-write-a-raster-data-file.html#write-raster-files"><i class="fa fa-check"></i><b>4.2.2</b> Write raster files</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="access-values.html"><a href="access-values.html"><i class="fa fa-check"></i><b>4.3</b> Access values</a></li>
+<li class="chapter" data-level="4.4" data-path="quick-plotting.html"><a href="quick-plotting.html"><i class="fa fa-check"></i><b>4.4</b> Quick Plotting</a></li>
+</ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="par-comp.html"><a href="par-comp.html"><i class="fa fa-check"></i><b>A</b> Loop and Parallel Computing</a><ul>
-<li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html"><i class="fa fa-check"></i>Before you start</a><ul>
-<li class="chapter" data-level="" data-path="before-you-start-3.html"><a href="before-you-start-3.html#direction-for-replication-3"><i class="fa fa-check"></i>Direction for replication</a></li>
+<li class="chapter" data-level="" data-path="before-you-start-4.html"><a href="before-you-start-4.html"><i class="fa fa-check"></i>Before you start</a><ul>
+<li class="chapter" data-level="" data-path="before-you-start-4.html"><a href="before-you-start-4.html#direction-for-replication-3"><i class="fa fa-check"></i>Direction for replication</a></li>
 </ul></li>
 <li class="chapter" data-level="A.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html"><i class="fa fa-check"></i><b>A.1</b> Repetitive processes and looping</a><ul>
 <li class="chapter" data-level="A.1.1" data-path="repetitive-processes-and-looping.html"><a href="repetitive-processes-and-looping.html#what-is-looping"><i class="fa fa-check"></i><b>A.1.1</b> What is looping?</a></li>
@@ -272,47 +289,181 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
   gtag('config', 'UA-59758608-3');
 </script>
-<div id="conventions-of-the-book-and-some-notes" class="section level2 unnumbered">
-<h2>Conventions of the book and some notes</h2>
-<p>Here are some notes of the conventions of this book and notes for R beginners and those who are not used to reading <code>rmarkdown</code>-generated html documents.</p>
-<div id="texts-in-gray-boxes" class="section level3 unnumbered">
-<h3>Texts in gray boxes</h3>
-<p>They are one of the following:</p>
-<ul>
-<li>objects defined on R during demonstrations</li>
-<li>R functions</li>
-<li>R packages</li>
-</ul>
-<p>When it is a function, I always put parentheses at the end like this: <code>st_read()</code>.<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> Sometimes, I combine a package and function in one like this: <code>sf::st_read()</code>. This means it is a function called <code>st_read()</code> from the <code>sf</code> package.</p>
+<div id="raster-data-object-classes" class="section level2">
+<h2><span class="header-section-number">4.1</span> Raster data object classes</h2>
+<div id="raster-package-rasterlayer-rasterstack-and-rasterbrick" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> <code>raster</code> package: <code>RasterLayer</code>, <code>RasterStack</code>, and <code>RasterBrick</code></h3>
+<p>Let’s start with taking a look at raster data. We will download CDL data for Iowa in 2015.</p>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb271-1" data-line-number="1"><span class="kw">library</span>(cdlTools)</a>
+<a class="sourceLine" id="cb271-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb271-3" data-line-number="3"><span class="co">#--- download the CDL data for Iowa in 2015 ---#</span></a>
+<a class="sourceLine" id="cb271-4" data-line-number="4">IA_cdl_<span class="dv">2015</span> &lt;-<span class="st"> </span><span class="kw">getCDL</span>(<span class="st">&quot;Iowa&quot;</span>, <span class="dv">2015</span>)<span class="op">$</span>IA2015</a>
+<a class="sourceLine" id="cb271-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb271-6" data-line-number="6"><span class="co">#--- take a look ---#</span></a>
+<a class="sourceLine" id="cb271-7" data-line-number="7">IA_cdl_<span class="dv">2015</span></a></code></pre></div>
+<pre><code>class      : RasterLayer 
+dimensions : 11671, 17795, 207685445  (nrow, ncol, ncell)
+resolution : 30, 30  (x, y)
+extent     : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+crs        : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+source     : /private/var/folders/t4/5gnqprbn38nftyxkyk5hdwmd8hnypy/T/Rtmp5g1PCO/CDL_2015_19.tif 
+names      : CDL_2015_19 
+values     : 0, 255  (min, max)</code></pre>
+<p>Evaluating the imported raster object provides you with information about the raster data, such as dimensions (number of cells, number of columns, number of cells), spatial resolution (30 meter by 30 meter for this raster data), extent, CRS and the minimum and maximum values recorded in this raster layer. The class of the downloaded data is <code>RasterLayer</code>, which is a raster data class defined by the <code>raster</code> package.<a href="#fn77" class="footnote-ref" id="fnref77"><sup>77</sup></a> A <code>RasterLayer</code> consists of only one layer, meaning that only a single variable is associated with the cells (here it is land use category code in integer). Among these spatial characteristics, you often need to extract the CRS of a raster object before you interact it with vector data<a href="#fn78" class="footnote-ref" id="fnref78"><sup>78</sup></a>, which can be done using <code>projection()</code>:</p>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb273-1" data-line-number="1"><span class="kw">projection</span>(IA_cdl_<span class="dv">2015</span>)</a></code></pre></div>
+<pre><code>[1] &quot;+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs&quot;</code></pre>
+<hr />
+<p>You can stack multiple raster layers of the <strong>same spatial resolution and extent</strong> to create a <code>RasterStack</code> using <code>raster::stack()</code>. Often times, processing a multi-layer object has computational advantages over processing multiple single-layer one by one<a href="#fn79" class="footnote-ref" id="fnref79"><sup>79</sup></a>.</p>
+<p>To create a <code>RasterStack</code> and <code>RasterBrick</code>, let’s download the CDL data for IA in 2016 and stack it with the 2015 data.</p>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb275-1" data-line-number="1"><span class="co">#--- download the CDL data for Iowa in 2016 ---#</span></a>
+<a class="sourceLine" id="cb275-2" data-line-number="2">IA_cdl_<span class="dv">2016</span> &lt;-<span class="st"> </span><span class="kw">getCDL</span>(<span class="st">&quot;Iowa&quot;</span>, <span class="dv">2016</span>)<span class="op">$</span>IA2016 </a>
+<a class="sourceLine" id="cb275-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb275-4" data-line-number="4"><span class="co">#--- stack the two ---#</span></a>
+<a class="sourceLine" id="cb275-5" data-line-number="5">IA_cdl_stack &lt;-<span class="st"> </span><span class="kw">stack</span>(IA_cdl_<span class="dv">2015</span>, IA_cdl_<span class="dv">2016</span>)</a>
+<a class="sourceLine" id="cb275-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb275-7" data-line-number="7"><span class="co">#--- take a look ---#</span></a>
+<a class="sourceLine" id="cb275-8" data-line-number="8">IA_cdl_stack</a></code></pre></div>
+<pre><code>class      : RasterStack 
+dimensions : 11671, 17795, 207685445, 2  (nrow, ncol, ncell, nlayers)
+resolution : 30, 30  (x, y)
+extent     : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+crs        : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+names      : CDL_2015_19, CDL_2016_19 
+min values :           0,           0 
+max values :         255,         255 </code></pre>
+<p><code>IA_cdl_stack</code> is of class <code>RasterStack</code>, and it has two layers of variables: CDL for 2015 and 2016. You can make it a <code>RasterBrick</code> using <code>raster::brick()</code>:</p>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb277-1" data-line-number="1"><span class="co">#--- stack the two ---#</span></a>
+<a class="sourceLine" id="cb277-2" data-line-number="2">IA_cdl_brick &lt;-<span class="st"> </span><span class="kw">brick</span>(IA_cdl_stack)</a>
+<a class="sourceLine" id="cb277-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb277-4" data-line-number="4"><span class="co">#--- or this works as well ---#</span></a>
+<a class="sourceLine" id="cb277-5" data-line-number="5"><span class="co"># IA_cdl_brick &lt;- brick(IA_cdl_2015, IA_cdl_2016)</span></a>
+<a class="sourceLine" id="cb277-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb277-7" data-line-number="7"><span class="co">#--- take a look ---#</span></a>
+<a class="sourceLine" id="cb277-8" data-line-number="8">IA_cdl_brick</a></code></pre></div>
+<pre><code>class      : RasterBrick 
+dimensions : 11671, 17795, 207685445, 2  (nrow, ncol, ncell, nlayers)
+resolution : 30, 30  (x, y)
+extent     : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+crs        : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+source     : /private/var/folders/t4/5gnqprbn38nftyxkyk5hdwmd8hnypy/T/Rtmp5g1PCO/raster/r_tmp_2020-05-27_205015_64951_93006.grd 
+names      : CDL_2015_19, CDL_2016_19 
+min values :           0,           0 
+max values :         229,         241 </code></pre>
+<p>You probably noticed that it took some time to create the <code>RasterBrick</code> object<a href="#fn80" class="footnote-ref" id="fnref80"><sup>80</sup></a>. While spatial operations on <code>RasterBrick</code> are supposedly faster than <code>RasterStack</code>, the time to create a <code>RasterBrick</code> object itself is often long enough to kill the speed advantage entirely<a href="#fn81" class="footnote-ref" id="fnref81"><sup>81</sup></a>. Often, the three raster object types are collectively referred to as <code>Raster</code><span class="math inline">\(^*\)</span> objects for shorthand in the documentation of the <code>raster</code> and other related packages.</p>
 </div>
-<div id="colored-boxes" class="section level3 unnumbered">
-<h3>Colored Boxes</h3>
-<p>Codes are in blue boxes, and outcomes are in red boxes.</p>
-<p>Codes:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">runif</span>(<span class="dv">5</span>)</a></code></pre></div>
-<p>Outcomes:</p>
-<pre><code>## [1] 0.2823770 0.9710530 0.8013289 0.5293366 0.1373800</code></pre>
+<div id="terra-package-spatraster" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> <code>terra</code> package: <code>SpatRaster</code></h3>
+<p><code>terra</code> package has only one object class for raster data, <code>SpatRaster</code> and no distinctions between one-layer and multi-layer rasters are necessary. Let’s first convert a <code>RasterLayer</code> to a <code>SpatRaster</code> using <code>terra::rast()</code> function.</p>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb279-1" data-line-number="1"><span class="co">#--- convert to a SpatRaster ---#</span></a>
+<a class="sourceLine" id="cb279-2" data-line-number="2">IA_cdl_<span class="dv">2015</span>_sr &lt;-<span class="st"> </span><span class="kw">rast</span>(IA_cdl_<span class="dv">2015</span>)</a>
+<a class="sourceLine" id="cb279-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb279-4" data-line-number="4"><span class="co">#--- take a look ---#</span></a>
+<a class="sourceLine" id="cb279-5" data-line-number="5">IA_cdl_<span class="dv">2015</span>_sr</a></code></pre></div>
+<pre><code>class       : SpatRaster 
+dimensions  : 11671, 17795, 1  (nrow, ncol, nlyr)
+resolution  : 30, 30  (x, y)
+extent      : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+coord. ref. : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs  
+data source : /private/var/folders/t4/5gnqprbn38nftyxkyk5hdwmd8hnypy/T/Rtmp5g1PCO/CDL_2015_19.tif 
+names       : Layer_1 </code></pre>
+<p>You can see that the number of layers (<code>nlyr</code>) is <span class="math inline">\(1\)</span> because the original object is a <code>RasterLayer</code>, which by definition has only one layer. Now, let’s convert a <code>RasterStack</code> to a <code>SpatRaster</code> using <code>terra::rast()</code>.</p>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb281-1" data-line-number="1"><span class="co">#--- convert to a SpatRaster ---#</span></a>
+<a class="sourceLine" id="cb281-2" data-line-number="2">IA_cdl_stack_sr &lt;-<span class="st"> </span><span class="kw">rast</span>(IA_cdl_stack)</a>
+<a class="sourceLine" id="cb281-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb281-4" data-line-number="4"><span class="co">#--- take a look ---#</span></a>
+<a class="sourceLine" id="cb281-5" data-line-number="5">IA_cdl_stack_sr</a></code></pre></div>
+<pre><code>class       : SpatRaster 
+dimensions  : 11671, 17795, 2  (nrow, ncol, nlyr)
+resolution  : 30, 30  (x, y)
+extent      : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+coord. ref. : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs  
+data sources: /private/var/folders/t4/5gnqprbn38nftyxkyk5hdwmd8hnypy/T/Rtmp5g1PCO/CDL_2015_19.tif  
+              /private/var/folders/t4/5gnqprbn38nftyxkyk5hdwmd8hnypy/T/Rtmp5g1PCO/CDL_2016_19.tif  
+names       : Layer_1, Layer_1 </code></pre>
+<p>Again, it is a <code>SpatRaster</code>, and you now see that the number of layers is 2. We just confirmed that <code>terra</code> has only one class for raster data whether it is single-layer or multiple-layer ones.</p>
+<p>Instead of <code>projection()</code>, you use <code>crs()</code> to extract the CRS.</p>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb283-1" data-line-number="1"><span class="kw">crs</span>(IA_cdl_<span class="dv">2015</span>_sr)</a></code></pre></div>
+<pre><code>[1] &quot;+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs &quot;</code></pre>
 </div>
-<div id="parentheses-around-codes" class="section level3 unnumbered">
-<h3>Parentheses around codes</h3>
-<p>Sometimes you will see codes enclosed by parenthesis like this:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">(</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">  a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">)</a></code></pre></div>
-<pre><code>## [1] 0.6049204 0.4672004 0.3666267 0.5582272 0.2880947</code></pre>
-<p>The parentheses prints what’s inside of a newly created object (here <code>a</code>) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created.</p>
-<p>This one prints nothing.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">5</span>)</a></code></pre></div>
+<div id="converting-a-spatraster-object-to-a-raster-object." class="section level3">
+<h3><span class="header-section-number">4.1.3</span> Converting a <code>SpatRaster</code> object to a <code>Raster</code><span class="math inline">\(^*\)</span> object.</h3>
+<p>You can convert a <code>SpatRaster</code> object to a <code>Raster</code><span class="math inline">\(^*\)</span> object using <code>raster()</code>, <code>stack()</code>, and <code>brick()</code>. Keep in mind that if you use <code>rater()</code> even though <code>SpatRaster</code> has multiple layers, the resulting <code>RasterLayer</code> object has only the first of the multiple layers.</p>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb285-1" data-line-number="1"><span class="co">#--- RasterLayer (only 1st layer) ---#</span></a>
+<a class="sourceLine" id="cb285-2" data-line-number="2">IA_cdl_stack_sr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">raster</span>()</a></code></pre></div>
+<pre><code>class      : RasterLayer 
+dimensions : 11671, 17795, 207685445  (nrow, ncol, ncell)
+resolution : 30, 30  (x, y)
+extent     : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+crs        : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+source     : /private/var/folders/t4/5gnqprbn38nftyxkyk5hdwmd8hnypy/T/Rtmp5g1PCO/CDL_2015_19.tif 
+names      : Layer_1 
+values     : 0, 255  (min, max)</code></pre>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb287-1" data-line-number="1"><span class="co">#--- RasterLayer ---#</span></a>
+<a class="sourceLine" id="cb287-2" data-line-number="2">IA_cdl_stack_sr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">stack</span>()</a></code></pre></div>
+<pre><code>class      : RasterStack 
+dimensions : 11671, 17795, 207685445, 2  (nrow, ncol, ncell, nlayers)
+resolution : 30, 30  (x, y)
+extent     : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+crs        : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+names      : CDL_2015_19, CDL_2016_19 
+min values :           0,           0 
+max values :         255,         255 </code></pre>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb289-1" data-line-number="1"><span class="co">#--- RasterLayer (this takes some time) ---#</span></a>
+<a class="sourceLine" id="cb289-2" data-line-number="2">IA_cdl_stack_sr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">brick</span>()</a></code></pre></div>
+<pre><code>class      : RasterBrick 
+dimensions : 11671, 17795, 207685445, 2  (nrow, ncol, ncell, nlayers)
+resolution : 30, 30  (x, y)
+extent     : -52095, 481755, 1938165, 2288295  (xmin, xmax, ymin, ymax)
+crs        : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+source     : /private/var/folders/t4/5gnqprbn38nftyxkyk5hdwmd8hnypy/T/Rtmp5g1PCO/raster/r_tmp_2020-05-27_205102_64951_75945.grd 
+names      : CDL_2015_19, CDL_2016_19 
+min values :           0,           0 
+max values :         229,         241 </code></pre>
 </div>
-<div id="footnotes" class="section level3 unnumbered">
-<h3>Footnotes</h3>
-<p>Footnotes appear at the bottom of the page. You can easily get to a footnote by clicking on the footnote number. You can also go back to the main narrative where the footnote number is by clicking on the curved arrow at the end of the footnote. So, don’t worry about having to scroll all the way up to where you were after reading footnotes.</p>
+<div id="vector-data-in-the-terra-package" class="section level3">
+<h3><span class="header-section-number">4.1.4</span> Vector data in the <code>terra</code> package</h3>
+<p><code>terra</code> package has its own class for vector data, called <code>SpatVector</code>. While we do not use any of the vector data functionality provided by the <code>terra</code> package, we learn how to convert an <code>sf</code> object to <code>SpatVector</code> because <code>terra</code> functions do not support <code>sf</code> as of now (this will likely be resolved very soon). We will see some use cases of this conversion in the next chapter when we learn raster value extractions for vector data using <code>terra::extract()</code>.</p>
+<p>As an example, let’s use Illinois county border data.</p>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb291-1" data-line-number="1"><span class="kw">library</span>(maps)</a>
+<a class="sourceLine" id="cb291-2" data-line-number="2"><span class="co">#--- Illinois county boundary ---#</span></a>
+<a class="sourceLine" id="cb291-3" data-line-number="3">(</a>
+<a class="sourceLine" id="cb291-4" data-line-number="4">IL_county &lt;-<span class="st"> </span><span class="kw">st_as_sf</span>(<span class="kw">map</span>(<span class="st">&quot;county&quot;</span>, <span class="st">&quot;illinois&quot;</span>, <span class="dt">plot =</span> <span class="ot">FALSE</span>, <span class="dt">fill =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb291-5" data-line-number="5">)</a></code></pre></div>
+<pre><code>Simple feature collection with 102 features and 1 field
+geometry type:  MULTIPOLYGON
+dimension:      XY
+bbox:           xmin: -91.50136 ymin: 37.00161 xmax: -87.49638 ymax: 42.50774
+CRS:            EPSG:4326
+First 10 features:
+                   ID                           geom
+1      illinois,adams MULTIPOLYGON (((-91.49563 4...
+2  illinois,alexander MULTIPOLYGON (((-89.21526 3...
+3       illinois,bond MULTIPOLYGON (((-89.27828 3...
+4      illinois,boone MULTIPOLYGON (((-88.94024 4...
+5      illinois,brown MULTIPOLYGON (((-90.91121 3...
+6     illinois,bureau MULTIPOLYGON (((-89.63351 4...
+7    illinois,calhoun MULTIPOLYGON (((-90.93414 3...
+8    illinois,carroll MULTIPOLYGON (((-89.91999 4...
+9       illinois,cass MULTIPOLYGON (((-90.51014 3...
+10 illinois,champaign MULTIPOLYGON (((-88.46468 4...</code></pre>
+<p>You cannot convert an <code>sf</code> object directly to <code>SpatVector</code>. You first need to turn an <code>sf</code> into a spatial object class supported by the <code>sp</code> package, and then turn that into a <code>SpatVector</code> object using <code>terra::vect()</code>.</p>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb293-1" data-line-number="1">IL_county_sv &lt;-<span class="st"> </span><span class="kw">as</span>(IL_county, <span class="st">&quot;Spatial&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># to SpatialPolygonsDataFrame  </span></a>
+<a class="sourceLine" id="cb293-2" data-line-number="2"><span class="st">    </span><span class="co">#--- to SpatVectgor ---#</span></a>
+<a class="sourceLine" id="cb293-3" data-line-number="3"><span class="st">    </span><span class="kw">vect</span>(.)</a>
+<a class="sourceLine" id="cb293-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb293-5" data-line-number="5"><span class="co">#--- or ---#</span></a>
+<a class="sourceLine" id="cb293-6" data-line-number="6">IL_county_sv &lt;-<span class="st"> </span><span class="kw">vect</span>(<span class="kw">as</span>(IL_county, <span class="st">&quot;Spatial&quot;</span>))</a></code></pre></div>
+<p>You just need to put the name of your <code>sf</code> object in place of <code>IL_county</code>. Do not even try to understand what <code>SpatialPolygonsDataFrame</code> is. It is just an intermediate object that you do not really need to understand.</p>
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="8">
-<li id="fn8"><p>This is a function that draws values randomly from the uniform distribution.<a href="conventions-of-the-book-and-some-notes.html#fnref8" class="footnote-back">↩</a></p></li>
+<ol start="77">
+<li id="fn77"><p>This is what I meant by the <code>raster</code> being THE package for raster data handling. The default object class for many raster-related packages is a <code>raster</code> object class, instead of a <code>terra</code> object class.<a href="raster-data-object-classes.html#fnref77" class="footnote-back">↩</a></p></li>
+<li id="fn78"><p>e.g., extracting values from a raster layer to vector data, or cropping a raster layer to the spatial extent of vector data.<a href="raster-data-object-classes.html#fnref78" class="footnote-back">↩</a></p></li>
+<li id="fn79"><p>You will see this in Chapter <a href="#int-RV"><strong>??</strong></a> where we learn how to extract values from a raster layer for a vector data.<a href="raster-data-object-classes.html#fnref79" class="footnote-back">↩</a></p></li>
+<li id="fn80"><p>Read <a href="https://geocompr.robinlovelace.net/spatial-class.html#raster-classes">here</a> for the subtle difference between <code>RasterStack</code> and <code>RasterBrick</code><a href="raster-data-object-classes.html#fnref80" class="footnote-back">↩</a></p></li>
+<li id="fn81"><p>We will see this in Chapter , where we compare the speed of data extraction from <code>RasterStack</code> and <code>RasterBrick</code> objects.<a href="raster-data-object-classes.html#fnref81" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
             </section>
@@ -320,8 +471,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="what-is-going-to-be-covered-in-this-book.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="session-information.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="before-you-start-3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="read-and-write-a-raster-data-file.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

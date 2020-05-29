@@ -631,7 +631,7 @@ toc()
 
 ```
 elapsed 
- 24.496 
+ 24.531 
 ```
 
 **Parallelized**
@@ -647,10 +647,10 @@ toc()
 
 ```
 elapsed 
-  2.663 
+ 24.704 
 ```
 
-As you can see, parallelization makes it much quicker with a noticeable difference in elapsed time. We made the code 9.2 times faster. However, we did not make the process 15 times faster even though we used 15 cores for the parallelized process. This is because of the overhead associated with distributing tasks to the cores. The relative advantage of parallelization would be greater if each iteration took more time. For example, if you are running a process that takes about 2 minutes for 1000 times, it would take approximately 33 hours and 20 minutes. But, it may take only 4 hours if you parallelize it on 15 cores, or maybe even 2 hours if you run it on 30 cores. 
+As you can see, parallelization makes it much quicker with a noticeable difference in elapsed time. We made the code 0.99 times faster. However, we did not make the process 15 times faster even though we used 15 cores for the parallelized process. This is because of the overhead associated with distributing tasks to the cores. The relative advantage of parallelization would be greater if each iteration took more time. For example, if you are running a process that takes about 2 minutes for 1000 times, it would take approximately 33 hours and 20 minutes. But, it may take only 4 hours if you parallelize it on 15 cores, or maybe even 2 hours if you run it on 30 cores. 
 
 ### Mac or Linux users
 
@@ -669,6 +669,6 @@ MC_results <- pbmclapply(1:1000, MC_sim, mc.cores = get_num_procs() - 1)
 
 ### Some background on the parallelization packages 
 
-For Mac and Linux users the coding cost of parallelization was minimal since when `parallel::mclapply()` was available. Parallelization is really a piece of cake for those who know how to use `lapply()` because the syntax is identical. For Windows users, that had not been the case until the arrival of the `future.apply` package. Windows create new threads to run on multiple cores, which does not inherit any of the R objects you have created on the environment. This meant that if you need to use a dataset (or any other objects that you are not creating within the loop internally) inside the loop, you had to tell R explicitly what objects you want it to carry to the threads so they can use those objects. This hassle was eliminated by the `future.apply` package.^[To be honest, I do not completely understand how it does what it does.] On Mac and Linux machines, it was not even an issue because parallelization is done by forking (which Windows machines cannot do), which inherits all the available R objects on the environment. Since the `future.apply` package works for all the platforms, I focused on this package. 
+For Mac and Linux users the coding cost of parallelization was minimal since when `parallel::mclapply()` was available. Parallelization is really a piece of cake for those who know how to use `lapply()` because the syntax is identical. For Windows users, that had not been the case until the arrival of the `future.apply` package. Windows machines create new threads to run on multiple cores, which do not inherit any of the R objects you have created on the environment. This means that if you need to use a dataset (or any other objects that you are not creating within the loop internally) inside the loop, you have to tell R explicitly what objects you want it to carry to the new threads so they can use those objects themselves. This hassle was eliminated by the `future.apply` package.^[To be honest, I do not completely understand how it does what it does.] On Mac and Linux machines, it was not even an issue because parallelization is done by forking (which Windows machines cannot do), which inherits all the available R objects on the environment. Since the `future.apply` package works for all the platforms, I focused on this package. 
 
 
