@@ -1,21 +1,3 @@
---- 
-title: "Effective Spatial Data Management"
-author: "Taro Mieno"
-date: "`r Sys.Date()`"
-output:
-  tufte::tufte_html: 
-    css: "tufte_mine.css"
-    number_sections: yes
-    toc: yes
-  tufte::tufte_handout:
-    citation_package: natbib
-    latex_engine: xelatex
-  tufte::tufte_book:
-    citation_package: natbib
-    latex_engine: xelatex
-# bibliography: skeleton.bib
-link-citations: yes
----
 
 
 ```{r setup, echo = FALSE}
