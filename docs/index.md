@@ -168,7 +168,7 @@ Outcomes:
 
 
 ```
-## [1] 0.1031591 0.8807462 0.4185009 0.2887959 0.6107286
+## [1] 0.5918324 0.7650684 0.2865619 0.7478327 0.1145872
 ```
 
 ### Parentheses around codes {-}
@@ -183,7 +183,7 @@ Sometimes you will see codes enclosed by parenthesis like this:
 ```
 
 ```
-## [1] 0.48533565 0.54989841 0.09962364 0.11692465 0.88521729
+## [1] 0.03467449 0.83528484 0.53478069 0.34281871 0.32134641
 ```
 
 The parentheses prints what's inside of a newly created object (here `a`) without explicitly evaluating the object. So, basically I am signaling that we will be looking inside of the object that was just created. 

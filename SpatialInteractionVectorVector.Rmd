@@ -184,7 +184,7 @@ ggplot() +
 
 ### st_intersects()  
 
-This function identifies which `sfg` object in an `sf` (or `sfc`) intersects with `sfg` object(s) in another `sf`. For example, you can use the function to identify which well is located within which county. `st_intersects()` is the most commonly used topological relation. You may not find yourself using `st_intersects()`, but it is important to understand what it does as it is the default topological relation used when performing spatial subsetting and joining, which we will cover later.  
+This function identifies which `sfg` object in an `sf` (or `sfc`) intersects with `sfg` object(s) in another `sf`. For example, you can use the function to identify which well is located within which county. `st_intersects()` is the most commonly used topological relation. It is important to understand what it does as it is the default topological relation used when performing spatial subsetting and joining, which we will cover later.  
 
 ---
 
@@ -678,9 +678,9 @@ So, all of the four observations have identical geometry, which is the geometry 
 
 Sometimes you face the need to crop spatial objects by polygon boundaries. For example, we found the total length of the railroads **inside** of each county in Demonstration 4 in Chapter \@ref(demo4) by cutting off the parts of the railroads that extend beyond the boundary of counties. Also, we just saw that area-weighted averages cannot be found using `st_join()` because it does not provide information about how much area of each HUC unit is intersecting with each of its intersecting counties. If we can get the geometry of the intersecting part of the HUC unit and the county, then we can calculate its area, which in turn allows us to find area-weighted averages of joined attributes. For these purposes, we can use `sf::st_intersection()`. Below, how `st_intersection()` works for lines-polygons and polygons-polygons intersections. Intersections that involve points using `st_intersection()` is the same as using `st_join()` because points are length-less and area-less (nothing to cut). Thus, it is not discussed here.
 
-### st_intersection() {#st_intersection}
+### `st_intersection()` {#st_intersection}
 
-Instead of getting just indices of intersecting objects like `st_intersect()`,`st_intersection()` returns intersecting spatial objects with the non-intersecting parts of the `sf` objects cut out. Moreover, attributed values of the source `sf` will be merged to its intersecting `sfg` in the target `sf`. We will see how it works for lines-polygons and polygons-polygons cases using the toy examples we used to explain how `st_intersects()` work. Here is the figure of the lines and polygons (Figure \@ref(fig:plot-lines-polygons)):
+While `st_intersects()` returns the indices of intersecting objects, `st_intersection()` returns intersecting spatial objects with the non-intersecting parts of the `sf` objects cut out. Moreover, attribute values of the source `sf` will be merged to its intersecting `sfg` in the target `sf`. We will see how it works for lines-polygons and polygons-polygons cases using the toy examples we used to explain how `st_intersects()` work. Here is the figure of the lines and polygons (Figure \@ref(fig:plot-lines-polygons)):
 
 ```{r plot-lines-polygons, fig.cap = "Visualization of the points, lines, and polygons"}
 ggplot() +

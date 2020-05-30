@@ -221,7 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.3" data-path="spatial-join.html"><a href="spatial-join.html#polygon-polygon"><i class="fa fa-check"></i><b>3.3.3</b> Case 3: polygons (target) vs polygons (source)</a></li>
 </ul></li>
 <li class="chapter" data-level="3.4" data-path="spatial-intersection-transformative-join.html"><a href="spatial-intersection-transformative-join.html"><i class="fa fa-check"></i><b>3.4</b> Spatial Intersection (transformative join)</a><ul>
-<li class="chapter" data-level="3.4.1" data-path="spatial-intersection-transformative-join.html"><a href="spatial-intersection-transformative-join.html#st_intersection"><i class="fa fa-check"></i><b>3.4.1</b> st_intersection()</a></li>
+<li class="chapter" data-level="3.4.1" data-path="spatial-intersection-transformative-join.html"><a href="spatial-intersection-transformative-join.html#st_intersection"><i class="fa fa-check"></i><b>3.4.1</b> <code>st_intersection()</code></a></li>
 <li class="chapter" data-level="3.4.2" data-path="spatial-intersection-transformative-join.html"><a href="spatial-intersection-transformative-join.html#area-weighted-average"><i class="fa fa-check"></i><b>3.4.2</b> Area-weighted average</a></li>
 </ul></li>
 </ul></li>
@@ -347,15 +347,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb327-3" data-line-number="3">MC_results &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, MC_sim)</a>
 <a class="sourceLine" id="cb327-4" data-line-number="4"><span class="kw">toc</span>()</a></code></pre></div>
 <pre><code>elapsed 
-  24.39 </code></pre>
+ 24.655 </code></pre>
 <p><strong>Parallelized</strong></p>
 <div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb329-1" data-line-number="1"><span class="co">#--- parallel ---#</span></a>
 <a class="sourceLine" id="cb329-2" data-line-number="2"><span class="kw">tic</span>()</a>
 <a class="sourceLine" id="cb329-3" data-line-number="3">MC_results &lt;-<span class="st"> </span><span class="kw">future_lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, MC_sim)</a>
 <a class="sourceLine" id="cb329-4" data-line-number="4"><span class="kw">toc</span>()</a></code></pre></div>
 <pre><code>elapsed 
-  2.648 </code></pre>
-<p>As you can see, parallelization makes it much quicker with a noticeable difference in elapsed time. We made the code 9.21 times faster. However, we did not make the process 15 times faster even though we used 15 cores for the parallelized process. This is because of the overhead associated with distributing tasks to the cores. The relative advantage of parallelization would be greater if each iteration took more time. For example, if you are running a process that takes about 2 minutes for 1000 times, it would take approximately 33 hours and 20 minutes. But, it may take only 4 hours if you parallelize it on 15 cores, or maybe even 2 hours if you run it on 30 cores.</p>
+  2.785 </code></pre>
+<p>As you can see, parallelization makes it much quicker with a noticeable difference in elapsed time. We made the code 8.85 times faster. However, we did not make the process 15 times faster even though we used 15 cores for the parallelized process. This is because of the overhead associated with distributing tasks to the cores. The relative advantage of parallelization would be greater if each iteration took more time. For example, if you are running a process that takes about 2 minutes for 1000 times, it would take approximately 33 hours and 20 minutes. But, it may take only 4 hours if you parallelize it on 15 cores, or maybe even 2 hours if you run it on 30 cores.</p>
 <div id="mac-or-linux-users" class="section level3">
 <h3><span class="header-section-number">A.2.1</span> Mac or Linux users</h3>
 <p>For Mac users, <code>parallel::mclapply()</code> is just as compelling (or <code>pbmclapply::pbmclapply()</code> if you want to have a nice progress report, which is very helpful particularly when the process is long). It is just as easy to use as <code>future_lapply()</code> because its syntax is the same as <code>lapply()</code>. You can control the number of cores to employ by adding <code>mc.cores</code> option. Here is an example code that does the same MC simulations we conducted above:</p>

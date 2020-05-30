@@ -221,7 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.3" data-path="spatial-join.html"><a href="spatial-join.html#polygon-polygon"><i class="fa fa-check"></i><b>3.3.3</b> Case 3: polygons (target) vs polygons (source)</a></li>
 </ul></li>
 <li class="chapter" data-level="3.4" data-path="spatial-intersection-transformative-join.html"><a href="spatial-intersection-transformative-join.html"><i class="fa fa-check"></i><b>3.4</b> Spatial Intersection (transformative join)</a><ul>
-<li class="chapter" data-level="3.4.1" data-path="spatial-intersection-transformative-join.html"><a href="spatial-intersection-transformative-join.html#st_intersection"><i class="fa fa-check"></i><b>3.4.1</b> st_intersection()</a></li>
+<li class="chapter" data-level="3.4.1" data-path="spatial-intersection-transformative-join.html"><a href="spatial-intersection-transformative-join.html#st_intersection"><i class="fa fa-check"></i><b>3.4.1</b> <code>st_intersection()</code></a></li>
 <li class="chapter" data-level="3.4.2" data-path="spatial-intersection-transformative-join.html"><a href="spatial-intersection-transformative-join.html#area-weighted-average"><i class="fa fa-check"></i><b>3.4.2</b> Area-weighted average</a></li>
 </ul></li>
 </ul></li>
@@ -371,7 +371,7 @@ Figure 3.1: Visualization of the points, lines, and polygons
 </div>
 <div id="st_intersects" class="section level3">
 <h3><span class="header-section-number">3.1.1</span> st_intersects()</h3>
-<p>This function identifies which <code>sfg</code> object in an <code>sf</code> (or <code>sfc</code>) intersects with <code>sfg</code> object(s) in another <code>sf</code>. For example, you can use the function to identify which well is located within which county. <code>st_intersects()</code> is the most commonly used topological relation. You may not find yourself using <code>st_intersects()</code>, but it is important to understand what it does as it is the default topological relation used when performing spatial subsetting and joining, which we will cover later.</p>
+<p>This function identifies which <code>sfg</code> object in an <code>sf</code> (or <code>sfc</code>) intersects with <code>sfg</code> object(s) in another <code>sf</code>. For example, you can use the function to identify which well is located within which county. <code>st_intersects()</code> is the most commonly used topological relation. It is important to understand what it does as it is the default topological relation used when performing spatial subsetting and joining, which we will cover later.</p>
 <hr />
 <p><strong>points and polygons</strong></p>
 <div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" data-line-number="1"><span class="kw">st_intersects</span>(points, polygons)</a></code></pre></div>
